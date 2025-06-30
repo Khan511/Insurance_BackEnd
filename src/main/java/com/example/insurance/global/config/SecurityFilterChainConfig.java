@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,9 +21,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -42,7 +45,11 @@ public class SecurityFilterChainConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
+    /**
+     * Primary security filter chain for API endpoints
+     */
     @Bean
+    @Order(1) // Highest priority
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
@@ -50,18 +57,45 @@ public class SecurityFilterChainConfig {
                 .cors(cors -> cors.configurationSource(configurationSource()))
                 .csrf(csrf -> csrf.disable()) // disable for stateless APIs
                 .headers(headers -> headers
-                .contentSecurityPolicy(csp -> csp.policyDirectives(contentSecurityPolicy))
-                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                .httpStrictTransportSecurity(hsts -> hsts
-                .includeSubDomains(true)
-                .preload(true)
-                .maxAgeInSeconds(31536000)
-                )
-                )
+                        .contentSecurityPolicy(csp -> csp.policyDirectives(contentSecurityPolicy))
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                        .httpStrictTransportSecurity(hsts -> hsts
+                                .includeSubDomains(true)
+                                .preload(true)
+                                .maxAgeInSeconds(31536000)))
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/public/**",))
+                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").hasAnyAuthority("SCOPE_DELETE")
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(null)
+                        .accessDeniedHandler(null))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, jwtAuthorizationFilter.getClass());
 
+        return http.build();
+    }
+
+    /**
+     * Default security filter chain for all other requests
+     */
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defauSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/error", "/webjars/**").permitAll()
+                        .anyRequest().denyAll()// Deny all other requests by default
+                )
+                .formLogin(login -> login.disable())
+                .httpBasic(basic -> basic.disable());
+        return http.build();
     }
 
     @Bean
