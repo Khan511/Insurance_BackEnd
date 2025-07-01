@@ -1,13 +1,8 @@
 package com.example.insurance.domain.user.service;
 
-import static com.example.insurance.global.config.enums.LoginType.LOGIN_FAILURE;
-
 import java.time.LocalDateTime;
-
-import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.insurance.common.enummuration.RoleType;
 import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.role.model.RoleEntity;
@@ -17,7 +12,6 @@ import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.global.cache.CacheStore;
 import com.example.insurance.global.config.enums.LoginType;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
