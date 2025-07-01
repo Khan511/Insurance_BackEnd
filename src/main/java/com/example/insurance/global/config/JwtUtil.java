@@ -42,10 +42,14 @@ import io.jsonwebtoken.io.Decoders;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
+@Setter
 @Component
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "jwt")
@@ -94,8 +98,10 @@ public class JwtUtil {
     // Prepare JWT builder with modern standards
     private JwtBuilder jwtBuilder() {
         return Jwts.builder()
-                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .audience().add(audience).and()
+                // .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .header()
+                .type(Header.JWT_TYPE)
+                .add("add", audience).and()
                 .issuer(issuer)
                 .id(UUID.randomUUID().toString())
                 .issuedAt(Date.from(Instant.now()))

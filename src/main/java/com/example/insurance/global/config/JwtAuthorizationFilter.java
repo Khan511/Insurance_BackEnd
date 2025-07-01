@@ -2,23 +2,18 @@ package com.example.insurance.global.config;
 
 import static com.example.insurance.shared.constant.Constant.LOGIN_PATH;
 import static com.example.insurance.shared.constant.Constant.TOKEN_INVALIDATED_MSG;
-
 import java.io.IOException;
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.example.insurance.global.config.enums.TokenType;
 import com.example.insurance.global.config.token.Token;
 import com.example.insurance.global.config.token.TokenData;
 import com.example.insurance.infrastructure.web.dtos.AuthResponseDto;
 import com.example.insurance.shared.auth.TokenBlackList;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -5,10 +5,8 @@ import static com.example.insurance.shared.constant.Constant.ALLOWED_METHODS;
 import static com.example.insurance.shared.constant.Constant.ALLOWED_ORIGIONS;
 import static com.example.insurance.shared.constant.Constant.EXPOSED_HEADERS;
 import static com.example.insurance.shared.constant.Constant.MAX_AGE;
-
 import java.time.Duration;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,14 +21,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -73,7 +67,9 @@ public class SecurityFilterChainConfig {
                                                                 .preload(true)
                                                                 .maxAgeInSeconds(31536000)))
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/api/auth/**",
+                                                                "/api/user/create-user")
+                                                .permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")

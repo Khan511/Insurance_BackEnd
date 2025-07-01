@@ -19,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.service.UserService;
 import com.example.insurance.global.config.dto.LoginRequestDto;
@@ -48,6 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+
         super.setAuthenticationManager(authenticationManager);
         setFilterProcessesUrl(Constant.LOGIN_PATH);
     }
@@ -99,6 +99,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(
             HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
             throws IOException {
+
         String email = (String) request.getAttribute(LOGIN_EMAIL);
 
         if (email != null) {

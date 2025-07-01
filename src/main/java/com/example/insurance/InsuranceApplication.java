@@ -1,16 +1,13 @@
 package com.example.insurance;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
+// import java.security.KeyPair;
+// import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-
-import javax.crypto.SecretKey;
-
+// import java.util.Base64;
+// import javax.crypto.SecretKey;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
 // import io.jsonwebtoken.SignatureAlgorithm;
 // import io.jsonwebtoken.io.Encoders;
 // import io.jsonwebtoken.security.Keys;

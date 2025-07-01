@@ -13,6 +13,7 @@ import com.example.insurance.domain.user.service.UserService;
 import com.example.insurance.shared.kernel.utils.ResponseBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,7 +24,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create-user")
-    public ResponseEntity<?> createUser(@RequestBody CreateUserRequestDto userDto, HttpServletRequest request) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequestDto userDto, HttpServletRequest request) {
+
+        System.out.println("The Controller===================================>" + userDto);
 
         userService.createUserWithRoles(userDto.firstName(), userDto.lastName(), userDto.email(),
                 userDto.password());

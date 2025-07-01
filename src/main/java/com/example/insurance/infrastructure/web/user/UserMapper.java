@@ -2,7 +2,6 @@ package com.example.insurance.infrastructure.web.user;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.infrastructure.web.dtos.AuthResponseDto;
 
