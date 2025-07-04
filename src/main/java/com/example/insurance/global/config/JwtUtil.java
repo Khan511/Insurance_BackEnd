@@ -98,10 +98,10 @@ public class JwtUtil {
     // Prepare JWT builder with modern standards
     private JwtBuilder jwtBuilder() {
         return Jwts.builder()
-                // .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .header()
                 .type(Header.JWT_TYPE)
-                .add("add", audience).and()
+                .and()
+                .audience().add(audience).and()
                 .issuer(issuer)
                 .id(UUID.randomUUID().toString())
                 .issuedAt(Date.from(Instant.now()))
@@ -146,10 +146,10 @@ public class JwtUtil {
         Cookie cookie = new Cookie(tokenType.getValue(), tokenValue);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
-        cookie.setMaxAge((int) (tokenType == TokenType.ACCESS ? accessTokenExpiration : refreshTokenExpiration));
+        cookie.setMaxAge((int) (tokenType == TokenType.ACCESS ? accessTokenExpiration
+                : refreshTokenExpiration));
         cookie.setPath("/");
-        cookie.setAttribute("SameSite", "Strict"); // Enhanced Security
-        cookie.setAttribute("Partitioned", "true"); // CHIPS compliance
+        cookie.setAttribute("SameSite", "None"); // Enhanced Security
         response.addCookie(cookie);
 
     };
@@ -179,12 +179,14 @@ public class JwtUtil {
     }
 
     // Setting the token in Cookie and cookie in the response
-    public void setTokenCookieInResponse(HttpServletResponse response, AuthResponseDto user, TokenType tokenType) {
+    public void setTokenCookieInResponse(HttpServletResponse response,
+            AuthResponseDto user, TokenType tokenType) {
         tokenCookieSetter.accept(response, user, tokenType);
     }
 
     // Retrieve token from request cokies
-    public Optional<String> getTokenFromRequestCookie(HttpServletRequest request, String CookieName) {
+    public Optional<String> getTokenFromRequestCookie(HttpServletRequest request,
+            String CookieName) {
 
         if (request.getCookies() == null)
             return Optional.empty();
@@ -230,20 +232,23 @@ public class JwtUtil {
                 .build());
     }
 
-    // Secure cookie removal
+    /** Removes both access and refresh token cookies by setting maxAge=0. */
     public void removeTokenCookies(HttpServletResponse response) {
         createInvalidationCookie(response, TokenType.ACCESS);
         createInvalidationCookie(response, TokenType.REFRESH);
     }
 
-    private void createInvalidationCookie(HttpServletResponse response, TokenType tokenType) {
+    private void createInvalidationCookie(HttpServletResponse response,
+            TokenType tokenType) {
 
+        // Cookie cookie = new Cookie(tokenType.getValue(), null);
         Cookie cookie = new Cookie(tokenType.getValue(), null);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setMaxAge(0);
         cookie.setPath("/");
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "None");
+
         response.addCookie(cookie);
     }
 

@@ -26,8 +26,6 @@ public class UserController {
     @PostMapping("/create-user")
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequestDto userDto, HttpServletRequest request) {
 
-        System.out.println("The Controller===================================>" + userDto);
-
         userService.createUserWithRoles(userDto.firstName(), userDto.lastName(), userDto.email(),
                 userDto.password());
 

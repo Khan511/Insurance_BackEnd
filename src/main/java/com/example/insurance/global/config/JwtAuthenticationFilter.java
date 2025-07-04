@@ -38,7 +38,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper;
@@ -92,7 +91,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         userService.updateLoginAttempt(userEntity.getEmail(), LOGIN_SUCCESS);
         setTokenCookies(response, user);
         writeSuccessResponse(request, response, user);
-
     }
 
     @Override

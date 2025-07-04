@@ -1,6 +1,8 @@
 package com.example.insurance.domain.user.service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.insurance.common.enummuration.RoleType;
@@ -27,8 +29,9 @@ public class userServiceImpl implements UserService {
 
         User user = new User();
         user.setEmail(email);
-
+        user.setUserId(UUID.randomUUID().toString());
         PersonName name = new PersonName();
+
         name.setFirstName(firstName);
         name.setLastName(lastName);
         user.setName(name);

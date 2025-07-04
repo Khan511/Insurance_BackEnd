@@ -6,7 +6,6 @@ import lombok.Builder;
 
 @Builder
 public record AuthResponseDto(
-        String userId,
-        String email, Set<String> roles, Set<String> permissions) {
-
+                String userId,
+                String email, Set<String> roles, Set<String> permissions) {
 }
