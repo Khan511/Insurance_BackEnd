@@ -1,10 +1,10 @@
-package com.example.insurance.domain.insuranceCategory.service;
+// package com.example.insurance.domain.insuranceCategory.service;
 
-import java.util.List;
+// import java.util.List;
 
-import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
+// import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
 
-public interface InsuranceCategoryServices {
+// public interface InsuranceCategoryServices {
 
-    public List<InsurancePolicy> getAllPolicies();
-}
+// public List<InsurancePolicy> getAllPolicies();
+// }

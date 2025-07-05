@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
 import com.example.insurance.domain.insurancePolicy.repository.InsurancePolicyRespository;
+import com.example.insurance.usecases.policyCreation.model.CreateInsurancePolicy;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,11 +14,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InsurancePoliciesServiceImpl implements InsurancePolicyServices {
 
-    private final InsurancePolicyRespository allPoliciesRespository;
+    private final InsurancePolicyRespository insurancePolicyRespository;
 
     @Override
-    public List<InsurancePolicy> getAllPolicies() {
-        return allPoliciesRespository.findAll();
+    public List<CreateInsurancePolicy> getAllPolicies() {
+        List<CreateInsurancePolicy> allPolicies = insurancePolicyRespository.findAll();
+
+        System.out.println(allPolicies);
+        return allPolicies;
     }
 
 }

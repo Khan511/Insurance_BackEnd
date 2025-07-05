@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
 import com.example.insurance.domain.insurancePolicy.service.InsurancePolicyServices;
+import com.example.insurance.usecases.policyCreation.model.CreateInsurancePolicy;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class InsurancePolicyController {
     private final InsurancePolicyServices allPolicyServices;
 
     @GetMapping("/all-policies")
-    public List<InsurancePolicy> allPolicies() {
+    public List<CreateInsurancePolicy> allPolicies() {
 
         return allPolicyServices.getAllPolicies();
     }
