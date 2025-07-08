@@ -56,8 +56,8 @@ public class CustomerPolicy extends AuditEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PolicyBeneficiary> beneficiaries;
 
-    @OneToMany(mappedBy = "policy")
-    private List<Claim> claims;
+    // @OneToMany(mappedBy = "policy")
+    // private List<Claim> claims;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<PaymentSchedule> paymentSchedules;

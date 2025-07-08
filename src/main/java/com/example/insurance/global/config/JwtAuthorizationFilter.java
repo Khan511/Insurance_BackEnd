@@ -1,5 +1,7 @@
 package com.example.insurance.global.config;
 
+import static com.example.insurance.shared.constant.Constant.GET_ALL_POLICIES;
+import static com.example.insurance.shared.constant.Constant.GET_POLICY_DETAILS;
 import static com.example.insurance.shared.constant.Constant.LOGIN_PATH;
 import static com.example.insurance.shared.constant.Constant.TOKEN_INVALIDATED_MSG;
 import java.io.IOException;
@@ -33,19 +35,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String uri = request.getRequestURI();
         // if (LOGIN_PATH.equals(request.getRequestURI())) {
-        if (request.getRequestURI().startsWith(LOGIN_PATH)) {
+        if (uri.startsWith(LOGIN_PATH) || uri.startsWith(GET_ALL_POLICIES) || uri.startsWith(GET_POLICY_DETAILS)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             processAuthorization(request, response, filterChain);
-
         } catch (Exception e) {
             handleAuthorizationError(response, e);
         }
-
     }
 
     private void processAuthorization(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

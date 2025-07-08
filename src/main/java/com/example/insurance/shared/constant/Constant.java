@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Constant {
         public static final String LOGIN_PATH = "/api/user/login";
+        public static final String GET_ALL_POLICIES = "/api/policy/all-policies";
+        public static final String GET_POLICY_DETAILS = "/api/policy/policy-details";
         public static final String EMAIL = "email";
         public static final String ROLES = "roles";
         public static final String ROLE_PREFIX = "ROLE_";

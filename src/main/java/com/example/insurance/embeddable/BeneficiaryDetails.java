@@ -22,10 +22,10 @@ public class BeneficiaryDetails {
     @Enumerated(EnumType.STRING)
     private Relationship relationship;
 
-    @Embedded
-    private GovernmentId governmentId;
+    // @Embedded
+    // private GovernmentId governmentId;
 
-    @Column(name = "tax_info")
-    private TaxInformation taxInfo;
+    // @Column(name = "tax_info")
+    // private TaxInformation taxInfo;
 
 }

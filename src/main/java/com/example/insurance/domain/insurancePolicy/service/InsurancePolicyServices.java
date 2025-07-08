@@ -7,4 +7,6 @@ import com.example.insurance.usecases.policyCreation.model.CreateInsurancePolicy
 public interface InsurancePolicyServices {
 
     public List<CreateInsurancePolicy> getAllPolicies();
+
+    public CreateInsurancePolicy getPolicyById(long id);
 }

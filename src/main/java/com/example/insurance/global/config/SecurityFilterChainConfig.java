@@ -49,9 +49,7 @@ public class SecurityFilterChainConfig {
         @Order(1) // Highest priority
         public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
                         throws Exception {
-
                 // Create filters with
-
                 http
                                 .with(customSecurityConfigurer, c -> {
                                 })
@@ -70,7 +68,9 @@ public class SecurityFilterChainConfig {
                                                 .requestMatchers(HttpMethod.POST, "/api/auth/**",
                                                                 "/api/user/create-user")
                                                 .permitAll()
-                                                .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**")
+                                                .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**",
+                                                                "/api/policy/all-policies",
+                                                                "/api/policy/policy-details/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                                 .requestMatchers(HttpMethod.DELETE, "/api/**")

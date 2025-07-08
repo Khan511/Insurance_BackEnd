@@ -19,9 +19,12 @@ public class InsurancePoliciesServiceImpl implements InsurancePolicyServices {
     @Override
     public List<CreateInsurancePolicy> getAllPolicies() {
         List<CreateInsurancePolicy> allPolicies = insurancePolicyRespository.findAll();
-
-        System.out.println(allPolicies);
         return allPolicies;
+    }
+
+    @Override
+    public CreateInsurancePolicy getPolicyById(long id) {
+        return insurancePolicyRespository.findById(id).orElseThrow(() -> new RuntimeException("Policy not found"));
     }
 
 }
