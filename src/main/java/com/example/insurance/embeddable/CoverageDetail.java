@@ -1,24 +1,25 @@
 package com.example.insurance.embeddable;
 
-import java.math.BigDecimal;
-
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
-
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class CoverageDetail {
 
     @Column(name = "coverage_name", nullable = false, length = 100)
-    private String name;
+    private String coverageType;
 
     @Column(name = "description", length = 500)
     private String description;
@@ -30,7 +31,11 @@ public class CoverageDetail {
     })
     private MonetaryAmount coverageLimit;
 
-    @Column(name = "deductible")
-    private BigDecimal deductible;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "deductible_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "deductible_currency"))
+    })
+    private MonetaryAmount deductible;
 
 }

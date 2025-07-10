@@ -53,20 +53,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
-
-		<dependency>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-
-
 	<!-- Maven -->
 		<!-- <dependency>
     		<groupId>org.postgresql</groupId>
@@ -130,6 +116,18 @@
     		<artifactId>guava</artifactId>
     		<version>33.2.1-jre</version> <!-- Check for latest version -->
 		</dependency>
+
+<!-- 
+	<dependency>
+    	<groupId>com.vladmihalcea</groupId>
+    	<artifactId>hibernate-types-52</artifactId>
+    	<version>2.21.0</version>
+	</dependency> -->
+
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+</dependency> 
 
 	</dependencies>
 

@@ -1,13 +1,9 @@
 package com.example.insurance.domain.insurancePolicy.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
 import com.example.insurance.domain.insurancePolicy.repository.InsurancePolicyRespository;
-import com.example.insurance.usecases.policyCreation.model.CreateInsurancePolicy;
-
+import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,13 +13,13 @@ public class InsurancePoliciesServiceImpl implements InsurancePolicyServices {
     private final InsurancePolicyRespository insurancePolicyRespository;
 
     @Override
-    public List<CreateInsurancePolicy> getAllPolicies() {
-        List<CreateInsurancePolicy> allPolicies = insurancePolicyRespository.findAll();
+    public List<InsuranceProduct> getAllPolicies() {
+        List<InsuranceProduct> allPolicies = insurancePolicyRespository.findAll();
         return allPolicies;
     }
 
     @Override
-    public CreateInsurancePolicy getPolicyById(long id) {
+    public InsuranceProduct getPolicyById(long id) {
         return insurancePolicyRespository.findById(id).orElseThrow(() -> new RuntimeException("Policy not found"));
     }
 

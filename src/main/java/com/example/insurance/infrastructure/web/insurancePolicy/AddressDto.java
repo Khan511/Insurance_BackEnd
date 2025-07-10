@@ -1,19 +1,16 @@
-package com.example.insurance.shared.kernel.embeddables;
+package com.example.insurance.infrastructure.web.insurancePolicy;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Embeddable
-public class Address {
+public class AddressDto {
     private String street;
     private String city;
     private String state;
-
-    @Column(name = "postal_code")
     private String postalCode;
     private String country;
+
 }

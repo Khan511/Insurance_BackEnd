@@ -1,10 +1,13 @@
-// package com.example.insurance.domain.insuranceCategory.repository;
+package com.example.insurance.domain.insuranceCategory.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-// import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.insurance.domain.insuranceCategory.model.InsuranceCategory;
 
-// public interface InsuranceCategoryRepository extends
-// JpaRepository<InsurancePolicy, Long> {
+public interface InsuranceCategoryRepository extends
+        JpaRepository<InsuranceCategory, Long> {
 
-// }
+    Optional<InsuranceCategory> findByName(String name);
+
+}

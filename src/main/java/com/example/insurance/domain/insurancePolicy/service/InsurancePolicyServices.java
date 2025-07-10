@@ -1,12 +1,11 @@
 package com.example.insurance.domain.insurancePolicy.service;
 
 import java.util.List;
-import com.example.insurance.domain.insurancePolicy.model.InsurancePolicy;
-import com.example.insurance.usecases.policyCreation.model.CreateInsurancePolicy;
+import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 
 public interface InsurancePolicyServices {
 
-    public List<CreateInsurancePolicy> getAllPolicies();
+    public List<InsuranceProduct> getAllPolicies();
 
-    public CreateInsurancePolicy getPolicyById(long id);
+    public InsuranceProduct getPolicyById(long id);
 }

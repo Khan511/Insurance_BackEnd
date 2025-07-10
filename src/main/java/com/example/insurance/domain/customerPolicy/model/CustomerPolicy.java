@@ -22,6 +22,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -39,6 +40,7 @@ public class CustomerPolicy extends AuditEntity {
     private Long policyNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "policy_holder_id")
     private Customer policyHolder;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,8 +52,8 @@ public class CustomerPolicy extends AuditEntity {
     @Embedded
     private MonetaryAmount premium;
 
-    @Enumerated(EnumType.STRING)
-    private PolicyStatus status;
+    // @Enumerated(EnumType.STRING)
+    // private PolicyStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PolicyBeneficiary> beneficiaries;

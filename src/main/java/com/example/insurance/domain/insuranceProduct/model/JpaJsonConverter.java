@@ -1,38 +1,102 @@
 package com.example.insurance.domain.insuranceProduct.model;
 
 import java.io.IOException;
-// import java.math.BigDecimal;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import org.postgresql.util.PGobject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import jakarta.persistence.AttributeConverter;
+import java.math.BigDecimal;
 import jakarta.persistence.Converter;
 
-// JSON Converter for complex configuration
-@Converter(autoApply = true)
-public class JpaJsonConverter implements AttributeConverter<PremiumCalculationConfig, String> {
-    private static final ObjectMapper mapper = new ObjectMapper()
-            .registerModule(new JavaTimeModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+@Converter
+public class JpaJsonConverter implements AttributeConverter<PremiumCalculationConfig, Object> {
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        // Register custom serializer for BigDecimal
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(BigDecimal.class, new BigDecimalSerializer());
+        objectMapper.registerModule(module);
+    }
 
     @Override
-    public String convertToDatabaseColumn(PremiumCalculationConfig attribute) {
+    public Object convertToDatabaseColumn(PremiumCalculationConfig config) {
         try {
-            return mapper.writeValueAsString(attribute);
-        } catch (JsonProcessingException e) {
+            PGobject pgObject = new PGobject();
+            pgObject.setType("jsonb");
+            pgObject.setValue(objectMapper.writeValueAsString(config));
+            return pgObject;
+        } catch (Exception e) {
             throw new RuntimeException("JSON conversion error", e);
         }
     }
 
     @Override
-    public PremiumCalculationConfig convertToEntityAttribute(String dbData) {
+    public PremiumCalculationConfig convertToEntityAttribute(Object dbData) {
         try {
-            return mapper.readValue(dbData, PremiumCalculationConfig.class);
+            if (dbData == null)
+                return null;
+
+            if (dbData instanceof PGobject pgObject) {
+                return objectMapper.readValue(pgObject.getValue(), PremiumCalculationConfig.class);
+            } else if (dbData instanceof String stringValue) {
+                return objectMapper.readValue(stringValue, PremiumCalculationConfig.class);
+            }
+            throw new IllegalArgumentException("Unsupported database JSON type");
         } catch (IOException e) {
             throw new RuntimeException("JSON conversion error", e);
         }
     }
+
+    // Custom BigDecimal serializer
+    private static class BigDecimalSerializer extends com.fasterxml.jackson.databind.JsonSerializer<BigDecimal> {
+        @Override
+        public void serialize(BigDecimal value, com.fasterxml.jackson.core.JsonGenerator gen,
+                com.fasterxml.jackson.databind.SerializerProvider provider)
+                throws IOException {
+            gen.writeString(value.toPlainString());
+        }
+    }
 }
+
+// package com.example.insurance.domain.insuranceProduct.model;
+
+// import java.io.IOException;
+// import org.postgresql.util.PGobject;
+// import com.fasterxml.jackson.databind.ObjectMapper;
+// import jakarta.persistence.AttributeConverter;
+// import jakarta.persistence.Converter;
+
+// @Converter(autoApply = true)
+// public class JpaJsonConverter implements
+// AttributeConverter<PremiumCalculationConfig, Object> {
+// private static final ObjectMapper objectMapper = new ObjectMapper();
+
+// @Override
+// public Object convertToDatabaseColumn(PremiumCalculationConfig config) {
+// try {
+// PGobject jsonObject = new PGobject();
+// jsonObject.setType("jsonb");
+// jsonObject.setValue(objectMapper.writeValueAsString(config));
+// return jsonObject;
+// } catch (Exception e) {
+// throw new IllegalArgumentException("Error converting to JSONB", e);
+// }
+// }
+
+// @Override
+// public PremiumCalculationConfig convertToEntityAttribute(Object dbData) {
+// try {
+// if (dbData instanceof PGobject) {
+// return objectMapper.readValue(((PGobject) dbData).getValue(),
+// PremiumCalculationConfig.class);
+// } else if (dbData instanceof String) {
+// return objectMapper.readValue((String) dbData,
+// PremiumCalculationConfig.class);
+// }
+// throw new IllegalArgumentException("Unsupported database JSON type");
+// } catch (IOException e) {
+// throw new IllegalArgumentException("Error converting from JSONB", e);
+// }
+// }
+// }
