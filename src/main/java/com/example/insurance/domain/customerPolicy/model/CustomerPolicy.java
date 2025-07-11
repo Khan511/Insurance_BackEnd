@@ -2,22 +2,20 @@ package com.example.insurance.domain.customerPolicy.model;
 
 import java.util.List;
 // import java.util.UUID;
-
-import com.example.insurance.common.enummuration.PolicyStatus;
+// import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.auditing.domain.AuditEntity;
-import com.example.insurance.domain.claim.model.Claim;
+// import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.paymentSchedule.model.PaymentSchedule;
 import com.example.insurance.domain.policyBeneficiary.model.PolicyBeneficiary;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+// import jakarta.persistence.EnumType;
+// import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

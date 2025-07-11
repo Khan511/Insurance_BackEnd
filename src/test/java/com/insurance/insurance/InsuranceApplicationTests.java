@@ -3,7 +3,10 @@ package com.insurance.insurance;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import com.example.insurance.InsuranceApplication;
+
+// @SpringBootTest
+@SpringBootTest(classes = InsuranceApplication.class)
 class InsuranceApplicationTests {
 
 	@Test

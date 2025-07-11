@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+// import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,6 @@ import com.example.insurance.domain.insuranceCategory.model.InsuranceCategory;
 import com.example.insurance.domain.insuranceCategory.repository.InsuranceCategoryRepository;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.model.PremiumCalculationConfig;
-import com.example.insurance.domain.insuranceProduct.model.PremiumCalculationConfig.AgeBracket;
 import com.example.insurance.domain.insuranceProduct.repository.InsuranceProductRepository;
 import com.example.insurance.embeddable.CoverageDetail;
 import com.example.insurance.embeddable.ProductTranslation;
@@ -70,27 +69,27 @@ public class InsuranceProductInitializer {
 
         private InsuranceProduct createAutoInsurance(InsuranceCategory category) {
                 InsuranceProduct product = new InsuranceProduct();
-                product.setProductCode("AUTO-2024");
+                product.setProductCode("AUTO-2025");
                 product.setDisplayName("Comprehensive Auto Insurance");
                 product.setDescription(
                                 "Full coverage for your vehicle including collision, theft, and third-party liability");
                 product.setProductType(ProductType.AUTO);
 
                 // Pricing
-                product.setBasePremium(new MonetaryAmount(new BigDecimal("850.00"), "USD"));
+                product.setBasePremium(new MonetaryAmount(new BigDecimal("850.00"), "DKK"));
 
                 // Coverage details
                 Set<CoverageDetail> coverages = new HashSet<>();
                 coverages.add(new CoverageDetail(
                                 "Collision",
                                 "Damage from vehicle collisions",
-                                new MonetaryAmount(new BigDecimal("50000.00"), "USD"),
-                                new MonetaryAmount(new BigDecimal("500.00"), "USD")));
+                                new MonetaryAmount(new BigDecimal("50000.00"), "DKK"),
+                                new MonetaryAmount(new BigDecimal("500.00"), "DKK")));
                 coverages.add(new CoverageDetail(
                                 "Theft",
                                 "Vehicle theft protection",
-                                new MonetaryAmount(new BigDecimal("40000.00"), "USD"),
-                                new MonetaryAmount(new BigDecimal("1000.00"), "USD")));
+                                new MonetaryAmount(new BigDecimal("40000.00"), "DKK"),
+                                new MonetaryAmount(new BigDecimal("1000.00"), "DKK")));
                 product.setCoverageDetails(coverages);
 
                 // Eligibility rules
@@ -119,7 +118,7 @@ public class InsuranceProductInitializer {
 
                 // Sales info
                 product.setTargetAudience(Arrays.asList("Car owners", "Ride-share drivers"));
-                product.setRegion(Arrays.asList("Denmark", "Sweedan", "Norway"));
+                product.setRegion(Arrays.asList("Denmark", "Swedan", "Norway"));
                 product.setCategory(category);
 
                 // Operational
@@ -133,13 +132,16 @@ public class InsuranceProductInitializer {
                                 ClaimDocumentType.RequiredDocument.REPAIR_ESTIMATE));
 
                 // Translations
-                Map<Locale, ProductTranslation> translations = new HashMap<>();
-                translations.put(Locale.US, new ProductTranslation(
-                                "Comprehensive Auto Insurance",
-                                "Full vehicle protection package"));
-                translations.put(Locale.FRANCE, new ProductTranslation(
-                                "Assurance Auto Tous Risques",
-                                "Protection complète pour véhicule"));
+                Map<String, ProductTranslation> translations = new HashMap<>();
+                translations.put("da_DK", new ProductTranslation( // Danish (Denmark)
+                                "Omfattende Bilforsikring",
+                                "Fuld dækning for din bil inklusive kollision, tyveri og tredjemand ansvar"));
+                translations.put("sv_SE", new ProductTranslation( // Swedish (Sweden)
+                                "Omfattande Bilförsäkring",
+                                "Full täckning för ditt fordon inklusive kollision, stöld och tredjepartsansvar"));
+                translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål (Norway)
+                                "Omfattende Bilforsikring",
+                                "Full dekning for bilen din inkludert kollisjon, tyveri og tredjepartsansvar"));
                 product.setTranslation(translations);
 
                 return product;
@@ -147,25 +149,25 @@ public class InsuranceProductInitializer {
 
         private InsuranceProduct createHomeInsurance(InsuranceCategory category) {
                 InsuranceProduct product = new InsuranceProduct();
-                product.setProductCode("HOME-2024");
+                product.setProductCode("HOME-2025");
                 product.setDisplayName("Premium Homeowners Insurance");
                 product.setDescription(
                                 "Complete protection for your home against natural disasters, theft, and liability");
                 product.setProductType(ProductType.PROPERTY);
 
-                product.setBasePremium(new MonetaryAmount(new BigDecimal("1200.00"), "USD"));
+                product.setBasePremium(new MonetaryAmount(new BigDecimal("1200.00"), "DKK"));
 
                 Set<CoverageDetail> coverages = new HashSet<>();
                 coverages.add(new CoverageDetail(
                                 "Dwelling",
                                 "Main structure coverage",
-                                new MonetaryAmount(new BigDecimal("750000.00"), "USD"),
-                                new MonetaryAmount(new BigDecimal("1000.00"), "USD")));
+                                new MonetaryAmount(new BigDecimal("750000.00"), "DKK"),
+                                new MonetaryAmount(new BigDecimal("1000.00"), "DKK")));
                 coverages.add(new CoverageDetail(
                                 "Personal Property",
                                 "Belongings protection",
-                                new MonetaryAmount(new BigDecimal("150000.00"), "USD"),
-                                new MonetaryAmount(new BigDecimal("500.00"), "USD")));
+                                new MonetaryAmount(new BigDecimal("150000.00"), "DKK"),
+                                new MonetaryAmount(new BigDecimal("500.00"), "DKK")));
                 product.setCoverageDetails(coverages);
 
                 Map<String, String> eligibility = new HashMap<>();
@@ -174,11 +176,7 @@ public class InsuranceProductInitializer {
                 product.setEligibilityRules(eligibility);
 
                 PremiumCalculationConfig calcConfig = new PremiumCalculationConfig();
-                // calcConfig.setFormula("base + (locationFactor * riskZone) + (valueFactor *
-                // homeValue)");
-                // calcConfig.setFactors(Map.of(
-                // "locationFactor", new BigDecimal(150.0),
-                // "valueFactor", 0.0015));
+
                 calcConfig.setFormula("base + (locationFactor * riskZone) + (valueFactor * homeValue)");
                 calcConfig.addFactor("locationFactor", new BigDecimal("150.0"));
                 calcConfig.addFactor("valueFactor", new BigDecimal("0.0015"));
@@ -186,7 +184,7 @@ public class InsuranceProductInitializer {
                 // product.setCalculationConfig(calcConfig);
 
                 product.setTargetAudience(Arrays.asList("Homeowners", "Property investors"));
-                product.setRegion(Arrays.asList("Denmark", "Sweedan", "Norway"));
+                product.setRegion(Arrays.asList("Denmark", "Swedan", "Norway"));
                 product.setCategory(category);
                 product.setArchived(false);
                 product.setValidityPeriod(new PolicyPeriod(
@@ -197,28 +195,41 @@ public class InsuranceProductInitializer {
                                 ClaimDocumentType.RequiredDocument.ESTIMATE,
                                 ClaimDocumentType.RequiredDocument.INVENTORY_LIST));
 
+                // Add Nordic translations
+                Map<String, ProductTranslation> translations = new HashMap<>();
+                translations.put("da_DK", new ProductTranslation( // Danish (Denmark)
+                                "Premium Husejerforsikring",
+                                "Komplet beskyttelse for dit hjem mod naturkatastrofer, tyveri og ansvar"));
+                translations.put("sv_SE", new ProductTranslation( // Swedish (Sweden)
+                                "Premium Hemförsäkring",
+                                "Komplett skydd för ditt hem mot naturkatastrofer, stöld och ansvar"));
+                translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål (Norway)
+                                "Premium Huseierforsikring",
+                                "Full beskyttelse for hjemmet ditt mot naturkatastrofer, tyveri og ansvar"));
+                product.setTranslation(translations);
+
                 return product;
         }
 
         private InsuranceProduct createLifeInsurance(InsuranceCategory category) {
                 InsuranceProduct product = new InsuranceProduct();
-                product.setProductCode("LIFE-2024");
+                product.setProductCode("LIFE-2025");
                 product.setDisplayName("Term Life Insurance");
                 product.setDescription("Financial protection for your family with flexible term options");
                 product.setProductType(ProductType.LIFE);
 
-                product.setBasePremium(new MonetaryAmount(new BigDecimal("300.00"), "USD"));
+                product.setBasePremium(new MonetaryAmount(new BigDecimal("300.00"), "DKK"));
 
                 Set<CoverageDetail> coverages = new HashSet<>();
                 coverages.add(new CoverageDetail(
                                 "Death Benefit",
                                 "Primary coverage amount",
-                                new MonetaryAmount(new BigDecimal("500000.00"), "USD"),
+                                new MonetaryAmount(new BigDecimal("500000.00"), "DKK"),
                                 null));
                 coverages.add(new CoverageDetail(
                                 "Accidental Death",
                                 "Additional accidental coverage",
-                                new MonetaryAmount(new BigDecimal("250000.00"), "USD"),
+                                new MonetaryAmount(new BigDecimal("250000.00"), "DKK"),
                                 null));
                 product.setCoverageDetails(coverages);
 
@@ -240,7 +251,7 @@ public class InsuranceProductInitializer {
                 product.setCalculationConfig(calcConfig);
 
                 product.setTargetAudience(Arrays.asList("Families", "Breadwinners"));
-                product.setRegion(Arrays.asList("Denmark", "Sweedan", "Norway"));
+                product.setRegion(Arrays.asList("Denmark", "Swedan", "Norway"));
                 product.setCategory(category);
                 product.setArchived(false);
                 product.setValidityPeriod(new PolicyPeriod(
@@ -249,6 +260,19 @@ public class InsuranceProductInitializer {
                 product.setAllowedClaimTypes(Set.of(
                                 ClaimDocumentType.RequiredDocument.DEATH_CERTIFICATE,
                                 ClaimDocumentType.RequiredDocument.BENEFICIARY_DOCS));
+
+                // Add Nordic translations
+                Map<String, ProductTranslation> translations = new HashMap<>();
+                translations.put("da_DK", new ProductTranslation( // Danish (Denmark)
+                                "Tidsbegrænset Livsforsikring",
+                                "Finansiel beskyttelse til din familie med fleksible løbetidsmuligheder"));
+                translations.put("sv_SE", new ProductTranslation( // Swedish (Sweden)
+                                "Tidsbegränsad Livförsäkring",
+                                "Finansiellt skydd för din familj med flexibla försäkringsperioder"));
+                translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål (Norway)
+                                "Tidsbegrenset Livsforsikring",
+                                "Finansielt beskyttelse for familien din med fleksible løpetidsalternativer"));
+                product.setTranslation(translations);
 
                 return product;
         }

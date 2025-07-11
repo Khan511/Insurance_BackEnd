@@ -1,64 +1,52 @@
-package com.example.insurance.domain.insuranceProduct.model;
+// package com.example.insurance.domain.insuranceProduct.model;
 
-import java.io.IOException;
-import org.postgresql.util.PGobject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import jakarta.persistence.AttributeConverter;
-import java.math.BigDecimal;
-import jakarta.persistence.Converter;
+// import java.io.IOException;
+// import org.postgresql.util.PGobject;
+// import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.databind.SerializationFeature;
+// import jakarta.persistence.AttributeConverter;
+// import jakarta.persistence.Converter;
 
-@Converter
-public class JpaJsonConverter implements AttributeConverter<PremiumCalculationConfig, Object> {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+// @Converter
+// public class JpaJsonConverter implements
+// AttributeConverter<PremiumCalculationConfig, Object> {
+// private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    static {
-        // Register custom serializer for BigDecimal
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(BigDecimal.class, new BigDecimalSerializer());
-        objectMapper.registerModule(module);
-    }
+// static {
+// // Configure Jackson to serialize BigDecimals as plain strings
+// objectMapper.enable(SerializationFeature.WRITE_BIGDECIMAL_AS_PLAIN);
+// }
 
-    @Override
-    public Object convertToDatabaseColumn(PremiumCalculationConfig config) {
-        try {
-            PGobject pgObject = new PGobject();
-            pgObject.setType("jsonb");
-            pgObject.setValue(objectMapper.writeValueAsString(config));
-            return pgObject;
-        } catch (Exception e) {
-            throw new RuntimeException("JSON conversion error", e);
-        }
-    }
+// @Override
+// public Object convertToDatabaseColumn(PremiumCalculationConfig config) {
+// try {
+// PGobject pgObject = new PGobject();
+// pgObject.setType("jsonb");
+// pgObject.setValue(objectMapper.writeValueAsString(config));
+// return pgObject;
+// } catch (Exception e) {
+// throw new RuntimeException("JSON conversion error", e);
+// }
+// }
 
-    @Override
-    public PremiumCalculationConfig convertToEntityAttribute(Object dbData) {
-        try {
-            if (dbData == null)
-                return null;
+// @Override
+// public PremiumCalculationConfig convertToEntityAttribute(Object dbData) {
+// try {
+// if (dbData == null)
+// return null;
 
-            if (dbData instanceof PGobject pgObject) {
-                return objectMapper.readValue(pgObject.getValue(), PremiumCalculationConfig.class);
-            } else if (dbData instanceof String stringValue) {
-                return objectMapper.readValue(stringValue, PremiumCalculationConfig.class);
-            }
-            throw new IllegalArgumentException("Unsupported database JSON type");
-        } catch (IOException e) {
-            throw new RuntimeException("JSON conversion error", e);
-        }
-    }
-
-    // Custom BigDecimal serializer
-    private static class BigDecimalSerializer extends com.fasterxml.jackson.databind.JsonSerializer<BigDecimal> {
-        @Override
-        public void serialize(BigDecimal value, com.fasterxml.jackson.core.JsonGenerator gen,
-                com.fasterxml.jackson.databind.SerializerProvider provider)
-                throws IOException {
-            gen.writeString(value.toPlainString());
-        }
-    }
-}
-
+// if (dbData instanceof PGobject pgObject) {
+// return objectMapper.readValue(pgObject.getValue(),
+// PremiumCalculationConfig.class);
+// } else if (dbData instanceof String stringValue) {
+// return objectMapper.readValue(stringValue, PremiumCalculationConfig.class);
+// }
+// throw new IllegalArgumentException("Unsupported database JSON type");
+// } catch (IOException e) {
+// throw new RuntimeException("JSON conversion error", e);
+// }
+// }
+// }
 // package com.example.insurance.domain.insuranceProduct.model;
 
 // import java.io.IOException;

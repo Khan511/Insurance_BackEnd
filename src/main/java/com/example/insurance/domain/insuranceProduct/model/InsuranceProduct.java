@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+// import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 // import java.util.UUID;
+
+import org.hibernate.annotations.Type;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
+// import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -27,7 +29,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapKeyClass;
+// import jakarta.persistence.MapKeyClass;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 // import jakarta.persistence.SequenceGenerator;
@@ -47,12 +49,7 @@ import com.example.insurance.embeddable.CoverageDetail;
 import com.example.insurance.embeddable.ProductTranslation;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
-// import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-
-// import org.hibernate.annotations.Type;
-// import org.hibernate.annotations.TypeDef;
-
-// @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 @Entity
 @Getter
@@ -76,8 +73,8 @@ public class InsuranceProduct extends AuditEntity {
     @Column(name = "display_name", nullable = false, length = 100)
     private String displayName;
     // For large description
-    @Lob
-    @Column(name = "description", nullable = false)
+    // @Lob
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
     // Product Information
@@ -98,8 +95,8 @@ public class InsuranceProduct extends AuditEntity {
     @MapKeyColumn(name = "rule_key")
     @Column(name = "rule_value")
     private Map<String, String> eligibilityRules = new HashMap<>();
-    @Convert(converter = JpaJsonConverter.class)
-    // @Type(type = "jsonb")
+    // @Convert(converter = JpaJsonConverter.class)
+    @Type(JsonBinaryType.class)
     @Column(name = "calculation_config", columnDefinition = "jsonb")
     private PremiumCalculationConfig calculationConfig; // JSONB storage for complex config
 
@@ -108,6 +105,7 @@ public class InsuranceProduct extends AuditEntity {
     @CollectionTable(name = "policy_target_audience", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "audience")
     private List<String> targetAudience = new ArrayList<>();
+
     @ElementCollection
     @CollectionTable(name = "poicy_region", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "region")
@@ -119,13 +117,18 @@ public class InsuranceProduct extends AuditEntity {
     // Operational
     @Column(name = "is_archived", nullable = false)
     private boolean archived = false;
+
     @ElementCollection
     @CollectionTable(name = "product_translations", joinColumns = @JoinColumn(name = "product_id"))
-    @MapKeyClass(Locale.class)
-    @MapKeyColumn(name = "local_code", length = 10)
-    private Map<Locale, ProductTranslation> translation = new HashMap<>();
+    // @MapKeyClass(Locale.class)
+    @MapKeyColumn(name = "local", length = 10)
+    @Column(name = "translation")
+    private Map<String, ProductTranslation> translation = new HashMap<>();
+
+    // if product is only availabe for some time.
     @Embedded
     private PolicyPeriod validityPeriod;
+
     @ElementCollection
     @CollectionTable(name = "product_claim_types", joinColumns = @JoinColumn(name = "product_id"))
     @Enumerated(EnumType.STRING)
