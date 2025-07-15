@@ -27,7 +27,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 // import jakarta.persistence.MapKeyClass;
 import jakarta.persistence.MapKeyColumn;
@@ -61,10 +60,6 @@ public class InsuranceProduct extends AuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "product_seq")
-    // @SequenceGenerator(name = "prduct_seq", sequenceName = "product_id_seq",
-    // allocationSize = 1)
     private Long id;
 
     // Core identification
@@ -72,8 +67,7 @@ public class InsuranceProduct extends AuditEntity {
     private String productCode;
     @Column(name = "display_name", nullable = false, length = 100)
     private String displayName;
-    // For large description
-    // @Lob
+
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
@@ -134,10 +128,6 @@ public class InsuranceProduct extends AuditEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "claim_type", length = 30)
     private Set<ClaimDocumentType.RequiredDocument> allowedClaimTypes = new HashSet<>();
-
-    // Relationships
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CustomerPolicy> activePolicies = new ArrayList<>();
 
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // Business Methods

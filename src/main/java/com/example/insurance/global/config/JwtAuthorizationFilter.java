@@ -1,5 +1,6 @@
 package com.example.insurance.global.config;
 
+import static com.example.insurance.shared.constant.Constant.CREATE_USER;
 import static com.example.insurance.shared.constant.Constant.GET_ALL_POLICIES;
 import static com.example.insurance.shared.constant.Constant.GET_POLICY_DETAILS;
 import static com.example.insurance.shared.constant.Constant.LOGIN_PATH;
@@ -37,7 +38,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String uri = request.getRequestURI();
         // if (LOGIN_PATH.equals(request.getRequestURI())) {
-        if (uri.startsWith(LOGIN_PATH) || uri.startsWith(GET_ALL_POLICIES) || uri.startsWith(GET_POLICY_DETAILS)) {
+        if (uri.startsWith(LOGIN_PATH) || uri.startsWith(GET_ALL_POLICIES) || uri.startsWith(GET_POLICY_DETAILS)
+                || uri.startsWith(CREATE_USER)) {
             filterChain.doFilter(request, response);
             return;
         }

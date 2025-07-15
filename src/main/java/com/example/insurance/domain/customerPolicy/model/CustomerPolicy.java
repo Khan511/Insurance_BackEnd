@@ -1,6 +1,9 @@
 package com.example.insurance.domain.customerPolicy.model;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import com.example.insurance.common.enummuration.PolicyStatus;
 // import java.util.UUID;
 // import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.auditing.domain.AuditEntity;
@@ -14,6 +17,8 @@ import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 // import jakarta.persistence.EnumType;
 // import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -50,8 +55,8 @@ public class CustomerPolicy extends AuditEntity {
     @Embedded
     private MonetaryAmount premium;
 
-    // @Enumerated(EnumType.STRING)
-    // private PolicyStatus status;
+    @Enumerated(EnumType.STRING)
+    private PolicyStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PolicyBeneficiary> beneficiaries;

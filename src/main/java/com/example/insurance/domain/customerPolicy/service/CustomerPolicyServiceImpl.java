@@ -1,7 +1,6 @@
 package com.example.insurance.domain.customerPolicy.service;
 
 import java.util.UUID;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.customer.model.ContactInfo;

@@ -35,5 +35,4 @@ public class InsuranceApplication {
 		// System.out.println("jwt.privateKey=" + privateKey);
 		// System.out.println("jwt.publicKey=" + publicKey);
 	}
-
 }
