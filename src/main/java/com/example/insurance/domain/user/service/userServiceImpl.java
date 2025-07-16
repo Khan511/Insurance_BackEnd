@@ -11,7 +11,7 @@ import com.example.insurance.domain.role.model.RoleEntity;
 import com.example.insurance.domain.role.repository.RoleRepository;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
-import com.example.insurance.global.cache.CacheStore;
+import com.example.insurance.global.config.cache.CacheStore;
 import com.example.insurance.global.config.enums.LoginType;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import lombok.RequiredArgsConstructor;

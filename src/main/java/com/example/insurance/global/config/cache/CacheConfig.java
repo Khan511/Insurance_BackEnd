@@ -1,5 +1,5 @@
 
-package com.example.insurance.global.cache;
+package com.example.insurance.global.config.cache;
 
 import java.util.concurrent.TimeUnit;
 
