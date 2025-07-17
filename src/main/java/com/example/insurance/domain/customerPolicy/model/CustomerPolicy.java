@@ -58,7 +58,7 @@ public class CustomerPolicy extends AuditEntity {
     @Enumerated(EnumType.STRING)
     private PolicyStatus status;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customerPolicy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PolicyBeneficiary> beneficiaries;
 
     // @OneToMany(mappedBy = "policy")
@@ -66,5 +66,17 @@ public class CustomerPolicy extends AuditEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<PaymentSchedule> paymentSchedules;
+
+    // Helper methods
+
+    public void addBeneficiary(PolicyBeneficiary policyBeneficiary) {
+        beneficiaries.add(policyBeneficiary);
+        policyBeneficiary.setCustomerPolicy(this);
+    }
+
+    public void removeBeneficiary(PolicyBeneficiary policyBeneficiary) {
+        beneficiaries.remove(policyBeneficiary);
+        policyBeneficiary.setCustomerPolicy(null);
+    }
 
 }

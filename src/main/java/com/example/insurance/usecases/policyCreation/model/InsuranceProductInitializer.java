@@ -76,9 +76,8 @@
 // InsuranceProduct product = new InsuranceProduct();
 // product.setProductCode("AUTO-2025");
 // product.setDisplayName("Comprehensive Auto Insurance");
-// product.setDescription(
-// "Full coverage for your vehicle including collision, theft, and third-party
-// liability");
+// product.setDescription("Full coverage for your vehicle including collision,
+// theft, and third-party liability");
 // product.setProductType(ProductType.AUTO);
 
 // // Pricing
@@ -148,8 +147,7 @@
 // "Omfattande Bilförsäkring",
 // "Full täckning för ditt fordon inklusive kollision, stöld och
 // tredjepartsansvar"));
-// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål
-// (Norway)
+// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål(Norway)
 // "Omfattende Bilforsikring",
 // "Full dekning for bilen din inkludert kollisjon, tyveri og
 // tredjepartsansvar"));
@@ -162,9 +160,8 @@
 // InsuranceProduct product = new InsuranceProduct();
 // product.setProductCode("HOME-2025");
 // product.setDisplayName("Premium Homeowners Insurance");
-// product.setDescription(
-// "Complete protection for your home against natural disasters, theft, and
-// liability");
+// product.setDescription("Complete protection for your home against natural
+// disasters, theft, and liability");
 // product.setProductType(ProductType.PROPERTY);
 
 // product.setBasePremium(new MonetaryAmount(new BigDecimal("1200.00"), "DKK"));
@@ -216,8 +213,7 @@
 // translations.put("sv_SE", new ProductTranslation( // Swedish (Sweden)
 // "Premium Hemförsäkring",
 // "Komplett skydd för ditt hem mot naturkatastrofer, stöld och ansvar"));
-// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål
-// (Norway)
+// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål(Norway)
 // "Premium Huseierforsikring",
 // "Full beskyttelse for hjemmet ditt mot naturkatastrofer, tyveri og ansvar"));
 // product.setTranslation(translations);

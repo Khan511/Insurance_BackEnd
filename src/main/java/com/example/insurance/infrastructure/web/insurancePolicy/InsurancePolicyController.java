@@ -10,6 +10,9 @@
 // import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RestController;
+
+// import
+// com.example.insurance.domain.customerPolicy.service.CustomerPolicyService;
 // import
 // com.example.insurance.domain.insurancePolicy.service.InsurancePolicyServices;
 // import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
@@ -19,21 +22,10 @@
 // @RequestMapping("/api/policy")
 // public class InsurancePolicyController {
 
-// private final InsurancePolicyServices insurancePolicyServices;
-
-// @GetMapping("/all-policies")
-// public List<InsuranceProduct> allPolicies() {
-// return insurancePolicyServices.getAllPolicies();
-// }
-
-// @GetMapping("/policy-details/{policyId}")
-// public InsuranceProduct getPolictyById(@PathVariable Long policyId) {
-// return insurancePolicyServices.getPolicyById(policyId);
-// }
+// private final CustomerPolicyService customerPolicyService;
 
 // // @PostMapping("/buy-policy")
 // // public ResponseEntity<?> buyPolicy(@RequestBody BuyPolicyDto buyPolicyDto)
-// {
 
 // // }
 // }

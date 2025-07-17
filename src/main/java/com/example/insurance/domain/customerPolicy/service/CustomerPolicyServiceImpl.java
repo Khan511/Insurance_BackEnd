@@ -1,15 +1,18 @@
 package com.example.insurance.domain.customerPolicy.service;
 
+import java.util.Arrays;
 import java.util.UUID;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.insurance.common.enummuration.UserStatus;
-import com.example.insurance.domain.customer.model.ContactInfo;
+
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.customerPolicy.repository.CustomerPolicyRepository;
-import com.example.insurance.infrastructure.web.insurancePolicy.AddressMapper;
 import com.example.insurance.infrastructure.web.insurancePolicy.BuyPolicyDto;
+import com.example.insurance.infrastructure.web.insurancePolicy.GovernmentIdDto;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,40 +20,50 @@ import lombok.RequiredArgsConstructor;
 public class CustomerPolicyServiceImpl implements CustomerPolicyService {
 
     private final CustomerPolicyRepository customerPolicyRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public CustomerPolicy buyPolicy(BuyPolicyDto buyPolicyDto) {
+    public void saveCustomerPolicy(BuyPolicyDto buyPolicyDto) {
 
-        // Create Custommer
-        Customer customer = new Customer();
-        customer.setUserId(UUID.randomUUID().toString());
-        customer.setEmail(buyPolicyDto.getEmail());
-        customer.getName().setFirstName(buyPolicyDto.getFirstName());
-        customer.getName().setLastName(buyPolicyDto.getLastName());
-        customer.setStatus(UserStatus.ACTIVE);
-        customer.setDateOfBirth(buyPolicyDto.getDateOfBirth());
-
-        // 2. Set Government ID
-        GovernmentId governmentId = new GovernmentId();
-        governmentId.setIdType(buyPolicyDto.getGovernmentIdDto().getIdType());
-        governmentId.setIdNumber(buyPolicyDto.getGovernmentIdDto().getIdNumber());
-        governmentId.setIssuingCountry(buyPolicyDto.getGovernmentIdDto().getIssuingCountry());
-        governmentId.setExpirationDate(buyPolicyDto.getGovernmentIdDto().getExpirationDate());
-        governmentId.setVerificationStatus(GovernmentId.VerificationStatus.PENDING);
-
-        customer.setGovernmentId(governmentId);
-
-        // 3. Set Contact Info
-        ContactInfo contactInfo = new ContactInfo();
-        contactInfo.setPhone(buyPolicyDto.getContactInfoDto().getPhone());
-        contactInfo.setAlternatePhone(buyPolicyDto.getContactInfoDto().getAlternatePhone());
-        contactInfo.setPrimaryAddress(AddressMapper.fromDto(buyPolicyDto.getContactInfoDto().getPrimaryAddress()));
-        contactInfo.setBillingAddress(AddressMapper.fromDto(buyPolicyDto.getContactInfoDto().getBillingAddress()));
-        customer.setContactInfo(contactInfo);
-
-        // 4. Create CustomerPolicy
         CustomerPolicy customerPolicy = new CustomerPolicy();
 
-        return null;
+        // Set customer information
+        Customer customer = new Customer();
+        customer.getName().setFirstName(buyPolicyDto.getCustomer().getFirstName());
+        customer.getName().setLastName(buyPolicyDto.getCustomer().getLastName());
+        customer.setUserId(UUID.randomUUID().toString());
+        customer.setEmail(buyPolicyDto.getCustomer().getEmail());
+        customer.setDateOfBirth(buyPolicyDto.getCustomer().getDateOfBirth());
+
+        // Set Government ID
+        GovernmentId governmentId = new GovernmentId();
+        GovernmentIdDto govIdDto = buyPolicyDto.getCustomer().getGovernmentId();
+
+        governmentId.setIdType(buyPolicyDto.getCustomer().getGovernmentId().getIdType());
+        governmentId.setIssuingCountry(govIdDto.getIssuingCountry());
+        governmentId.setExpirationDate(govIdDto.getExpirationDate());
+
+        // Create original ID temporarily
+        String rawIdNumber = govIdDto.getIdNumber();
+        governmentId.setIdNumber(rawIdNumber);// This will auto generate masskednumber
+
+        // Create secure hash(don't store raw ID)
+        governmentId.setEncryptedHash(passwordEncoder.encode(rawIdNumber + govIdDto.getIssuingCountry()));
+
+        // Clear sensitive data from memory ASAP
+        Arrays.fill(rawIdNumber.toCharArray(), '\0');
+
+        customer.setGovernmentId(governmentId);
+        customerPolicy.setPolicyHolder(customer);
+
+        // Create contact information
+        if (buyPolicyDto.getCustomer().getContactInfo() != null) {
+            customer.setContactInfo(ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
+        }
+
+        customer.addPolicy(customerPolicy);
+
+        customerPolicyRepository.save(customerPolicy);
+
     }
 
 }

@@ -42,13 +42,13 @@ public class GovernmentId {
 
     @Column(name = "id_number", nullable = false, length = 50)
     @NotBlank(message = "ID number is required")
-    @Size(min = 3, max = 50, message = "ID number must be 4-50 characters")
+    @Size(min = 4, max = 50, message = "ID number must be 4-50 characters")
     @Pattern(regexp = "^[a-zA-Z0-9\\-]+$", message = "Invalid ID number format")
     private String idNumber;
 
     @Column(name = "issuing_country", length = 3)
     @Size(min = 2, max = 3, message = "Country code must be 2 or 3 letters long, like 'US' or 'IND'.")
-    @Pattern(regexp = "^[A-Z]{2, 3}$", message = "Only uppercase letters allowed in country code.")
+    @Pattern(regexp = "^[A-Z]{2,3}$", message = "Only uppercase letters allowed in country code.")
     private String issuingCountry;
 
     @Column(name = "expiration_date")
@@ -72,10 +72,12 @@ public class GovernmentId {
     public String generateMaskedNumber() {
         if (idNumber == null || idNumber.length() < 4)
             return "****";
-        String prefix = idNumber.substring(0, 2);
-        String suffix = idNumber.substring(idNumber.length() - 2);
 
-        return prefix + "******" + suffix;
+        int keepChars = Math.min(2, idNumber.length() / 4);
+        String prefix = idNumber.substring(0, keepChars);
+        String suffix = idNumber.substring(idNumber.length() - keepChars);
+
+        return prefix + "*".repeat(6) + suffix;
     }
 
     public boolean isVerified() {

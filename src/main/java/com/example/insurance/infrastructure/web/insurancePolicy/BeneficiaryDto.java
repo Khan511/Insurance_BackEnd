@@ -11,5 +11,4 @@ public class BeneficiaryDto {
     private LocalDate dateOfBirth;
     private String taxCountry;
     private String tasIdentifier;
-
 }

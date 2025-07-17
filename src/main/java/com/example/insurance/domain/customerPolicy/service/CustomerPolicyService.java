@@ -5,5 +5,5 @@ import com.example.insurance.infrastructure.web.insurancePolicy.BuyPolicyDto;
 
 public interface CustomerPolicyService {
 
-    public CustomerPolicy buyPolicy(BuyPolicyDto buyPolicyDto);
+    public void saveCustomerPolicy(BuyPolicyDto buyPolicyDto);
 }
