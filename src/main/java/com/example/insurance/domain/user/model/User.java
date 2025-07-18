@@ -1,5 +1,6 @@
 package com.example.insurance.domain.user.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,6 +49,9 @@ public class User extends AuditEntity {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
 
     @JsonIgnore
     private String passwordHash;

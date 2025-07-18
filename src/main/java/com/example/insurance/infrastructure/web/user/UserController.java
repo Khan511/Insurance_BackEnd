@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequestDto userDto, HttpServletRequest request) {
 
         userService.createUserWithRoles(userDto.firstName(), userDto.lastName(), userDto.email(),
-                userDto.password());
+                userDto.password(), userDto.dateOfBirth());
 
         return ResponseEntity.ok().body(ResponseBuilder.buildSuccess(request, Map.of(),
                 "User Created, Please check email for account verification.", HttpStatus.CREATED));

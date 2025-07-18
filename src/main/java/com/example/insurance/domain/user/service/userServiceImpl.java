@@ -1,5 +1,6 @@
 package com.example.insurance.domain.user.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,7 +26,8 @@ public class userServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final CacheStore<String, Integer> userCache;
 
-    public User createUserWithRoles(String firstName, String lastName, String email, String password) {
+    public User createUserWithRoles(String firstName, String lastName, String email, String password,
+            LocalDate dateOfBirth) {
 
         User user = new User();
         user.setEmail(email);
@@ -37,6 +39,7 @@ public class userServiceImpl implements UserService {
         user.setName(name);
         user.setPasswordHash(passwordEncoder.encode(password));
         user.setStatus(UserStatus.PENDING_VERIFICATION);
+        user.setDateOfBirth(dateOfBirth);
 
         RoleEntity role = roleRepository.findByName(RoleType.USER)
                 .orElseThrow(() -> new RuntimeException("Role not found"));

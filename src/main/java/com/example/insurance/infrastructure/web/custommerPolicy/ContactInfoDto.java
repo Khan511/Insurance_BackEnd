@@ -1,4 +1,4 @@
-package com.example.insurance.infrastructure.web.insurancePolicy;
+package com.example.insurance.infrastructure.web.custommerPolicy;
 
 import lombok.Data;
 

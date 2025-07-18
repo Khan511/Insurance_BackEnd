@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.insurance.domain.customerPolicy.service.CustomerPolicyService;
-import com.example.insurance.infrastructure.web.insurancePolicy.BuyPolicyDto;
 import com.example.insurance.shared.kernel.utils.ResponseBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;

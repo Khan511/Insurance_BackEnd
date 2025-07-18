@@ -1,7 +1,7 @@
 package com.example.insurance.domain.customerPolicy.service;
 
 import com.example.insurance.domain.customer.model.ContactInfo;
-import com.example.insurance.infrastructure.web.insurancePolicy.ContactInfoDto;
+import com.example.insurance.infrastructure.web.custommerPolicy.ContactInfoDto;
 
 public class ContactInfoMapper {
 

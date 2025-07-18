@@ -1,6 +1,6 @@
 package com.example.insurance.domain.customerPolicy.service;
 
-import com.example.insurance.infrastructure.web.insurancePolicy.AddressDto;
+import com.example.insurance.infrastructure.web.custommerPolicy.AddressDto;
 import com.example.insurance.shared.kernel.embeddables.Address;
 
 public class AddressMapper {

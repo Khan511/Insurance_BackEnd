@@ -13,7 +13,6 @@ import org.hibernate.annotations.Type;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 // import jakarta.persistence.Convert;
@@ -30,7 +29,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 // import jakarta.persistence.MapKeyClass;
 import jakarta.persistence.MapKeyColumn;
-import jakarta.persistence.OneToMany;
 // import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -42,7 +40,6 @@ import com.example.insurance.common.enummuration.ClaimDocumentType;
 import com.example.insurance.common.enummuration.ProductType;
 
 import com.example.insurance.domain.auditing.domain.AuditEntity;
-import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.insuranceCategory.model.InsuranceCategory;
 import com.example.insurance.embeddable.CoverageDetail;
 import com.example.insurance.embeddable.ProductTranslation;

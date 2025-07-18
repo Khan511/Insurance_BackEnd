@@ -11,7 +11,11 @@ import jakarta.persistence.Embeddable;
 // import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Embeddable
 public class BeneficiaryDetails {
     @Column(name = "full_legal_name")

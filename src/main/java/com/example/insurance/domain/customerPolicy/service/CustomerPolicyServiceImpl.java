@@ -1,17 +1,24 @@
 package com.example.insurance.domain.customerPolicy.service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
+import com.example.insurance.domain.customer.repository.CustomerRepository;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.customerPolicy.repository.CustomerPolicyRepository;
-import com.example.insurance.infrastructure.web.insurancePolicy.BuyPolicyDto;
-import com.example.insurance.infrastructure.web.insurancePolicy.GovernmentIdDto;
+import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
+import com.example.insurance.domain.insuranceProduct.repository.InsuranceProductRepository;
+import com.example.insurance.domain.policyBeneficiary.model.PolicyBeneficiary;
+import com.example.insurance.domain.user.model.User;
+import com.example.insurance.domain.user.repository.UserRepository;
+import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
+import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
+import com.example.insurance.infrastructure.web.insuranceProduct.InsuraceProductDto;
+import com.example.insurance.shared.kernel.embeddables.PersonName;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,20 +26,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerPolicyServiceImpl implements CustomerPolicyService {
 
+    private final InsuranceProductRepository insuranceProductRepository;
     private final CustomerPolicyRepository customerPolicyRepository;
+    private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public void saveCustomerPolicy(BuyPolicyDto buyPolicyDto) {
+
+        System.out.println("============================================policyId" + buyPolicyDto.getPolicyId());
+        User user = userRepository.findUserByUserId(buyPolicyDto.getCustomer().getUserId())
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+
+        InsuranceProduct product = insuranceProductRepository.findById(buyPolicyDto.getPolicyId())
+                .orElseThrow(() -> new RuntimeException("Insurance Product not found"));
 
         CustomerPolicy customerPolicy = new CustomerPolicy();
 
         // Set customer information
         Customer customer = new Customer();
-        customer.getName().setFirstName(buyPolicyDto.getCustomer().getFirstName());
-        customer.getName().setLastName(buyPolicyDto.getCustomer().getLastName());
+
+        // Initialize the embedded name field;
+        PersonName name = new PersonName();
+        name.setFirstName(user.getName().getFirstName());
+        name.setLastName(user.getName().getLastName());
+        customer.setName(name);
+
         customer.setUserId(UUID.randomUUID().toString());
-        customer.setEmail(buyPolicyDto.getCustomer().getEmail());
-        customer.setDateOfBirth(buyPolicyDto.getCustomer().getDateOfBirth());
+        customer.setEmail(user.getEmail());
+        // customer.setDateOfBirth(user.getDateOfBirth());
 
         // Set Government ID
         GovernmentId governmentId = new GovernmentId();
@@ -60,7 +82,14 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
             customer.setContactInfo(ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
         }
 
+        // Add Beneficiaries
+        List<PolicyBeneficiary> beneficiaries = buyPolicyDto.getBeneficiaries().stream()
+                .map((policy) -> PolicyMapper.mapToBeneficiaryEntity(policy)).toList();
+
+        customerPolicy.setBeneficiaries(beneficiaries);
         customer.addPolicy(customerPolicy);
+
+        customerRepository.save(customer);
 
         customerPolicyRepository.save(customerPolicy);
 

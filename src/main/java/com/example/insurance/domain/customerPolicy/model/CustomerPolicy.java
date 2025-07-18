@@ -1,6 +1,5 @@
 package com.example.insurance.domain.customerPolicy.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.example.insurance.common.enummuration.PolicyStatus;
@@ -68,7 +67,6 @@ public class CustomerPolicy extends AuditEntity {
     private List<PaymentSchedule> paymentSchedules;
 
     // Helper methods
-
     public void addBeneficiary(PolicyBeneficiary policyBeneficiary) {
         beneficiaries.add(policyBeneficiary);
         policyBeneficiary.setCustomerPolicy(this);

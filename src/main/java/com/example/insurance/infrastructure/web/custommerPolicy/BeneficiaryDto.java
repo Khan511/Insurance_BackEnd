@@ -1,4 +1,4 @@
-package com.example.insurance.infrastructure.web.insurancePolicy;
+package com.example.insurance.infrastructure.web.custommerPolicy;
 
 import java.time.LocalDate;
 
@@ -10,5 +10,5 @@ public class BeneficiaryDto {
     private String relationship;
     private LocalDate dateOfBirth;
     private String taxCountry;
-    private String tasIdentifier;
+    private String taxIdentifier;
 }
