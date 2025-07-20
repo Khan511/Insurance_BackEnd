@@ -6,7 +6,6 @@ import com.example.insurance.embeddable.BeneficiaryDetails;
 // import com.example.insurance.embeddable.TaxIdentifierValidator;
 // import jakarta.persistence.AttributeOverride;
 // import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 // import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

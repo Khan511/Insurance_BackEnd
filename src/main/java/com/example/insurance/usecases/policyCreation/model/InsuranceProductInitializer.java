@@ -113,9 +113,10 @@
 // "valueFactor", new BigDecimal("0.02")));
 // // Add age brackets if needed
 // List<PremiumCalculationConfig.AgeBracket> ageBrackets = List.of(
-// new PremiumCalculationConfig.AgeBracket(18, 25, new BigDecimal("1.5")),
-// new PremiumCalculationConfig.AgeBracket(26, 40, new BigDecimal("1.2")),
-// new PremiumCalculationConfig.AgeBracket(41, 65, new BigDecimal("1.0")));
+// new PremiumCalculationConfig.AgeBracket(18, 25, new BigDecimal("1.5"), null),
+// new PremiumCalculationConfig.AgeBracket(26, 40, new BigDecimal("1.2"), null),
+// new PremiumCalculationConfig.AgeBracket(41, 65, new BigDecimal("1.0"),
+// null));
 
 // calcConfig.setAgeBrackets(ageBrackets);
 // calcConfig.setIncludesTax(true);
@@ -191,7 +192,6 @@
 // calcConfig.addFactor("locationFactor", new BigDecimal("150.0"));
 // calcConfig.addFactor("valueFactor", new BigDecimal("0.0015"));
 // product.setCalculationConfig(calcConfig);
-// // product.setCalculationConfig(calcConfig);
 
 // product.setTargetAudience(Arrays.asList("Homeowners", "Property investors"));
 // product.setRegion(Arrays.asList("Denmark", "Swedan", "Norway"));
@@ -251,11 +251,7 @@
 // product.setEligibilityRules(eligibility);
 
 // PremiumCalculationConfig calcConfig = new PremiumCalculationConfig();
-// // calcConfig.setFormula("base + (ageFactor * insuredAge) + (healthFactor *
-// // riskLevel)");
-// // calcConfig.setFactors(Map.of(
-// // "ageFactor", 15.0,
-// // "healthFactor", 200.0));
+
 // calcConfig.setFormula("base + (ageFactor * insuredAge) + (healthFactor *
 // riskLevel)");
 // calcConfig.addFactor("ageFactor", new BigDecimal("15.0"));
@@ -281,8 +277,7 @@
 // translations.put("sv_SE", new ProductTranslation( // Swedish (Sweden)
 // "Tidsbegränsad Livförsäkring",
 // "Finansiellt skydd för din familj med flexibla försäkringsperioder"));
-// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål
-// (Norway)
+// translations.put("nb_NO", new ProductTranslation( // Norwegian Bokmål(Norway)
 // "Tidsbegrenset Livsforsikring",
 // "Finansielt beskyttelse for familien din med fleksible
 // løpetidsalternativer"));

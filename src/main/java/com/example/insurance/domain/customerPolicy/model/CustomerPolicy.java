@@ -1,5 +1,6 @@
 package com.example.insurance.domain.customerPolicy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.insurance.common.enummuration.PolicyStatus;
@@ -58,7 +59,7 @@ public class CustomerPolicy extends AuditEntity {
     private PolicyStatus status;
 
     @OneToMany(mappedBy = "customerPolicy", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PolicyBeneficiary> beneficiaries;
+    private List<PolicyBeneficiary> beneficiaries = new ArrayList<>();
 
     // @OneToMany(mappedBy = "policy")
     // private List<Claim> claims;

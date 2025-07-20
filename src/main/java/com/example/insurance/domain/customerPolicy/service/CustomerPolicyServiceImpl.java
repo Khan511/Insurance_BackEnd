@@ -1,10 +1,13 @@
 package com.example.insurance.domain.customerPolicy.service;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
 import com.example.insurance.domain.customer.repository.CustomerRepository;
@@ -17,9 +20,11 @@ import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
-import com.example.insurance.infrastructure.web.insuranceProduct.InsuraceProductDto;
+import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
+import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,9 +37,9 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    @Transactional
     public void saveCustomerPolicy(BuyPolicyDto buyPolicyDto) {
 
-        System.out.println("============================================policyId" + buyPolicyDto.getPolicyId());
         User user = userRepository.findUserByUserId(buyPolicyDto.getCustomer().getUserId())
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
@@ -82,17 +87,39 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
             customer.setContactInfo(ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
         }
 
-        // Add Beneficiaries
+        customerPolicy.setPolicyHolder(customer);
+        customerPolicy.setProduct(product);
+        customerPolicy.setStatus(PolicyStatus.ACTIVE);
+
+        // Set coverage period
+        PolicyPeriod coveragePeriod = new PolicyPeriod();
+        coveragePeriod.setEffectiveDate(buyPolicyDto.getCoveragePeriod().getEffectiveDate());
+        coveragePeriod.setExpirationDate(buyPolicyDto.getCoveragePeriod().getExpirationDate());
+
+        customerPolicy.setCoveragePeriod(coveragePeriod);
+
+        // Set premium (simplified)
+        MonetaryAmount premium = new MonetaryAmount();
+        premium.setAmount(BigDecimal.valueOf(0));
+        premium.setCurrency("DKK");
+        customerPolicy.setPremium(premium);
+
+        // Add policy to customer(establishes bidirectional relationship)
+        customer.addPolicy(customerPolicy); // Sets policyHolder automatically
+
+        // Create beneficiaries WITH policy association
         List<PolicyBeneficiary> beneficiaries = buyPolicyDto.getBeneficiaries().stream()
-                .map((policy) -> PolicyMapper.mapToBeneficiaryEntity(policy)).toList();
+                .map(dto -> {
+                    PolicyBeneficiary b = PolicyMapper.mapToBeneficiaryEntity(dto);
+                    b.setCustomerPolicy(customerPolicy);
+                    return b;
+                }).toList();
 
+        // Set the list to policy (triggers cascade when saved)
         customerPolicy.setBeneficiaries(beneficiaries);
-        customer.addPolicy(customerPolicy);
 
+        // Save customer (cascades to policy and beneficiaries)
         customerRepository.save(customer);
-
-        customerPolicyRepository.save(customerPolicy);
-
     }
 
 }
