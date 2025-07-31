@@ -1,6 +1,5 @@
 package com.example.insurance.shared.constant;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Constant {

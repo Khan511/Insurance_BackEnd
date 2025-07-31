@@ -161,7 +161,7 @@
 // InsuranceProduct product = new InsuranceProduct();
 // product.setProductCode("HOME-2025");
 // product.setDisplayName("Premium Homeowners Insurance");
-// product.setDescription("Complete protection for your home against natural
+// product.setDescription("Complete protection for your home against naturalb
 // disasters, theft, and liability");
 // product.setProductType(ProductType.PROPERTY);
 
