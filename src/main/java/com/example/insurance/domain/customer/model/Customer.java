@@ -39,7 +39,7 @@ public class Customer {
     @Column(name = "user_uuid_id")
     private String userId;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email", unique = false, nullable = false)
     private String email;
 
     @Column(name = "date_of_birth")

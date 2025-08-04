@@ -34,14 +34,15 @@ import lombok.Getter;
 @Entity
 @Getter
 @Table(name = "claims")
-public class Claim extends AuditEntity {
+// public class Claim extends AuditEntity {
+public class Claim     {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private CustomerPolicy policy;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // private CustomerPolicy policy;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
@@ -54,38 +55,38 @@ public class Claim extends AuditEntity {
     @Embedded
     private IncidentDetails IncidentDetails;
 
-    @ElementCollection
-    @CollectionTable(name = "claim_digital_evidence", joinColumns = @JoinColumn(name = "claim_id"))
-    private List<DigitalEvidence> digitalEvidence;
+    // @ElementCollection
+    // @CollectionTable(name = "claim_digital_evidence", joinColumns = @JoinColumn(name = "claim_id"))
+    // private List<DigitalEvidence> digitalEvidence;
 
-    @Embedded
-    private ClaimAssessment assement;
+    // @Embedded
+    // private ClaimAssessment assement;
 
-    @Enumerated(EnumType.STRING)
-    private ClaimStatus status;
+    // @Enumerated(EnumType.STRING)
+    // private ClaimStatus status;
 
-    @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JoinColumn(name = "claim_id", nullable = false)
-    @OrderBy("timestamp DESC")
-    private List<ClaimStatusHistory> statusHistory = new ArrayList<>();
+    // @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
+    // // @JoinColumn(name = "claim_id", nullable = false)
+    // @OrderBy("timestamp DESC")
+    // private List<ClaimStatusHistory> statusHistory = new ArrayList<>();
 
     // Business method to change status
-    public void transitionStatus(ClaimStatus newStatus, String changedBy, String notes) {
-        if (this.status == newStatus)
-            return;
+    // public void transitionStatus(ClaimStatus newStatus, String changedBy, String notes) {
+    //     if (this.status == newStatus)
+    //         return;
 
-        statusHistory.add(new ClaimStatusHistory(
-                this,
-                newStatus,
-                changedBy,
-                "Transition: " + this.status + " → " + newStatus + ". " + notes));
+    //     statusHistory.add(new ClaimStatusHistory(
+    //             this,
+    //             newStatus,
+    //             changedBy,
+    //             "Transition: " + this.status + " → " + newStatus + ". " + notes));
 
-        this.status = newStatus;
-    }
+    //     this.status = newStatus;
+    // }
 
     // Get latest status without loading full history
-    public ClaimStatusHistory getLatestStatusChange() {
-        return statusHistory.isEmpty() ? null : statusHistory.get(0);
-    }
+    // public ClaimStatusHistory getLatestStatusChange() {
+    //     return statusHistory.isEmpty() ? null : statusHistory.get(0);
+    // }
 
 }
