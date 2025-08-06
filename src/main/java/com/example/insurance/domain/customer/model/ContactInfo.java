@@ -24,7 +24,7 @@ public class ContactInfo {
         @AttributeOverrides({
                         @AttributeOverride(name = "street", column = @Column(name = "primary_street")),
                         @AttributeOverride(name = "city", column = @Column(name = "primary_city")),
-                        @AttributeOverride(name = "state", column = @Column(name = "primary_state")),
+                        // @AttributeOverride(name = "state", column = @Column(name = "primary_state")),
                         @AttributeOverride(name = "postalCode", column = @Column(name = "primary_postal_code")),
                         @AttributeOverride(name = "country", column = @Column(name = "primary_country"))
         })
@@ -34,7 +34,7 @@ public class ContactInfo {
         @AttributeOverrides({
                         @AttributeOverride(name = "street", column = @Column(name = "billing_street")),
                         @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
-                        @AttributeOverride(name = "state", column = @Column(name = "billing_state")),
+                        // @AttributeOverride(name = "state", column = @Column(name = "billing_state")),
                         @AttributeOverride(name = "postalCode", column = @Column(name = "billing_postal_code")),
                         @AttributeOverride(name = "country", column = @Column(name = "billing_country")),
         })

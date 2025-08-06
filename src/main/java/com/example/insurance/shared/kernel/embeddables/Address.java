@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Address {
     private String street;
     private String city;
-    private String state;
+    // private String state;
 
     @Column(name = "postal_code")
     private String postalCode;

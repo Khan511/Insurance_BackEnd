@@ -12,7 +12,7 @@ public class AddressMapper {
 
         address.setStreet(dto.getStreet());
         address.setCity(dto.getCity());
-        address.setState(dto.getState());
+        // address.setState(dto.getState());
         address.setPostalCode(dto.getPostalCode());
         address.setCountry(dto.getCountry());
         return address;

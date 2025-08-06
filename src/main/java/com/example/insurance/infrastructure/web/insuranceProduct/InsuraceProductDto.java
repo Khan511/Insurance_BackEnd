@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 public class InsuraceProductDto {
     private Long id;
+    private String PolicyNumber;
     private String productCode;
     private String displayName;
     private String description;

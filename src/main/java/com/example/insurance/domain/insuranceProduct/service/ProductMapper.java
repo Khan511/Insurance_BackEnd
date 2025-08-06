@@ -13,6 +13,7 @@ public class ProductMapper {
         InsuraceProductDto dto = new InsuraceProductDto();
 
         dto.setId(product.getId());
+        dto.setPolicyNumber(product.getPolicyNumber());
         dto.setProductCode(product.getProductCode());
         dto.setDisplayName(product.getDisplayName());
         dto.setDescription(product.getDescription());

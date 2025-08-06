@@ -74,6 +74,7 @@
 
 // private InsuranceProduct createAutoInsurance(InsuranceCategory category) {
 // InsuranceProduct product = new InsuranceProduct();
+// product.setPolicyNumber("AUTO-1234");
 // product.setProductCode("AUTO-2025");
 // product.setDisplayName("Comprehensive Auto Insurance");
 // product.setDescription("Full coverage for your vehicle including collision,
@@ -159,6 +160,7 @@
 
 // private InsuranceProduct createHomeInsurance(InsuranceCategory category) {
 // InsuranceProduct product = new InsuranceProduct();
+// product.setPolicyNumber("HOME-5678");
 // product.setProductCode("HOME-2025");
 // product.setDisplayName("Premium Homeowners Insurance");
 // product.setDescription("Complete protection for your home against naturalb
@@ -223,6 +225,7 @@
 
 // private InsuranceProduct createLifeInsurance(InsuranceCategory category) {
 // InsuranceProduct product = new InsuranceProduct();
+// product.setPolicyNumber("LIFE-9876");
 // product.setProductCode("LIFE-2025");
 // product.setDisplayName("Term Life Insurance");
 // product.setDescription("Financial protection for your family with flexible
