@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
@@ -20,10 +19,10 @@ import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
+import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +38,8 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
 
     @Transactional
     public void saveCustomerPolicy(BuyPolicyDto buyPolicyDto) {
+
+        System.out.println("BuyPolicy Number: " + buyPolicyDto.getPolicyNumber());
 
         User user = userRepository.findUserByUserId(buyPolicyDto.getCustomer().getUserId())
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
@@ -87,6 +88,8 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
             customer.setContactInfo(ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
         }
 
+        customerPolicy.setUser(user);
+        customerPolicy.setPolicyNumber(product.getPolicyNumber());
         customerPolicy.setPolicyHolder(customer);
         customerPolicy.setProduct(product);
         customerPolicy.setStatus(PolicyStatus.ACTIVE);
@@ -122,4 +125,12 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerRepository.save(customer);
     }
 
+    @Override
+    public List<InsuraceProductDto> getAllPoliciesOfUser(String userId) {
+        List<CustomerPolicy> customerPolicies = customerPolicyRepository.findByUser_UserId(userId);
+
+        return customerPolicies.stream()
+                .map(PolicyMapper::toDto)
+                .toList();
+    }
 }

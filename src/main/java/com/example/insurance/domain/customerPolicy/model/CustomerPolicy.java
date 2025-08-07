@@ -12,9 +12,11 @@ import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.paymentSchedule.model.PaymentSchedule;
 import com.example.insurance.domain.policyBeneficiary.model.PolicyBeneficiary;
+import com.example.insurance.domain.user.model.User;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,7 +42,14 @@ public class CustomerPolicy extends AuditEntity {
     // Custom generated ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long policyNumber;
+    private Long id;
+
+    @Column(name = "policy_number")
+    private String policyNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "policy_holder_id")

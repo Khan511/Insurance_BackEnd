@@ -2,7 +2,7 @@ package com.example.insurance.domain.insuranceProduct.service;
 
 import java.util.List;
 
-import com.example.insurance.infrastructure.web.insuranceProduct.InsuraceProductDto;
+import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 
 public interface InsuranceProductService {
 

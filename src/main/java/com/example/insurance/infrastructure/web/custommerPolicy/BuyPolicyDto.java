@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class BuyPolicyDto {
     private Long policyId;
+    private String policyNumber;
     private String status;
     private CustomerDto customer;
     private String product;

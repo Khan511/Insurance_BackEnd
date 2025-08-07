@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.insurance.domain.insuranceProduct.service.InsuranceProductService;
+import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,5 +27,4 @@ public class InsuranceProductController {
     public InsuraceProductDto getPolictyById(@PathVariable Long policyId) {
         return insuranceProductService.getPolicyById(policyId);
     }
-
 }

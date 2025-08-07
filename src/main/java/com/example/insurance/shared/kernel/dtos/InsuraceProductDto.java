@@ -1,4 +1,4 @@
-package com.example.insurance.infrastructure.web.insuranceProduct;
+package com.example.insurance.shared.kernel.dtos;
 
 import java.util.List;
 import java.util.Map;

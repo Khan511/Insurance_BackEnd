@@ -4,7 +4,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.repository.InsuranceProductRepository;
-import com.example.insurance.infrastructure.web.insuranceProduct.InsuraceProductDto;
+import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
+
 import lombok.RequiredArgsConstructor;
 
 @Service

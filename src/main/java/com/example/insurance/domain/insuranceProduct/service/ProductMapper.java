@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.model.PremiumCalculationConfig;
-import com.example.insurance.infrastructure.web.insuranceProduct.CategoryDto;
-import com.example.insurance.infrastructure.web.insuranceProduct.InsuraceProductDto;
+import com.example.insurance.shared.kernel.dtos.CategoryDto;
+import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 
 public class ProductMapper {
 
