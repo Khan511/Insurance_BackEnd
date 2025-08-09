@@ -55,6 +55,10 @@ public class Claim {
     @Embedded
     private IncidentDetails IncidentDetails;
 
+    public boolean isValidIncidentType() {
+        return claimType.getSupportedIncidentTypes().contains(IncidentDetails.getType());
+    }
+
     // @ElementCollection
     // @CollectionTable(name = "claim_digital_evidence", joinColumns =
     // @JoinColumn(name = "claim_id"))

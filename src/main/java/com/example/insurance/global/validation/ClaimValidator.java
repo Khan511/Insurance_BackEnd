@@ -19,7 +19,7 @@ public class ClaimValidator {
                 }
 
                 // 2. Validate required documents
-                Set<ClaimDocumentType> attachedDocTypes = claim.getAttachedDocuments()
+                Set<ClaimDocumentType.RequiredDocument> attachedDocTypes = claim.getAttachedDocuments()
                                 .stream()
                                 .map(DocumentAttachment::getDocumentType)
                                 .collect(Collectors.toSet());

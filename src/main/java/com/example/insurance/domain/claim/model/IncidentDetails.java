@@ -39,7 +39,7 @@ public class IncidentDetails {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "incident_street")),
             @AttributeOverride(name = "city", column = @Column(name = "incident_city")),
-            @AttributeOverride(name = "state", column = @Column(name = "incident_state")),
+            // @AttributeOverride(name = "state", column = @Column(name = "incident_state")),
             @AttributeOverride(name = "postalCode", column = @Column(name = "incident_postal_code")),
             @AttributeOverride(name = "country", column = @Column(name = "incident_country"))
     })
@@ -57,8 +57,8 @@ public class IncidentDetails {
     @Embedded
     private ThirdPartyDetails thirdPartyDetails;
 
-    @Embedded
-    private GeoCooordinates coordinates;
+    // @Embedded
+    // private GeoCooordinates coordinates;
 
     @Embedded
     private WeatherConditions weatherCondition;

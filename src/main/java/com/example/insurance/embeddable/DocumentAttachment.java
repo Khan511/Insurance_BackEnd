@@ -42,7 +42,7 @@ public class DocumentAttachment {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, updatable = false)
-    private ClaimDocumentType documentType;
+    private ClaimDocumentType.RequiredDocument documentType;
 
     // Immutable construction
     public DocumentAttachment(UUID storageId,
@@ -50,7 +50,7 @@ public class DocumentAttachment {
             String originalFilename,
             String contentType,
             String sha256Checksum,
-            ClaimDocumentType documentType) {
+            ClaimDocumentType.RequiredDocument documentType) {
         this.storageId = storageId;
         this.storageBucket = storageBucket;
         this.originalFilename = originalFilename;
