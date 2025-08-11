@@ -3,7 +3,6 @@ package com.example.insurance.global.validation;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.example.insurance.common.enummuration.ClaimDocumentType;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
@@ -38,17 +37,4 @@ public class ClaimValidator {
                 }
         }
 }
-// public class ClaimValidator {
-// public static void validateClaim(Claim claim, CustomerPolicy policy) {
-// if
-// (!policy.getProduct().getAllowedClaimTypes().contains(claim.getClaimType()))
-// {
-// throw new RuntimeException(
-// "Policy doesn't cover this claim type");
-// }
-// if (claim.getClaimType().getRequiredDocuments().size() >
-// claim.getAttachedDocuments().size()) {
-// throw new RuntimeException("Required documents are not attached");
-// }
-// }
-// }
+ 
