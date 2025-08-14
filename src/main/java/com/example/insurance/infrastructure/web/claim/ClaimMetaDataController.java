@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.insurance.common.enummuration.ClaimDocumentType;
+import com.example.insurance.domain.claim.service.ClaimService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/claim-metadata")
 public class ClaimMetaDataController {
+
+    private final ClaimService claimService;
 
     @GetMapping("/claim-types")
     public List<ClaimMetadataDTO> getClaimDocumentTypes() {
@@ -44,6 +49,9 @@ public class ClaimMetaDataController {
     @PostMapping("/submit-claim")
     public ResponseEntity<?> submitClaim(@Valid @RequestBody ClaimSubmissionDTO claimData) {
 
+        claimService.submitClaim(claimData);
+
+        return ResponseEntity.ok().body("Claim submitted successfully");
     }
 
 }

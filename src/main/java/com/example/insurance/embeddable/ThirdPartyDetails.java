@@ -2,15 +2,19 @@ package com.example.insurance.embeddable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
 
 @Embeddable
+@Getter
+@Setter
 public class ThirdPartyDetails {
 
-    private String contactName;
-    private String contactPhone;
+    private String name;
+    private String contactInfo;
 
     @Column(name = "third_party_insurance_provider")
-    private String insuranceProvider;
+    private String insuranceInfo;
 
     @Column(name = "third_party_policy_number")
     private String policyNumber;

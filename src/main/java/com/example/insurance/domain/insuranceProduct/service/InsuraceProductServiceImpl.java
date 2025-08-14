@@ -26,4 +26,10 @@ public class InsuraceProductServiceImpl implements InsuranceProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found")));
     }
 
+    @Override
+    public InsuranceProduct getInsuranceProductByPolicyNumber(String policyNumber) {
+        return insuranceProductRepository.findByPolicyNumber(policyNumber);
+
+    }
+
 }

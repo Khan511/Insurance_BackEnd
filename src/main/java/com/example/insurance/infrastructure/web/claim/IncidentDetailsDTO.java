@@ -2,9 +2,6 @@ package com.example.insurance.infrastructure.web.claim;
 
 import java.time.LocalDateTime;
 
-import com.example.insurance.embeddable.ThirdPartyDetails;
-import com.example.insurance.shared.kernel.embeddables.Address;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
