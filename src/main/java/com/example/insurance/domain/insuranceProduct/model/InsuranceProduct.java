@@ -64,7 +64,7 @@ public class InsuranceProduct extends AuditEntity {
 
     // Core identification
     @Column(name = "policy_number", unique = true, nullable = false, length = 20)
-    private String PolicyNumber;
+    private String policyNumber;
 
     @Column(name = "product_code", unique = true, nullable = false, length = 20)
     private String productCode;
