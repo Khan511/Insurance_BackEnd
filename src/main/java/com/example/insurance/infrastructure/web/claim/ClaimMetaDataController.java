@@ -48,7 +48,7 @@ public class ClaimMetaDataController {
 
     @PostMapping("/submit-claim")
     public ResponseEntity<?> submitClaim(@Valid @RequestBody ClaimSubmissionDTO claimData) {
-
+System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + claimData.getPolicyNumber());
         claimService.submitClaim(claimData);
 
         return ResponseEntity.ok().body("Claim submitted successfully");
