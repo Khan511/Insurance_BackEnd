@@ -1,7 +1,6 @@
 package com.example.insurance.domain.claimStatusHistory.model;
 
 import java.time.Instant;
-import java.util.UUID;
 
 import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.domain.claim.model.Claim;

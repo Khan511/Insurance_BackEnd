@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import com.example.insurance.common.enummuration.ClaimDocumentType;
 import com.example.insurance.domain.claim.model.Claim;
+import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
-import com.example.insurance.embeddable.DocumentAttachment;
 
 public class ClaimValidator {
         public static void validateClaim(Claim claim, CustomerPolicy policy) {
@@ -20,7 +20,7 @@ public class ClaimValidator {
                 // 2. Validate required documents
                 Set<ClaimDocumentType.RequiredDocument> attachedDocTypes = claim.getAttachedDocuments()
                                 .stream()
-                                .map(DocumentAttachment::getDocumentType)
+                                .map(ClaimDocuments::getDocumentType)
                                 .collect(Collectors.toSet());
 
                 Set<ClaimDocumentType.RequiredDocument> requiredDocs = new HashSet<>(
@@ -37,4 +37,3 @@ public class ClaimValidator {
                 }
         }
 }
- 

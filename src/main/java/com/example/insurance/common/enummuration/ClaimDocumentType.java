@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
- 
+
 @Getter
 @AllArgsConstructor
 public enum ClaimDocumentType {
@@ -67,29 +67,4 @@ public enum ClaimDocumentType {
         }
     }
 
-    // public enum RequiredDocument {
-    // POLICE_REPORT, REPAIR_ESTIMATE, MEDICAL_BILLS,
-    // DOCTOR_REPORT, DEATH_CERTIFICATE, INCIDENT_REPORT,
-    // FORENSIC_AUDIT, PROPERTY_DAMAGE_REPORT,
-    // ESTIMATE, INVENTORY_LIST, BENEFICIARY_DOCS
-    // }
-
 }
-
-// public enum ClaimType {
-
-// AUTOMOBILE_COLLISION,
-// AUTOMOBILE_THEFT,
-// AUTOMOBILE_VANDALISM,
-// PROPERTY_FIRE,
-// PROPERTY_FLOOD,
-// PROPERTY_THEFT,
-// HEALTH_HOSPITALIZATION,
-// HEALTH_DENTAL,
-// LIFE_DEATH,
-// LIFE_DISABILITY,
-// TRAVEL_CANCELLATION,
-// TRAVEL_MEDICAL,
-// LIABILITY_GENERAL,
-// CYBER_INCIDENT
-// }

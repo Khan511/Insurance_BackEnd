@@ -1,7 +1,7 @@
 package com.example.insurance.infrastructure.web.claim;
 
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Value;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,8 @@ public class ClaimSubmissionDTO {
     @NotEmpty(message = "Policy number is required")
     private String policyNumber;
 
-    private String storageBucket = "your-firebase-bucket-name";
+    @Value("${aws.bucket}")
+    private String storageBucket;
 
     @NotEmpty(message = "Claim type is required")
     private String claimType;
@@ -29,7 +30,7 @@ public class ClaimSubmissionDTO {
     @Valid
     private IncidentDetailsDTO incidentDetails;
 
-    @NotEmpty(message = "At least one document is required")
-    @Valid
+    // @NotEmpty(message = "At least one document is required")
+    // @Valid
     private List<DocumentAttachmentDTO> documents;
 }

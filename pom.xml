@@ -131,9 +131,8 @@
     <artifactId>jackson-databind</artifactId>
 	    
 </dependency>  -->
-<!-- Maven -->
-
-<!-- FOR JAVA MAIL SENDER -->
+ 
+ 
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-mail</artifactId>
@@ -143,6 +142,19 @@
     <groupId>com.fasterxml.jackson.datatype</groupId>
     <artifactId>jackson-datatype-jsr310</artifactId>
 </dependency>
+
+ <!-- AWS DEPENDECIES -->
+ <dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>s3</artifactId>
+    <version>2.17.0</version>
+</dependency>
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>auth</artifactId>
+    <version>2.17.0</version>
+</dependency>
+
 
 	</dependencies>
 	

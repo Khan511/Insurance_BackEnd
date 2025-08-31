@@ -11,9 +11,10 @@ import com.example.insurance.common.enummuration.IncidentType;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.claim.model.IncidentDetails;
 import com.example.insurance.domain.claim.repository.ClaimRepository;
+import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
+import com.example.insurance.domain.claimDocuments.service.ClaimDocumentsService;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.service.InsuranceProductService;
-import com.example.insurance.embeddable.DocumentAttachment;
 import com.example.insurance.embeddable.ThirdPartyDetails;
 import com.example.insurance.infrastructure.web.claim.ClaimSubmissionDTO;
 import com.example.insurance.infrastructure.web.claim.DocumentAttachmentDTO;
@@ -28,6 +29,7 @@ public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
     private final InsuranceProductService insuranceProductService;
+    private final ClaimDocumentsService claimDocumentsService;
 
     public void submitClaim(ClaimSubmissionDTO claimSubmissionDTO) {
 
@@ -44,14 +46,17 @@ public class ClaimServiceImpl implements ClaimService {
         // Map and set document attachments
         claim.setIncidentDetails(mapIncidentDetails(claimSubmissionDTO.getIncidentDetails()));
 
-        // Map and set document attachments
-        claim.setAttachedDocuments(mapDocumentAttachments(claimSubmissionDTO.getDocuments()));
+        // // Map and set document attachments
+        // claim.setAttachedDocuments(mapDocumentAttachments(claimSubmissionDTO.getDocuments()));
 
         // Set relationShip with insurace product
         claim.setInsuranceProduct(product);
 
-        // Save and return the claim
-        claimRepository.save(claim);
+        // First save the claim to get an ID
+        Claim savedClaim = claimRepository.save(claim);
+
+        // Save documents using the ClaimDocuemtnService
+        claimDocumentsService.saveClaimDocuments(claimSubmissionDTO.getDocuments(), savedClaim);
     }
 
     private IncidentDetails mapIncidentDetails(IncidentDetailsDTO dto) {
@@ -87,17 +92,17 @@ public class ClaimServiceImpl implements ClaimService {
 
     }
 
-    private List<DocumentAttachment> mapDocumentAttachments(List<DocumentAttachmentDTO> dtos) {
+    private List<ClaimDocuments> mapDocumentAttachments(List<DocumentAttachmentDTO> dtos, Claim claim) {
 
         return dtos.stream()
                 .map(dto -> {
-                    return new DocumentAttachment(
+                    return new ClaimDocuments(
                             UUID.fromString(dto.getStorageId()),
                             dto.getStorageBucket(),
                             dto.getOriginalFileName(),
                             dto.getContentType(),
                             dto.getSha256Checksum(),
-                            ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()));
+                            ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()), claim);
                 }).collect(Collectors.toList());
     }
 

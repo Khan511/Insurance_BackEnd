@@ -65,8 +65,9 @@ public class SecurityFilterChainConfig {
                                                                 .preload(true)
                                                                 .maxAgeInSeconds(31536000)))
                                 .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(HttpMethod.OPTIONS, "/api/s3/**").permitAll()
                                                 .requestMatchers(HttpMethod.POST, "/api/auth/**",
-                                                                "/api/user/create-user")
+                                                                "/api/user/create-user", "/api/s3/**")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**",
                                                                 "/api/policy/all-policies",

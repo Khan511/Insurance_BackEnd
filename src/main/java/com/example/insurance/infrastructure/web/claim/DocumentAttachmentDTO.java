@@ -1,7 +1,5 @@
 package com.example.insurance.infrastructure.web.claim;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import lombok.Getter;
 
 @Getter
@@ -15,4 +13,8 @@ public class DocumentAttachmentDTO {
     private String documentType;
     // @Value("${app.storage.bucket}")
     private String storageBucket;
+    private String fileKey; // Add this field
+    private String fileUrl; // Add this field
+    private Long fileSize; // Add this field
+    private String uploadedAt; // Add this field
 }
