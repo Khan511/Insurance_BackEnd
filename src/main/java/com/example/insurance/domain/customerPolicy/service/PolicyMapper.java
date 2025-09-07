@@ -6,8 +6,8 @@ import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.policyBeneficiary.model.PolicyBeneficiary;
 import com.example.insurance.embeddable.BeneficiaryDetails;
 import com.example.insurance.infrastructure.web.custommerPolicy.BeneficiaryDto;
+import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.shared.kernel.dtos.CategoryDto;
-import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 
 public class PolicyMapper {
     public static PolicyBeneficiary mapToBeneficiaryEntity(BeneficiaryDto dto) {
@@ -26,8 +26,8 @@ public class PolicyMapper {
         return details;
     };
 
-    public static InsuraceProductDto toDto(CustomerPolicy product) {
-        InsuraceProductDto dto = new InsuraceProductDto();
+    public static InsurancePolicyDto toDto(CustomerPolicy product) {
+        InsurancePolicyDto dto = new InsurancePolicyDto();
 
         dto.setId(product.getId());
         dto.setPolicyNumber(product.getProduct().getPolicyNumber());
@@ -36,6 +36,7 @@ public class PolicyMapper {
         dto.setDescription(product.getProduct().getDescription());
         dto.setProductType(product.getProduct().getProductType());
         // dto.setBasePremium(product.getBasePremium());
+        dto.setStatus(product.getStatus());
         dto.setCoverageDetails(product.getProduct().getCoverageDetails());
         dto.setEligibilityRules(product.getProduct().getEligibilityRules());
         dto.setTargetAudience(product.getProduct().getTargetAudience());

@@ -65,13 +65,16 @@ public class SecurityFilterChainConfig {
                                                                 .preload(true)
                                                                 .maxAgeInSeconds(31536000)))
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(HttpMethod.OPTIONS, "/api/s3/**").permitAll()
+                                                .requestMatchers(HttpMethod.OPTIONS, "/api/s3/**").authenticated()
                                                 .requestMatchers(HttpMethod.POST, "/api/auth/**",
-                                                                "/api/user/create-user", "/api/s3/**")
+                                                                "/api/user/create-user")
+
                                                 .permitAll()
+                                                // 👇 allow delete of S3 objects for authenticated users
+                                                .requestMatchers(HttpMethod.DELETE, "/api/s3/**").authenticated()
                                                 .requestMatchers(HttpMethod.GET, "/api/public/**", "/api/doc/**",
-                                                                "/api/policy/all-policies",
-                                                                "/api/policy/policy-details/**")
+                                                                "/api/product/all-products",
+                                                                "/api/product/product-details/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                                 .requestMatchers(HttpMethod.DELETE, "/api/**")

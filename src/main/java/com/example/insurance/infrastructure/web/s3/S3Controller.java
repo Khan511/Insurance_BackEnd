@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.insurance.global.config.CustomUserDetails;
@@ -36,10 +37,10 @@ public class S3Controller {
     private final S3Presigner s3Presigner;
     private final String bucketName;
 
-    public S3Controller(S3Client s3Client, S3Presigner s3Presigner, @Value("${aws.bucket}") String buckteName) {
+    public S3Controller(S3Client s3Client, S3Presigner s3Presigner, @Value("${aws.bucket}") String bucketName) {
         this.s3Client = s3Client;
         this.s3Presigner = s3Presigner;
-        this.bucketName = buckteName;
+        this.bucketName = bucketName;
     }
 
     @PostMapping("/presigned-url")
@@ -98,21 +99,52 @@ public class S3Controller {
     }
 
     @DeleteMapping("/delete-object")
-    public ResponseEntity<?> deleteObject(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> deleteObject(@RequestParam String imageUrl,
+            @AuthenticationPrincipal CustomUserDetails user) {
+
         try {
-            String imageUrl = request.get("imageUrl");
+
+            String objectKeye = extractKeyFromUrl(imageUrl);
+            System.out.println("Attempting to delete object with key: " + objectKeye);
+
+            // Add more detailed logging
+            System.out.println("Bucket name: " + bucketName);
+            System.out.println("Full S3 path: s3://" + bucketName + "/" + objectKeye);
+
             String objectKey = extractKeyFromUrl(imageUrl);
 
             s3Client.deleteObject(DeleteObjectRequest.builder()
                     .bucket(bucketName)
                     .key(objectKey)
                     .build());
+
             return ResponseEntity.ok().build();
         } catch (S3Exception e) {
+            System.err.println("S3 Error: " + e.awsErrorDetails().errorMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete object: " + e.awsErrorDetails().errorMessage());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete object: " + e.getMessage());
         }
     }
+    // @DeleteMapping("/delete-object")
+    // public ResponseEntity<?> deleteObject(@RequestParam String imageUrl) {
+    // try {
+    // // String imageUrl = request.get("imageUrl");
+    // String objectKey = extractKeyFromUrl(imageUrl);
+
+    // s3Client.deleteObject(DeleteObjectRequest.builder()
+    // .bucket(bucketName)
+    // .key(objectKey)
+    // .build());
+    // return ResponseEntity.ok().build();
+    // } catch (S3Exception e) {
+    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    // .body("Failed to delete object: " + e.getMessage());
+    // }
+    // }
 
     private String extractKeyFromUrl(String imageUrl) {
         try {

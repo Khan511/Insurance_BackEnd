@@ -2,6 +2,7 @@ package com.example.insurance.infrastructure.web.claim;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
@@ -48,10 +49,10 @@ public class ClaimMetaDataController {
 
     @PostMapping("/submit-claim")
     public ResponseEntity<?> submitClaim(@Valid @RequestBody ClaimSubmissionDTO claimData) {
-System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + claimData.getPolicyNumber());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + claimData.getPolicyNumber());
         claimService.submitClaim(claimData);
 
-        return ResponseEntity.ok().body("Claim submitted successfully");
+        return ResponseEntity.ok(Map.of("message", "Claim submitted successfully"));
     }
 
 }

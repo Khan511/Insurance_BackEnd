@@ -13,17 +13,17 @@ import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/policy")
+@RequestMapping("/api/product")
 public class InsuranceProductController {
 
     private final InsuranceProductService insuranceProductService;
 
-    @GetMapping("/all-policies")
+    @GetMapping("/all-products")
     public List<InsuraceProductDto> allPolicies() {
         return insuranceProductService.getAllPolicies();
     }
 
-    @GetMapping("/policy-details/{policyId}")
+    @GetMapping("/product-details/{policyId}")
     public InsuraceProductDto getPolictyById(@PathVariable Long policyId) {
         return insuranceProductService.getPolicyById(policyId);
     }

@@ -3,6 +3,7 @@ package com.example.insurance.domain.customerPolicy.service;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
+import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
@@ -126,11 +128,29 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
     }
 
     @Override
-    public List<InsuraceProductDto> getAllPoliciesOfUser(String userId) {
+    public List<InsurancePolicyDto> getAllPoliciesOfUser(String userId) {
         List<CustomerPolicy> customerPolicies = customerPolicyRepository.findByUser_UserId(userId);
 
         return customerPolicies.stream()
                 .map(PolicyMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public InsurancePolicyDto getInsuranceDetails(String policyId, String userId) {
+        Long policyIdLong;
+
+        try {
+            policyIdLong = Long.parseLong(policyId);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid policy ID format");
+        }
+
+        Optional<CustomerPolicy> policyOpt = customerPolicyRepository.findByUser_UserIdAndId(userId, policyIdLong);
+
+        CustomerPolicy policy = policyOpt.orElseThrow(() -> new RuntimeException("Policy not found for user"));
+
+        return PolicyMapper.toDto(policy);
+
     }
 }

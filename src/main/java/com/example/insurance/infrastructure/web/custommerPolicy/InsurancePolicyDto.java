@@ -1,4 +1,4 @@
-package com.example.insurance.shared.kernel.dtos;
+package com.example.insurance.infrastructure.web.custommerPolicy;
 
 import java.util.List;
 import java.util.Map;
@@ -8,12 +8,14 @@ import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.common.enummuration.ProductType;
 import com.example.insurance.domain.insuranceProduct.service.PremiumCalculationConfigDto;
 import com.example.insurance.embeddable.CoverageDetail;
+import com.example.insurance.shared.kernel.dtos.CategoryDto;
 import com.example.insurance.embeddable.ProductTranslation;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
 import lombok.Data;
 
 @Data
-public class InsuraceProductDto {
+public class InsurancePolicyDto {
+
     private Long id;
     private String PolicyNumber;
     private String productCode;
