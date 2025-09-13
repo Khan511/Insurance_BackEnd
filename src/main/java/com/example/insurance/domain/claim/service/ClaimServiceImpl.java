@@ -1,23 +1,29 @@
 package com.example.insurance.domain.claim.service;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+// import java.util.UUID;
+// import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.insurance.common.enummuration.ClaimDocumentType;
+import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.common.enummuration.IncidentType;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.claim.model.IncidentDetails;
 import com.example.insurance.domain.claim.repository.ClaimRepository;
-import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
+// import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
 import com.example.insurance.domain.claimDocuments.service.ClaimDocumentsService;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.service.InsuranceProductService;
+import com.example.insurance.domain.user.model.User;
+import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.embeddable.ThirdPartyDetails;
+import com.example.insurance.global.config.CustomUserDetails;
+import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;
 import com.example.insurance.infrastructure.web.claim.ClaimSubmissionDTO;
-import com.example.insurance.infrastructure.web.claim.DocumentAttachmentDTO;
+// import com.example.insurance.infrastructure.web.claim.DocumentAttachmentDTO;
 import com.example.insurance.infrastructure.web.claim.IncidentDetailsDTO;
 import com.example.insurance.shared.kernel.embeddables.Address;
 
@@ -28,10 +34,15 @@ import lombok.RequiredArgsConstructor;
 public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
+    private final UserRepository userRepository;
     private final InsuranceProductService insuranceProductService;
     private final ClaimDocumentsService claimDocumentsService;
+    private final ClaimIdGenerator claimIdGenerator;
 
-    public void submitClaim(ClaimSubmissionDTO claimSubmissionDTO) {
+    public void submitClaim(ClaimSubmissionDTO claimSubmissionDTO, CustomUserDetails customUserDetails) {
+
+        User user = userRepository.findUserByUserId(customUserDetails.getUserEntity().getUserId())
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         InsuranceProduct product = insuranceProductService
                 .getInsuranceProductByPolicyNumber(claimSubmissionDTO.getPolicyNumber());
@@ -40,6 +51,10 @@ public class ClaimServiceImpl implements ClaimService {
         Claim claim = new Claim();
 
         // Set Basic info
+        claim.setClaimNumber(claimIdGenerator.generateUniqueClaimId());
+        claim.setStatus(ClaimStatus.PENDING);
+
+        claim.setUser(user);
         claim.setPolicyNumber(claimSubmissionDTO.getPolicyNumber());
         claim.setClaimType(ClaimDocumentType.valueOf(claimSubmissionDTO.getClaimType()));
 
@@ -92,18 +107,40 @@ public class ClaimServiceImpl implements ClaimService {
 
     }
 
-    private List<ClaimDocuments> mapDocumentAttachments(List<DocumentAttachmentDTO> dtos, Claim claim) {
+    // private List<ClaimDocuments>
+    // mapDocumentAttachments(List<DocumentAttachmentDTO> dtos, Claim claim) {
+    // return dtos.stream()
+    // .map(dto -> new ClaimDocuments(
+    // UUID.fromString(dto.getStorageId()),
+    // dto.getStoragePath(),
+    // dto.getStorageBucket(),
+    // dto.getOriginalFileName(),
+    // dto.getContentType(),
+    // dto.getSha256Checksum(),
+    // ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()),
+    // claim,
+    // dto.getFileUrl(),
+    // dto.getFileSize()))
+    // .collect(Collectors.toList());
+    // }
 
-        return dtos.stream()
-                .map(dto -> {
-                    return new ClaimDocuments(
-                            UUID.fromString(dto.getStorageId()),
-                            dto.getStorageBucket(),
-                            dto.getOriginalFileName(),
-                            dto.getContentType(),
-                            dto.getSha256Checksum(),
-                            ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()), claim);
-                }).collect(Collectors.toList());
+    @Override
+    public List<ClaimResponseDTO> getAllClaimOfUser(String userId) {
+        List<Claim> allClaims = claimRepository.findByUser_UserId(userId);
+
+        return allClaims.stream()
+                .map(claim -> ClaimMapper.mapToDto(claim))
+                .toList();
+
+    }
+
+    public void processClaim(Long claimId, BigDecimal amount, ClaimStatus status) {
+        Claim claim = claimRepository.findById(claimId).orElseThrow(() -> new RuntimeException("Claim not found"));
+
+        claim.setAmount(amount);
+        claim.setStatus(status);
+
+        claimRepository.save(claim);
     }
 
 }

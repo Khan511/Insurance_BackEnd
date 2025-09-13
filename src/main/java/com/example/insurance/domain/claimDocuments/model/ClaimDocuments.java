@@ -7,7 +7,6 @@ import com.example.insurance.common.enummuration.DocumentStatus;
 import com.example.insurance.domain.claim.model.Claim;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,15 +18,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @Entity
 @Table(name = "claim_documents")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@RequiredArgsConstructor
+// @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClaimDocuments {
 
     @Id
@@ -35,10 +38,16 @@ public class ClaimDocuments {
     private Long id;
 
     @Column(nullable = false)
-    private UUID storageId; // Obfuscated reference
+    private UUID storageId;
+
+    private String storagePath;
 
     @Column(nullable = false)
     private String storageBucket;
+
+    private String fileUrl;
+
+    private Long fileSize;
 
     @Column(nullable = false)
     private String originalFilename;
@@ -66,12 +75,16 @@ public class ClaimDocuments {
 
     // Immutable construction
     public ClaimDocuments(UUID storageId,
+            String storagePath,
             String storageBucket,
             String originalFilename,
             String contentType,
             String sha256Checksum,
+
             ClaimDocumentType.RequiredDocument documentType,
-            Claim claim) {
+            Claim claim,
+            String fileUrl,
+            Long fileSize) {
         this.storageId = storageId;
         this.storageBucket = storageBucket;
         this.originalFilename = originalFilename;
@@ -80,6 +93,8 @@ public class ClaimDocuments {
         this.documentType = documentType;
         this.uploadedAt = Instant.now();
         this.claim = claim;
+        this.fileUrl = fileUrl;
+        this.fileSize = fileSize;
     }
 
     // Domain logic --------------------------------------------------

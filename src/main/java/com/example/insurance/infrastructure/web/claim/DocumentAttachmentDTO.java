@@ -1,7 +1,9 @@
 package com.example.insurance.infrastructure.web.claim;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class DocumentAttachmentDTO {
     private String storageId;
@@ -13,8 +15,8 @@ public class DocumentAttachmentDTO {
     private String documentType;
     // @Value("${app.storage.bucket}")
     private String storageBucket;
-    private String fileKey; // Add this field
-    private String fileUrl; // Add this field
-    private Long fileSize; // Add this field
-    private String uploadedAt; // Add this field
+    private String fileKey;
+    private String fileUrl;
+    private Long fileSize;
+    private String uploadedAt;
 }

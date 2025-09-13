@@ -1,13 +1,16 @@
 package com.example.insurance.domain.claim.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.insurance.common.enummuration.ClaimDocumentType;
+import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
+import com.example.insurance.domain.user.model.User;
+
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -36,6 +39,20 @@ public class Claim {
 
     @Column(name = "policy_number", nullable = false)
     private String policyNumber;
+
+    @Column(name = "claim_number", unique = true, nullable = false)
+    private String claimNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ClaimStatus status = ClaimStatus.PENDING;
+
+    @Column(name = "amount")
+    private BigDecimal amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     // @ManyToOne(fetch = FetchType.LAZY)
     // private CustomerPolicy policy;

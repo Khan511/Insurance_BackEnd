@@ -3,7 +3,7 @@ package com.example.insurance.common.enummuration;
 public enum ClaimStatus {
 
     // Initial state after claim submission
-    REPORTED,
+    PENDING,
 
     // Claim is being reviewed by adjusters
     UNDER_REVIEW,
