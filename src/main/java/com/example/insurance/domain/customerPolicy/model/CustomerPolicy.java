@@ -73,7 +73,7 @@ public class CustomerPolicy extends AuditEntity {
     // @OneToMany(mappedBy = "policy")
     // private List<Claim> claims;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
     private List<PaymentSchedule> paymentSchedules;
 
     // Helper methods
@@ -85,6 +85,17 @@ public class CustomerPolicy extends AuditEntity {
     public void removeBeneficiary(PolicyBeneficiary policyBeneficiary) {
         beneficiaries.remove(policyBeneficiary);
         policyBeneficiary.setCustomerPolicy(null);
+    }
+
+    // Helper methods for payment schedules
+    public void addPaymentSchedule(PaymentSchedule paymentSchedule) {
+        paymentSchedules.add(paymentSchedule);
+        paymentSchedule.setPolicy(this);
+    }
+
+    public void removePaymentSchedule(PaymentSchedule paymentSchedule) {
+        paymentSchedules.remove(paymentSchedule);
+        paymentSchedule.setPolicy(null);
     }
 
 }

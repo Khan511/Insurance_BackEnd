@@ -1,5 +1,7 @@
 package com.example.insurance.infrastructure.web.claim;
 
+import java.time.Instant;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,9 @@ import lombok.Setter;
 @Getter
 public class DocumentAttachmentDTO {
     private String storageId;
-    private String storagePath;
+    // private String storagePath;
     private String sha256Checksum;
-    private String downloadUrl;
+    // private String downloadUrl;
     private String originalFileName;
     private String contentType;
     private String documentType;
@@ -18,5 +20,5 @@ public class DocumentAttachmentDTO {
     private String fileKey;
     private String fileUrl;
     private Long fileSize;
-    private String uploadedAt;
+    private Instant uploadedAt;
 }

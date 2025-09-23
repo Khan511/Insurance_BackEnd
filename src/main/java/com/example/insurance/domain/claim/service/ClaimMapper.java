@@ -60,7 +60,10 @@ public class ClaimMapper {
                         d.setContentType(doc.getContentType());
                         d.setSha256Checksum(doc.getSha256Checksum());
                         d.setDocumentType(doc.getDocumentType().name());
-
+                        d.setFileUrl(doc.getFileUrl());
+                        d.setFileSize(doc.getFileSize());
+                        d.setFileKey(doc.getFileKey());
+                        d.setUploadedAt(doc.getUploadedAt());
                         return d;
                     })
                     .toList();

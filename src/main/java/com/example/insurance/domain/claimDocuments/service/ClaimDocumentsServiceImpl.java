@@ -37,7 +37,7 @@ public class ClaimDocumentsServiceImpl implements ClaimDocumentsService {
     private ClaimDocuments createClaimDocumentFromDTO(DocumentAttachmentDTO dto, Claim claim) {
         ClaimDocuments document = new ClaimDocuments(
                 UUID.fromString(dto.getStorageId()),
-                dto.getStoragePath(),
+                // dto.getStoragePath(),
                 dto.getStorageBucket(),
                 dto.getOriginalFileName(),
                 dto.getContentType(),
@@ -45,7 +45,8 @@ public class ClaimDocumentsServiceImpl implements ClaimDocumentsService {
 
                 ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()), claim,
                 dto.getFileUrl(),
-                dto.getFileSize());
+                dto.getFileSize(),
+                dto.getFileKey());
 
         // Set the claim refrence
         document.setClaim(claim);

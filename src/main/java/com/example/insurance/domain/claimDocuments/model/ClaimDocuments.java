@@ -40,7 +40,9 @@ public class ClaimDocuments {
     @Column(nullable = false)
     private UUID storageId;
 
-    private String storagePath;
+    // private String storagePath;
+
+    private String fileKey;
 
     @Column(nullable = false)
     private String storageBucket;
@@ -75,7 +77,7 @@ public class ClaimDocuments {
 
     // Immutable construction
     public ClaimDocuments(UUID storageId,
-            String storagePath,
+            // String storagePath,
             String storageBucket,
             String originalFilename,
             String contentType,
@@ -84,7 +86,8 @@ public class ClaimDocuments {
             ClaimDocumentType.RequiredDocument documentType,
             Claim claim,
             String fileUrl,
-            Long fileSize) {
+            Long fileSize,
+            String fileKey) {
         this.storageId = storageId;
         this.storageBucket = storageBucket;
         this.originalFilename = originalFilename;
@@ -95,6 +98,7 @@ public class ClaimDocuments {
         this.claim = claim;
         this.fileUrl = fileUrl;
         this.fileSize = fileSize;
+        this.fileKey = fileKey;
     }
 
     // Domain logic --------------------------------------------------

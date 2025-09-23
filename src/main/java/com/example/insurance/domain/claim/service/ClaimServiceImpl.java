@@ -102,27 +102,8 @@ public class ClaimServiceImpl implements ClaimService {
 
             details.setThirdPartyDetails(thirdParty);
         }
-
         return details;
-
     }
-
-    // private List<ClaimDocuments>
-    // mapDocumentAttachments(List<DocumentAttachmentDTO> dtos, Claim claim) {
-    // return dtos.stream()
-    // .map(dto -> new ClaimDocuments(
-    // UUID.fromString(dto.getStorageId()),
-    // dto.getStoragePath(),
-    // dto.getStorageBucket(),
-    // dto.getOriginalFileName(),
-    // dto.getContentType(),
-    // dto.getSha256Checksum(),
-    // ClaimDocumentType.RequiredDocument.valueOf(dto.getDocumentType()),
-    // claim,
-    // dto.getFileUrl(),
-    // dto.getFileSize()))
-    // .collect(Collectors.toList());
-    // }
 
     @Override
     public List<ClaimResponseDTO> getAllClaimOfUser(String userId) {
@@ -131,7 +112,6 @@ public class ClaimServiceImpl implements ClaimService {
         return allClaims.stream()
                 .map(claim -> ClaimMapper.mapToDto(claim))
                 .toList();
-
     }
 
     public void processClaim(Long claimId, BigDecimal amount, ClaimStatus status) {
