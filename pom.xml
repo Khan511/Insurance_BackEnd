@@ -161,6 +161,12 @@
     <version>1.12.700</version> 
 </dependency>
 
+<!-- math expression parser -->
+<dependency>
+    <groupId>net.objecthunter</groupId>
+    <artifactId>exp4j</artifactId>
+    <version>0.4.8</version>
+</dependency>
 
 	</dependencies>
 	

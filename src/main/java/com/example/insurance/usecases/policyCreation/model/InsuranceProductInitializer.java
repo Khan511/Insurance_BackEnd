@@ -107,11 +107,13 @@
 
 // // Premium calculation
 // PremiumCalculationConfig calcConfig = new PremiumCalculationConfig();
-// calcConfig.setFormula("base + (ageFactor * driverAge) + (valueFactor *
-// vehicleValue)");
+// calcConfig.setFormula(
+// "base + (ageFactor * driverAge) + (valueFactor * vehicleValue) -
+// (experienceDiscount * drivingExperience)");
 // calcConfig.setFactors(Map.of(
 // "ageFactor", new BigDecimal("25.0"),
-// "valueFactor", new BigDecimal("0.02")));
+// "valueFactor", new BigDecimal("0.02"),
+// "experienceDiscount", new BigDecimal("50.0")));
 // // Add age brackets if needed
 // List<PremiumCalculationConfig.AgeBracket> ageBrackets = List.of(
 // new PremiumCalculationConfig.AgeBracket(18, 25, new BigDecimal("1.5"), null),

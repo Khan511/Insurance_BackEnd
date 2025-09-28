@@ -54,6 +54,11 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         InsuranceProduct product = insuranceProductRepository.findById(buyPolicyDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Insurance Product not found"));
 
+        System.out.println("Loaded Product ID: " + product.getId());
+        System.out.println("Product Type: " + product.getProductType());
+        System.out.println("Base Premium: " + product.getBasePremium().getAmount());
+        System.out.println("Formula: " + product.getCalculationConfig().getFormula());
+
         CustomerPolicy customerPolicy = new CustomerPolicy();
 
         // Set customer information
@@ -184,6 +189,8 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         if (buyPolicyDto.getDrivingExperience() != null) {
             riskFactors.put("drivingExperience", buyPolicyDto.getDrivingExperience());
         }
+
+        System.out.println("Age: =================================================== " + user.getDateOfBirth());
 
         // For life insurance
         if (user.getDateOfBirth() != null) {

@@ -11,7 +11,7 @@ public class BuyPolicyDto {
     private String policyNumber;
     private String status;
     private CustomerDto customer;
-    private String product;
+    // private String product;
     private CoveragePeriodDto coveragePeriod;
     private PremiumDto premium;
     private List<BeneficiaryDto> beneficiaries;
@@ -21,4 +21,5 @@ public class BuyPolicyDto {
     private String healthCondition; // For life insurance
     private BigDecimal propertyValue; // For home insurance
     private String propertyLocation; // For home insurance
+    private String paymentFrequency;
 };
