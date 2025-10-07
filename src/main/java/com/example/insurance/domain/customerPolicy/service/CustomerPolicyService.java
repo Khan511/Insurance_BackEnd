@@ -1,6 +1,5 @@
 package com.example.insurance.domain.customerPolicy.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;

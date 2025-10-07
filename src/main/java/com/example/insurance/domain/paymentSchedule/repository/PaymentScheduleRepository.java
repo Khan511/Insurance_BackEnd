@@ -12,4 +12,6 @@ public interface PaymentScheduleRepository extends JpaRepository<PaymentSchedule
 
     List<PaymentSchedule> findByPolicyId(long id);
 
+    void deleteByPolicyId(Long id);
+
 }

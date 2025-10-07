@@ -1,11 +1,13 @@
 package com.example.insurance.infrastructure.web.custommerPolicy;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.common.enummuration.ProductType;
+import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.domain.insuranceProduct.service.PremiumCalculationConfigDto;
 import com.example.insurance.embeddable.CoverageDetail;
 import com.example.insurance.shared.kernel.dtos.CategoryDto;
@@ -33,4 +35,18 @@ public class InsurancePolicyDto {
     private PolicyPeriod validityPeriod;
     private Set<String> allowedClaimTypes; // Using String instead of enum
     private Map<String, ProductTranslation> translations;
+
+    // Premium information
+    private BigDecimal premium;
+    private String currency;
+
+    // Payment Information
+    // MONTHLY, QUARTERLY, ANNUAL
+    private PaymentFrequency paymentFrequency;
+    // Payment schedules
+    private List<PaymentScheduleDto> paymentSchedules;
+
+    // Beneficiaries
+    private List<BeneficiaryDto> beneficiaries;
+
 }

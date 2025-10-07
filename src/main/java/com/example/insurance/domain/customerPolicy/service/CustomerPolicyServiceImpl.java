@@ -1,12 +1,16 @@
 package com.example.insurance.domain.customerPolicy.service;
 
 import java.time.LocalDate;
+// import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.insurance.common.enummuration.PolicyStatus;
@@ -16,6 +20,7 @@ import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
 import com.example.insurance.domain.customer.repository.CustomerRepository;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
+import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.domain.customerPolicy.repository.CustomerPolicyRepository;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.repository.InsuranceProductRepository;
@@ -27,6 +32,8 @@ import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
+import com.example.insurance.infrastructure.web.premiumCalculation.PremiumCalculationRequest;
+import com.example.insurance.infrastructure.web.premiumCalculation.PremiumCalculationResponse;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
@@ -114,18 +121,35 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerPolicy.setCoveragePeriod(coveragePeriod);
 
         // Calculate premium based on product type and risk factors
-        Map<String, Object> riskFactors = extractRiskFactors(buyPolicyDto, user);
-        MonetaryAmount premium = premiumCalculationService.calculatePremium(product, riskFactors);
+        PremiumCalculationRequest premiumRequest = new PremiumCalculationRequest();
+        premiumRequest.setProductId(buyPolicyDto.getProductId());
+        premiumRequest.setRiskFactors(extractRiskFactors(buyPolicyDto, product.getProductType()));
+        premiumRequest.setPaymentFrequency(buyPolicyDto.getPaymentFrequency());
+
+        PremiumCalculationResponse premiumCalculation = premiumCalculationService.calculatePremium(premiumRequest,
+                user.getEmail());
+
+        // Store annual premium
+        MonetaryAmount premium = new MonetaryAmount(
+                premiumCalculation.getAmount(),
+                premiumCalculation.getCurrency());
+
         customerPolicy.setPremium(premium);
+        customerPolicy.setPaymentFrequency(buyPolicyDto.getPaymentFrequency());
 
         // Generate payment schedule
-        String frequency = determinePaymentFrequency(product.getProductType()); // Or get from DTO
+        // String frequency = determinePaymentFrequency(product.getProductType()); // Or
+        // get from DTO
+        // List<PaymentSchedule> paymentSchedules =
+        // paymentScheduleService.generatePaymentSchedule(customerPolicy,
+        // frequency);
         List<PaymentSchedule> paymentSchedules = paymentScheduleService.generatePaymentSchedule(customerPolicy,
-                frequency);
+                buyPolicyDto.getPaymentFrequency());
+
         customerPolicy.setPaymentSchedules(paymentSchedules);
 
         // Add policy to customer(establishes bidirectional relationship)
-        customer.addPolicy(customerPolicy); // Sets policyHolder automatically
+        customer.addPolicy(customerPolicy);
 
         // Create beneficiaries WITH policy association
         List<PolicyBeneficiary> beneficiaries = buyPolicyDto.getBeneficiaries().stream()
@@ -142,13 +166,55 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerRepository.save(customer);
     }
 
+    @Transactional
+    public void changePaymentFrequency(Long policyId, PaymentFrequency newFrequency) {
+
+        CustomerPolicy policy = customerPolicyRepository.findById(policyId)
+                .orElseThrow(() -> new RuntimeException("Policy not found"));
+
+        // update the payment frequency
+        policy.setPaymentFrequency(newFrequency);
+
+        // Regenerate payment schedules
+        List<PaymentSchedule> newSchedules = paymentScheduleService.generatePaymentSchedule(policy,
+                newFrequency);
+
+        // clear existing schedules and set new onces
+        if (policy.getPaymentSchedules() != null) {
+            policy.getPaymentSchedules().clear();
+        }
+
+        policy.setPaymentSchedules(newSchedules);
+
+        customerPolicyRepository.save(policy);
+
+    }
+
     @Override
     public List<InsurancePolicyDto> getAllPoliciesOfUser(String userId) {
         List<CustomerPolicy> customerPolicies = customerPolicyRepository.findByUser_UserId(userId);
 
+        // List<CustomerPolicy> policies = customerPolicies.stream()
+        // .sorted(Comparator.comparing(policy -> policy.getPaymentSchedules().stream()
+        // .map(PaymentSchedule::getDueDate)
+        // .min(Comparator.naturalOrder())
+        // .orElse(LocalDate.MAX) // Put policies without schedules at the end
+        // ))
+        // .collect(Collectors.toList());
+        // return customerPolicies.stream()
+        // .map(PolicyMapper::toDto)
+        // .toList();
+
+        // Also sort payment schedules within each policy by due date
+        customerPolicies.forEach(policy -> {
+            if (policy.getPaymentSchedules() != null) {
+                policy.getPaymentSchedules().sort(Comparator.comparing(PaymentSchedule::getDueDate));
+            }
+        });
         return customerPolicies.stream()
                 .map(PolicyMapper::toDto)
                 .toList();
+
     }
 
     @Override
@@ -176,57 +242,37 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         return allPolicies;
     }
 
-    private Map<String, Object> extractRiskFactors(BuyPolicyDto buyPolicyDto, User user) {
+    private Map<String, Object> extractRiskFactors(BuyPolicyDto buyPolicyDto, ProductType productType) {
         Map<String, Object> riskFactors = new HashMap<>();
 
-        // Extract risk factors based on product type
-        // You'll need to add these fields to your BuyPolicyDto
-
-        // For auto insurance
-        if (buyPolicyDto.getVehicleValue() != null) {
-            riskFactors.put("vehicleValue", buyPolicyDto.getVehicleValue());
-        }
-        if (buyPolicyDto.getDrivingExperience() != null) {
-            riskFactors.put("drivingExperience", buyPolicyDto.getDrivingExperience());
-        }
-
-        System.out.println("Age: =================================================== " + user.getDateOfBirth());
-
-        // For life insurance
-        if (user.getDateOfBirth() != null) {
-            int age = calculateAge(user.getDateOfBirth());
-            riskFactors.put("age", age);
-        }
-        if (buyPolicyDto.getHealthCondition() != null) {
-            riskFactors.put("healthCondition", buyPolicyDto.getHealthCondition());
-        }
-
-        // For home insurance
-        if (buyPolicyDto.getPropertyValue() != null) {
-            riskFactors.put("propertyValue", buyPolicyDto.getPropertyValue());
-        }
-        if (buyPolicyDto.getPropertyLocation() != null) {
-            riskFactors.put("propertyLocation", buyPolicyDto.getPropertyLocation());
+        switch (productType) {
+            case AUTO:
+                if (buyPolicyDto.getVehicleValue() != null) {
+                    riskFactors.put("vehicleValue", buyPolicyDto.getVehicleValue());
+                }
+                if (buyPolicyDto.getDrivingExperience() != null) {
+                    riskFactors.put("drivingExperience", buyPolicyDto.getDrivingExperience());
+                }
+                break;
+            case LIFE:
+                if (buyPolicyDto.getHealthCondition() != null) {
+                    riskFactors.put("healthCondition", buyPolicyDto.getHealthCondition());
+                }
+                break;
+            case PROPERTY:
+                if (buyPolicyDto.getPropertyValue() != null) {
+                    riskFactors.put("propertyValue", buyPolicyDto.getPropertyValue());
+                }
+                if (buyPolicyDto.getPropertyLocation() != null) {
+                    riskFactors.put("propertyLocation", buyPolicyDto.getPropertyLocation());
+                }
+                break;
+            default:
+                // Handle other product types if needed
+                break;
         }
 
         return riskFactors;
     }
 
-    private String determinePaymentFrequency(ProductType productType) {
-        // Set default payment frequency based on product type
-        switch (productType) {
-            case AUTO:
-                return "MONTHLY";
-            case LIFE:
-                return "ANNUAL";
-            case PROPERTY:
-                return "QUARTERLY";
-            default:
-                return "MONTHLY";
-        }
-    }
-
-    private int calculateAge(LocalDate birthDate) {
-        return java.time.Period.between(birthDate, java.time.LocalDate.now()).getYears();
-    }
 }

@@ -2,15 +2,11 @@ package com.example.insurance.infrastructure.web.s3;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.print.DocFlavor.STRING;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -18,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.amazonaws.HttpMethod;
-import com.amazonaws.auth.policy.Resource;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 
 import com.example.insurance.global.config.CustomUserDetails;
 import com.google.common.net.HttpHeaders;
@@ -258,11 +249,11 @@ public class S3Controller {
         return fileKey;
     }
 
-    private String getFileExtension(String filename) {
-        int lastIndex = filename.lastIndexOf('.');
-        if (lastIndex == -1) {
-            return "";
-        }
-        return filename.substring(lastIndex + 1);
-    }
+    // private String getFileExtension(String filename) {
+    // int lastIndex = filename.lastIndexOf('.');
+    // if (lastIndex == -1) {
+    // return "";
+    // }
+    // return filename.substring(lastIndex + 1);
+    // }
 }

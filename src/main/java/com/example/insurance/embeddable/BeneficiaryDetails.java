@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import com.example.insurance.common.enummuration.Relationship;
 // import com.example.insurance.domain.customer.model.GovernmentId;
 // import com.example.insurance.domain.policyBeneficiary.model.TaxInformation;
+import com.example.insurance.domain.customer.model.GovernmentId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 // import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
