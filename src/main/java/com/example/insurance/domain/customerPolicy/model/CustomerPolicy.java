@@ -65,6 +65,10 @@ public class CustomerPolicy extends AuditEntity {
     private MonetaryAmount premium;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_frequency")
+    private PaymentFrequency paymentFrequency;
+
+    @Enumerated(EnumType.STRING)
     private PolicyStatus status;
 
     @OneToMany(mappedBy = "customerPolicy", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -7,7 +7,7 @@ public class ClaimDocumentMapper {
 
     public static DocumentAttachmentDTO toDto(ClaimDocuments documents) {
 
-        DocumentAttachmentDTO doc = new DocumentAttachmentDTO();
+        // DocumentAttachmentDTO doc = new DocumentAttachmentDTO();
 
         // doc.setStorageId(documents.getStorageId()).toString();
         // doc.setStoragePath(documents.getStoragePath());

@@ -9,10 +9,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
+import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.domain.paymentSchedule.model.PaymentSchedule;
 import com.example.insurance.domain.paymentSchedule.repository.PaymentScheduleRepository;
+
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,7 +24,7 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
 
     private final PaymentScheduleRepository paymentScheduleRepository;
 
-    public List<PaymentSchedule> generatePaymentSchedule(CustomerPolicy policy, String frequency) {
+    public List<PaymentSchedule> generatePaymentSchedule(CustomerPolicy policy, PaymentFrequency frequency) {
         List<PaymentSchedule> schedules = new ArrayList<>();
         MonetaryAmount premium = policy.getPremium();
         LocalDate startDate = policy.getCoveragePeriod().getEffectiveDate();
@@ -29,16 +32,16 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         int numberOfPayments;
         int periodMonths;
 
-        switch (frequency.toUpperCase()) {
-            case "MONTHLY":
+        switch (frequency) {
+            case PaymentFrequency.MONTHLY:
                 numberOfPayments = 12;
                 periodMonths = 1;
                 break;
-            case "QUARTERLY":
+            case PaymentFrequency.QUARTERLY:
                 numberOfPayments = 4;
                 periodMonths = 3;
                 break;
-            case "ANNUAL":
+            case PaymentFrequency.ANNUAL:
                 numberOfPayments = 1;
                 periodMonths = 12;
                 break;
@@ -62,6 +65,17 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         }
 
         return schedules;
+    }
+
+    // Regenrate payment shcedules(To clear old ones)
+    @Transactional
+    public List<PaymentSchedule> regeneratePaymentSchedule(CustomerPolicy policy, PaymentFrequency newFrequency) {
+
+        // Clear existing one
+        paymentScheduleRepository.deleteByPolicyId(policy.getId());
+
+        // Generate new schedule
+        return generatePaymentSchedule(policy, newFrequency);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.example.insurance.infrastructure.web.premiumCalculation;
 
 import java.math.BigDecimal;
 
+import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -18,7 +20,8 @@ public class PremiumCalculationResponse {
     private BigDecimal amount;
     private String currency;
     private BigDecimal installmentAmount;
-    private String paymentFrequency;
+    // private String paymentFrequency;
+    private PaymentFrequency paymentFrequency;
     private String formulaUsed;
 
 }
