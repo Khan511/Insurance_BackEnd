@@ -2,6 +2,7 @@ package com.example.insurance.domain.paymentSchedule.model;
 
 import java.time.LocalDate;
 // import java.util.UUID;
+import java.time.LocalDateTime;
 
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
@@ -9,6 +10,8 @@ import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,6 +46,14 @@ public class PaymentSchedule {
     private LocalDate dueDate;
 
     @Column(name = "paid_date")
-    private LocalDate paidDate;
+    private LocalDateTime paidDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 20)
+    private PaymentStatus status;
+
+    // from payment gateway
+    @Column(name = "transaction_id", unique = true)
+    private String transactionId;
 
 }

@@ -62,6 +62,10 @@ public class PolicyMapper {
         dto.setValidityPeriod(product.getProduct().getValidityPeriod());
         dto.setTranslations(product.getProduct().getTranslation());
         dto.setPaymentFrequency(product.getPaymentFrequency());
+        dto.setPoliciyHolderName(
+                product.getPolicyHolder().getName().getFirstName() + " "
+                        + product.getPolicyHolder().getName().getLastName());
+        dto.setPolicyHolderEmail(product.getPolicyHolder().getEmail());
         dto.setBeneficiaries(
                 product.getBeneficiaries().stream().map((bene) -> mapPolicyBeneficiaryToDto(bene))
                         .collect(Collectors.toList()));
@@ -100,14 +104,8 @@ public class PolicyMapper {
         dto.setDueDate(paymentSchedule.getDueDate());
         dto.setPaidDate(paymentSchedule.getPaidDate());
 
-        // You can add status calculation if needed
-        if (paymentSchedule.getPaidDate() != null) {
-            dto.setStatus("PAID");
-        } else if (paymentSchedule.getDueDate().isBefore(java.time.LocalDate.now())) {
-            dto.setStatus("OVERDUE");
-        } else {
-            dto.setStatus("PENDING");
-        }
+        dto.setStatus(paymentSchedule.getStatus().name());
+        dto.setTransactionId(paymentSchedule.getTransactionId());
 
         return dto;
     }

@@ -76,7 +76,7 @@ public class SecurityFilterChainConfig {
                                                                 "/api/product/all-products",
                                                                 "/api/product/product-details/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                                // .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                                 .requestMatchers(HttpMethod.DELETE, "/api/**")
                                                 .hasAnyAuthority("SCOPE_DELETE")
                                                 .anyRequest().authenticated())

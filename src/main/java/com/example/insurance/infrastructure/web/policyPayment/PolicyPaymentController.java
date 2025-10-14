@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +26,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/my-policies")
 public class PolicyPaymentController {
 
-    private CustomerPolicyService customerPolicyService;
+    private final CustomerPolicyService customerPolicyService;
 
-    private PaymentScheduleService paymentScheduleService;
+    private final PaymentScheduleService paymentScheduleService;
 
     @GetMapping("/payments")
     public ResponseEntity<?> getMyPolicyPayments(@AuthenticationPrincipal User user) {
@@ -55,14 +57,14 @@ public class PolicyPaymentController {
                     paymentMap.put("dueDate", payment.getDueDate().toString());
                     paymentMap.put("paidDate", payment.getPaidDate() != null ? payment.getPaidDate().toString() : null);
 
-                    // Determine payment status
-                    String status = "pending";
-                    if (payment.getPaidDate() != null) {
-                        status = "paid";
-                    } else if (payment.getDueDate().isBefore(java.time.LocalDate.now())) {
-                        status = "overdue";
-                    }
-                    paymentMap.put("status", status);
+                    // // Determine payment status
+                    // String status = "pending";
+                    // if (payment.getPaidDate() != null) {
+                    // status = "paid";
+                    // } else if (payment.getDueDate().isBefore(java.time.LocalDate.now())) {
+                    // status = "overdue";
+                    // }
+                    paymentMap.put("status", payment.getStatus());
 
                     return paymentMap;
                 }).collect(Collectors.toList());
@@ -77,4 +79,12 @@ public class PolicyPaymentController {
                     Map.of("error", "Failed to retrieve payment information: " + e.getMessage()));
         }
     }
+
+    @PostMapping("/process-payment/{scheduleId}")
+    public ResponseEntity<?> processPayment(@PathVariable long scheduleId) {
+
+        paymentScheduleService.processPayment(scheduleId);
+        return ResponseEntity.ok().body(Map.of("message", "Payment Payid Successfully"));
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.common.enummuration.ProductType;
+import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.domain.insuranceProduct.service.PremiumCalculationConfigDto;
 import com.example.insurance.embeddable.CoverageDetail;
@@ -36,6 +37,8 @@ public class InsurancePolicyDto {
     private Set<String> allowedClaimTypes; // Using String instead of enum
     private Map<String, ProductTranslation> translations;
 
+    private String policiyHolderName;
+    private String policyHolderEmail;
     // Premium information
     private BigDecimal premium;
     private String currency;
@@ -43,6 +46,7 @@ public class InsurancePolicyDto {
     // Payment Information
     // MONTHLY, QUARTERLY, ANNUAL
     private PaymentFrequency paymentFrequency;
+
     // Payment schedules
     private List<PaymentScheduleDto> paymentSchedules;
 

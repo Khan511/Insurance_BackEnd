@@ -12,4 +12,6 @@ public interface PaymentScheduleService {
 
     public List<PaymentSchedule> findByPolicyId(long id);
 
+    public void processPayment(Long scheduleId);
+
 }

@@ -1,7 +1,5 @@
 package com.example.insurance.domain.customerPolicy.service;
 
-import java.time.LocalDate;
-// import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -9,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -137,12 +134,6 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerPolicy.setPremium(premium);
         customerPolicy.setPaymentFrequency(buyPolicyDto.getPaymentFrequency());
 
-        // Generate payment schedule
-        // String frequency = determinePaymentFrequency(product.getProductType()); // Or
-        // get from DTO
-        // List<PaymentSchedule> paymentSchedules =
-        // paymentScheduleService.generatePaymentSchedule(customerPolicy,
-        // frequency);
         List<PaymentSchedule> paymentSchedules = paymentScheduleService.generatePaymentSchedule(customerPolicy,
                 buyPolicyDto.getPaymentFrequency());
 
@@ -193,17 +184,6 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
     @Override
     public List<InsurancePolicyDto> getAllPoliciesOfUser(String userId) {
         List<CustomerPolicy> customerPolicies = customerPolicyRepository.findByUser_UserId(userId);
-
-        // List<CustomerPolicy> policies = customerPolicies.stream()
-        // .sorted(Comparator.comparing(policy -> policy.getPaymentSchedules().stream()
-        // .map(PaymentSchedule::getDueDate)
-        // .min(Comparator.naturalOrder())
-        // .orElse(LocalDate.MAX) // Put policies without schedules at the end
-        // ))
-        // .collect(Collectors.toList());
-        // return customerPolicies.stream()
-        // .map(PolicyMapper::toDto)
-        // .toList();
 
         // Also sort payment schedules within each policy by due date
         customerPolicies.forEach(policy -> {

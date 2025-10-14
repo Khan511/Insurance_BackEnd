@@ -2,6 +2,7 @@ package com.example.insurance.infrastructure.web.custommerPolicy;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public class PaymentScheduleDto {
     private BigDecimal dueAmount;
     private String currency;
     private LocalDate dueDate;
-    private LocalDate paidDate;
+    private LocalDateTime paidDate;
     private String status; // You can add this if you have payment status
+    private String transactionId;
 }
