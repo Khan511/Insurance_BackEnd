@@ -9,10 +9,16 @@ import lombok.Data;
 @Data
 public class PaymentScheduleDto {
     private Long id;
+
     private BigDecimal dueAmount;
+
     private String currency;
+
     private LocalDate dueDate;
+
     private LocalDateTime paidDate;
+
     private String status;
+
     private String transactionId;
 }
