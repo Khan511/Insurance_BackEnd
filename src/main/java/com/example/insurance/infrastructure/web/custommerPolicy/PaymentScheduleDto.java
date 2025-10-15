@@ -13,6 +13,6 @@ public class PaymentScheduleDto {
     private String currency;
     private LocalDate dueDate;
     private LocalDateTime paidDate;
-    private String status; // You can add this if you have payment status
+    private String status;
     private String transactionId;
 }
