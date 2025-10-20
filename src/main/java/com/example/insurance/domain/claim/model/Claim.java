@@ -54,9 +54,6 @@ public class Claim {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // private CustomerPolicy policy;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
     private ClaimDocumentType claimType;

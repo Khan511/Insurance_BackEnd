@@ -14,4 +14,5 @@ public interface PaymentScheduleService {
 
     public void processPayment(Long scheduleId);
 
+    public List<PaymentSchedule> regeneratePaymentSchedule(CustomerPolicy policy, PaymentFrequency newFrequency);
 }

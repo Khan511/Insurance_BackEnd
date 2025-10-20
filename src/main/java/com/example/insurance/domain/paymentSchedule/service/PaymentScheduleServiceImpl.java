@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -82,7 +81,12 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         paymentScheduleRepository.deleteByPolicyId(policy.getId());
 
         // Generate new schedule
-        return generatePaymentSchedule(policy, newFrequency);
+        List<PaymentSchedule> newSchedules = generatePaymentSchedule(policy, newFrequency);
+
+        // save new schedules
+        List<PaymentSchedule> savedSchedules = paymentScheduleRepository.saveAll(newSchedules);
+
+        return savedSchedules;
     }
 
     @Override

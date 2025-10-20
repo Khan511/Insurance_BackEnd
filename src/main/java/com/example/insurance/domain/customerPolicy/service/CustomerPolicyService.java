@@ -3,6 +3,7 @@ package com.example.insurance.domain.customerPolicy.service;
 import java.util.List;
 
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
+import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 
@@ -16,6 +17,7 @@ public interface CustomerPolicyService {
 
     public List<CustomerPolicy> findByUserId(String userId);
 
+    public void changePaymentFrequency(Long policyId, PaymentFrequency newFrequency);
     // int calculateAge(LocalDate birthDate);
 
 }

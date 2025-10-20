@@ -59,7 +59,7 @@ public class PolicyMapper {
         dto.setEligibilityRules(product.getProduct().getEligibilityRules());
         dto.setTargetAudience(product.getProduct().getTargetAudience());
         dto.setRegions(product.getProduct().getRegion());
-        dto.setValidityPeriod(product.getProduct().getValidityPeriod());
+        dto.setValidityPeriod(product.getCoveragePeriod());
         dto.setTranslations(product.getProduct().getTranslation());
         dto.setPaymentFrequency(product.getPaymentFrequency());
 
