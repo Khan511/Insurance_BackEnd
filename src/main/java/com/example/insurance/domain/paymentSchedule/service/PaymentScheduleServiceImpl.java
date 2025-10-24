@@ -7,19 +7,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.stereotype.Service;
-
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.domain.paymentSchedule.model.PaymentSchedule;
 import com.example.insurance.domain.paymentSchedule.model.PaymentStatus;
 import com.example.insurance.domain.paymentSchedule.repository.PaymentScheduleRepository;
-
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
-
 import jakarta.persistence.EntityNotFoundException;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

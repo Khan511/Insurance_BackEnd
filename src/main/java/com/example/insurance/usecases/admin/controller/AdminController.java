@@ -2,7 +2,6 @@ package com.example.insurance.usecases.admin.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +15,9 @@ import com.example.insurance.shared.kernel.dtos.InsuraceProductDto;
 import com.example.insurance.usecases.admin.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
@@ -40,6 +41,8 @@ public class AdminController {
     @PutMapping("/update-policy")
     public ResponseEntity<?> updatePolicy(@RequestBody AdminPolicyRequestDto dto) {
         adminService.updatePolicy(dto);
+
+        log.info("Admin update policy===================================={}", dto);
 
         return ResponseEntity.ok(Map.of("message", "Policy updated successfully!"));
     }

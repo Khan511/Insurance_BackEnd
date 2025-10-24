@@ -1,7 +1,6 @@
 package com.example.insurance.domain.customerPolicy.service;
 
 import java.util.List;
-
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
 import com.example.insurance.infrastructure.web.custommerPolicy.BuyPolicyDto;

@@ -19,7 +19,7 @@ public class PolicyMapper {
         return beneficiary;
     }
 
-    private static BeneficiaryDetails mapBeneficiaryDetails(BeneficiaryDto dto) {
+    public static BeneficiaryDetails mapBeneficiaryDetails(BeneficiaryDto dto) {
         BeneficiaryDetails details = new BeneficiaryDetails();
 
         details.setFullLegalname(dto.getName());

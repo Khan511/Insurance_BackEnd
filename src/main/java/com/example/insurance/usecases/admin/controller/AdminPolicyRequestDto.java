@@ -1,14 +1,9 @@
 package com.example.insurance.usecases.admin.controller;
 
 import java.math.BigDecimal;
-
-// import java.math.BigDecimal;
-// import java.util.List;
-
-import com.example.insurance.domain.customerPolicy.model.PaymentFrequency;
+import java.util.List;
+import com.example.insurance.infrastructure.web.custommerPolicy.BeneficiaryDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.CoveragePeriodDto;
-import com.example.insurance.infrastructure.web.custommerPolicy.PremiumDto;
-
 import lombok.Data;
 
 @Data
@@ -30,4 +25,6 @@ public class AdminPolicyRequestDto {
 
     // private PaymentFrequency paymentFrequency;
     private String paymentFrequency;
+
+    private List<BeneficiaryDto> beneficiaries;
 };

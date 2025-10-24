@@ -9,6 +9,5 @@ public class BeneficiaryDto {
     private String name;
     private String relationship;
     private LocalDate dateOfBirth;
-    // private String taxCountry;
-    // private String taxIdentifier;
+
 }
