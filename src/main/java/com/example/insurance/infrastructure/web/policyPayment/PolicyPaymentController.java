@@ -54,13 +54,6 @@ public class PolicyPaymentController {
                     paymentMap.put("dueDate", payment.getDueDate().toString());
                     paymentMap.put("paidDate", payment.getPaidDate() != null ? payment.getPaidDate().toString() : null);
 
-                    // // Determine payment status
-                    // String status = "pending";
-                    // if (payment.getPaidDate() != null) {
-                    // status = "paid";
-                    // } else if (payment.getDueDate().isBefore(java.time.LocalDate.now())) {
-                    // status = "overdue";
-                    // }
                     paymentMap.put("status", payment.getStatus());
 
                     return paymentMap;

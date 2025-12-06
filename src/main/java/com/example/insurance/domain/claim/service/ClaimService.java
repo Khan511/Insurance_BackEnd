@@ -1,6 +1,8 @@
 package com.example.insurance.domain.claim.service;
 
 import java.util.List;
+
+import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.global.config.CustomUserDetails;
 import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;
 import com.example.insurance.infrastructure.web.claim.ClaimSubmissionDTO;
@@ -11,8 +13,6 @@ public interface ClaimService {
 
     List<ClaimResponseDTO> getAllClaimOfUser(String userId);
 
-    
-
-
+    public Claim findByClaimNumber(String claimNumber);
 
 }

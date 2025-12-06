@@ -123,4 +123,9 @@ public class ClaimServiceImpl implements ClaimService {
         claimRepository.save(claim);
     }
 
+    public Claim findByClaimNumber(String claimNumber) {
+        return claimRepository.findByClaimNumber(claimNumber)
+                .orElseThrow(() -> new RuntimeException("Claim not found!"));
+    }
+
 }

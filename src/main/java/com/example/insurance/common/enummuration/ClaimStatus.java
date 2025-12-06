@@ -20,6 +20,10 @@ public enum ClaimStatus {
     // Approved for payment
     APPROVED,
 
+    REJECTED,
+
+    PROCESSING,
+
     // Payment processed
     PAYMENT_PROCESSED,
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 // import java.util.UUID;
 
+import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "customers")
 // public class Customer extends User {
-public class Customer {
+public class Customer extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,6 +37,7 @@ public class Customer {
     @Embedded
     private PersonName name;
 
+    // This is customer UUID(gonna change it Custommer_uuid_id)
     @Column(name = "user_uuid_id")
     private String userId;
 

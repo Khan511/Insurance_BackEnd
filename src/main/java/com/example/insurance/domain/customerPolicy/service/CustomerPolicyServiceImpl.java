@@ -58,51 +58,54 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         InsuranceProduct product = insuranceProductRepository.findById(buyPolicyDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Insurance Product not found"));
 
-        System.out.println("Loaded Product ID: " + product.getId());
-        System.out.println("Product Type: " + product.getProductType());
-        System.out.println("Base Premium: " + product.getBasePremium().getAmount());
-        System.out.println("Formula: " + product.getCalculationConfig().getFormula());
-
         CustomerPolicy customerPolicy = new CustomerPolicy();
 
-        // Set customer information
-        Customer customer = new Customer();
+        // Check if customer already exists for this user
+        Customer customer = customerRepository.findByUserId(user.getUserId())
+                .orElseGet(() -> {
 
-        // Initialize the embedded name field;
-        PersonName name = new PersonName();
-        name.setFirstName(user.getName().getFirstName());
-        name.setLastName(user.getName().getLastName());
-        customer.setName(name);
+                    // Set customer information
+                    Customer newCustomer = new Customer();
 
-        customer.setUserId(UUID.randomUUID().toString());
-        customer.setEmail(user.getEmail());
-        // customer.setDateOfBirth(user.getDateOfBirth());
+                    // Initialize the embedded name field;
+                    PersonName name = new PersonName();
+                    name.setFirstName(user.getName().getFirstName());
+                    name.setLastName(user.getName().getLastName());
+                    newCustomer.setName(name);
 
-        // Set Government ID
-        GovernmentId governmentId = new GovernmentId();
-        GovernmentIdDto govIdDto = buyPolicyDto.getCustomer().getGovernmentId();
+                    newCustomer.setUserId(user.getUserId());
+                    newCustomer.setEmail(user.getEmail());
+                    newCustomer.setDateOfBirth(user.getDateOfBirth());
 
-        governmentId.setIdType(buyPolicyDto.getCustomer().getGovernmentId().getIdType());
-        governmentId.setIssuingCountry(govIdDto.getIssuingCountry());
-        governmentId.setExpirationDate(govIdDto.getExpirationDate());
+                    // Set Government ID
+                    GovernmentId governmentId = new GovernmentId();
+                    GovernmentIdDto govIdDto = buyPolicyDto.getCustomer().getGovernmentId();
 
-        // Create original ID temporarily
-        String rawIdNumber = govIdDto.getIdNumber();
-        governmentId.setIdNumber(rawIdNumber);// This will auto generate masskednumber
+                    governmentId.setIdType(buyPolicyDto.getCustomer().getGovernmentId().getIdType());
+                    governmentId.setIssuingCountry(govIdDto.getIssuingCountry());
+                    governmentId.setExpirationDate(govIdDto.getExpirationDate());
 
-        // Create secure hash(don't store raw ID)
-        governmentId.setEncryptedHash(passwordEncoder.encode(rawIdNumber + govIdDto.getIssuingCountry()));
+                    // Create original ID temporarily
+                    String rawIdNumber = govIdDto.getIdNumber();
+                    governmentId.setIdNumber(rawIdNumber);// This will auto generate masskednumber
 
-        // Clear sensitive data from memory ASAP
-        Arrays.fill(rawIdNumber.toCharArray(), '\0');
+                    // Create secure hash(don't store raw ID)
+                    governmentId.setEncryptedHash(passwordEncoder.encode(rawIdNumber + govIdDto.getIssuingCountry()));
 
-        customer.setGovernmentId(governmentId);
-        customerPolicy.setPolicyHolder(customer);
+                    // Clear sensitive data from memory ASAP
+                    Arrays.fill(rawIdNumber.toCharArray(), '\0');
 
-        // Create contact information
-        if (buyPolicyDto.getCustomer().getContactInfo() != null) {
-            customer.setContactInfo(ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
-        }
+                    newCustomer.setGovernmentId(governmentId);
+                    // customerPolicy.setPolicyHolder(customer);
+
+                    // Create contact information
+                    if (buyPolicyDto.getCustomer().getContactInfo() != null) {
+                        newCustomer.setContactInfo(
+                                ContactInfoMapper.toEntity(buyPolicyDto.getCustomer().getContactInfo()));
+                    }
+
+                    return newCustomer;
+                });
 
         customerPolicy.setUser(user);
         customerPolicy.setPolicyNumber(product.getPolicyNumber());
