@@ -15,6 +15,7 @@ import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.usecases.admin.service.AdminService;
 import com.example.insurance.usecases.admin.service.ApproveClaimRequest;
+import com.example.insurance.usecases.admin.service.ClaimSortRequest;
 import com.example.insurance.usecases.admin.service.MarkAsPaidRequest;
 import com.example.insurance.usecases.admin.service.PaymentSummaryDto;
 import com.example.insurance.usecases.admin.service.RejectClaimRequest;
@@ -37,8 +38,8 @@ public class AdminController {
     }
 
     @GetMapping("/get-all-claims")
-    public ResponseEntity<?> getAllClaims() {
-        List<ClaimResponseDTO> getAllClaims = adminService.getAllClaims();
+    public ResponseEntity<?> getAllClaims(ClaimSortRequest request) {
+        List<ClaimResponseDTO> getAllClaims = adminService.getAllClaims(request);
 
         return ResponseEntity.ok(getAllClaims);
     }

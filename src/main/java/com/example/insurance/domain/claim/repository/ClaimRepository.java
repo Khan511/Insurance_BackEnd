@@ -2,8 +2,9 @@ package com.example.insurance.domain.claim.repository;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.example.insurance.domain.claim.model.Claim;
 
@@ -15,4 +16,8 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
     boolean existsByClaimNumber(String claimNumber);
 
     Optional<Claim> findByClaimNumber(String claimNumber);
+
+    // Custom query with dynamic sorting
+    @Query("SELECT c FROM Claim c")
+    List<Claim> findAllWithSorting(Sort sort);
 }

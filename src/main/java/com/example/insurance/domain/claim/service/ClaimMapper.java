@@ -2,7 +2,6 @@
 package com.example.insurance.domain.claim.service;
 
 import java.util.List;
-
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.claim.model.IncidentDetails;
 import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;

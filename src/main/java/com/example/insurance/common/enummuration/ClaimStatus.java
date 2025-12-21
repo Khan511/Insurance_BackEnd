@@ -1,41 +1,3 @@
-// package com.example.insurance.common.enummuration;
-
-// public enum ClaimStatus {
-
-//     // Initial state after claim submission
-//     PENDING,
-
-//     // Claim is being reviewed by adjusters
-//     UNDER_REVIEW,
-
-//     UNDER_INVESTIGATION,
-
-//     // Approved for payment
-//     APPROVED,
-
-//     PAID,
-
-//     // Claim rejected
-//     REJECTED,
-
-//     // Claim withdrawn by customer
-//     WITHDRAWN,
-
-//     // Post-payment closure
-//     CLOSED,
-
-//     CANCELLED;
-
-//     // Optional: Business logic methods
-//     public boolean isActive() {
-//         return this != CLOSED && this != REJECTED && this != WITHDRAWN;
-//     }
-
-//     public boolean isTerminal() {
-//         return this == REJECTED || this == PAID || this == CLOSED;
-//     }
-
-// }
 
 package com.example.insurance.common.enummuration;
 
@@ -52,7 +14,7 @@ public enum ClaimStatus {
 
     // Optional: Business logic methods
     public boolean isActive() {
-        return this != CLOSED && this != REJECTED && this != WITHDRAWN && this != CANCELLED;
+        return this != CLOSED && this != REJECTED && this != WITHDRAWN && this != CANCELLED && this != PAID;
     }
 
     public boolean isTerminal() {

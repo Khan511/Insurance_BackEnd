@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -60,10 +61,23 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<ClaimResponseDTO> getAllClaims() {
-        List<Claim> getAllClaims = claimRepository.findAll();
+    public List<ClaimResponseDTO> getAllClaims(ClaimSortRequest sortRequest) {
 
-        return getAllClaims.stream().map((claim) -> ClaimMapper.mapToDto(claim)).toList();
+        // Determine sort direction
+        Sort.Direction direction = "DESC".equalsIgnoreCase(sortRequest.getSortDirection()) ? Sort.Direction.ASC
+                : Sort.Direction.DESC;
+
+        // Determine sort field (map from request field to entity field)
+        String sortField = AdminMapper.mapSortField(sortRequest.getSortBy());
+
+        // Create Sort Object
+        Sort sort = Sort.by(direction, sortField);
+
+        // Get sorted claim from repository
+        // List<Claim> getAllClaims = claimRepository.findAll();
+        List<Claim> allCaims = claimRepository.findAllWithSorting(sort);
+
+        return allCaims.stream().map((claim) -> ClaimMapper.mapToDto(claim)).toList();
     }
 
     @Override

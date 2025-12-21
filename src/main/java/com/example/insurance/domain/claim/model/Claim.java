@@ -3,6 +3,7 @@ package com.example.insurance.domain.claim.model;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -208,8 +209,8 @@ public class Claim extends AuditEntity {
     }
 
     /**
-     * Calculate processing time in days
-     * Uses createdAt (submission date) to closed date or current time
+     * Calculate processing time in calendar days
+     * Simplified version using LocalDate only (ignores time of day)
      */
     public long getProcessingDays() {
         LocalDateTime submissionDate = getSubmissionDate();
@@ -217,8 +218,16 @@ public class Claim extends AuditEntity {
             return 0;
         }
 
-        LocalDateTime endDate = closedDate != null ? closedDate : LocalDateTime.now();
-        return java.time.Duration.between(submissionDate, endDate).toDays();
+        LocalDate submissionLocalDate = submissionDate.toLocalDate();
+        LocalDate endLocalDate;
+
+        if (closedDate != null) {
+            endLocalDate = closedDate.toLocalDate();
+        } else {
+            endLocalDate = LocalDate.now();
+        }
+
+        return java.time.temporal.ChronoUnit.DAYS.between(submissionLocalDate, endLocalDate);
     }
 
     /**
