@@ -1,5 +1,6 @@
 package com.example.insurance.domain.claim.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.example.insurance.common.enummuration.IncidentType;
 import com.example.insurance.embeddable.GeoCooordinates;
@@ -34,6 +35,9 @@ public class IncidentDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "incident_type", length = 50)
     private IncidentType type;
+
+    @Column(name = "claim_amount")
+    private BigDecimal claimAmount;
 
     @Embedded
     @AttributeOverrides({

@@ -1,51 +1,71 @@
+// package com.example.insurance.common.enummuration;
+
+// public enum ClaimStatus {
+
+//     // Initial state after claim submission
+//     PENDING,
+
+//     // Claim is being reviewed by adjusters
+//     UNDER_REVIEW,
+
+//     UNDER_INVESTIGATION,
+
+//     // Approved for payment
+//     APPROVED,
+
+//     PAID,
+
+//     // Claim rejected
+//     REJECTED,
+
+//     // Claim withdrawn by customer
+//     WITHDRAWN,
+
+//     // Post-payment closure
+//     CLOSED,
+
+//     CANCELLED;
+
+//     // Optional: Business logic methods
+//     public boolean isActive() {
+//         return this != CLOSED && this != REJECTED && this != WITHDRAWN;
+//     }
+
+//     public boolean isTerminal() {
+//         return this == REJECTED || this == PAID || this == CLOSED;
+//     }
+
+// }
+
 package com.example.insurance.common.enummuration;
 
 public enum ClaimStatus {
-
-    // Initial state after claim submission
     PENDING,
-
-    // Claim is being reviewed by adjusters
     UNDER_REVIEW,
-
-    // Additional information requested
-    AWAITING_DOCUMENTATION,
-
-    // Expert evaluation needed
-    REQUIRES_EXPERT_ASSESSMENT,
-
-    // Fraud detection triggered
-    FRAUD_INVESTIGATION,
-
-    // Approved for payment
+    UNDER_INVESTIGATION,
     APPROVED,
-
+    PAID,
     REJECTED,
-
-    PROCESSING,
-
-    // Payment processed
-    PAYMENT_PROCESSED,
-
-    // Claim rejected
-    DENIED,
-
-    // Claim withdrawn by customer
     WITHDRAWN,
-
-    // Post-payment closure
     CLOSED,
-
-    // Reopened for reevaluation
-    REOPENED;
+    CANCELLED;
 
     // Optional: Business logic methods
     public boolean isActive() {
-        return this != CLOSED && this != DENIED && this != WITHDRAWN;
+        return this != CLOSED && this != REJECTED && this != WITHDRAWN && this != CANCELLED;
     }
 
-    public boolean requiresAttention() {
-        return this == AWAITING_DOCUMENTATION || this == REQUIRES_EXPERT_ASSESSMENT;
+    public boolean isTerminal() {
+        return this == REJECTED || this == PAID || this == CLOSED || this == WITHDRAWN || this == CANCELLED;
+    }
 
+    // Helper to check if status change requires approval amount
+    public boolean requiresAmount() {
+        return this == APPROVED;
+    }
+
+    // Helper to check if status change requires reason
+    public boolean requiresReason() {
+        return this == REJECTED || this == CANCELLED;
     }
 }

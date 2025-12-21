@@ -37,6 +37,7 @@ public class PolicyMapper {
         BeneficiaryDto dto = new BeneficiaryDto();
 
         dto.setName(entity.getDetails().getFullLegalname());
+
         dto.setRelationship(entity.getDetails().getRelationship().name());
         dto.setDateOfBirth(entity.getDetails().getDateOfBirth());
 

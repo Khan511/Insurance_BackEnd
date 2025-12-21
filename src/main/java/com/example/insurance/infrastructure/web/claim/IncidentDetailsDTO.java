@@ -1,5 +1,6 @@
 package com.example.insurance.infrastructure.web.claim;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.validation.Valid;
@@ -25,6 +26,8 @@ public class IncidentDetailsDTO {
     @NotBlank(message = "Incident type is required")
     @Size(max = 50, message = "Incident type cannot exceed 50 characters")
     private String type; // Enum name string
+
+    private BigDecimal claimAmount;
 
     @NotNull(message = "Location details are required")
     @Valid

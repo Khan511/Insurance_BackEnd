@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.usecases.admin.service.AdminService;
+import com.example.insurance.usecases.admin.service.ApproveClaimRequest;
+import com.example.insurance.usecases.admin.service.MarkAsPaidRequest;
 import com.example.insurance.usecases.admin.service.PaymentSummaryDto;
+import com.example.insurance.usecases.admin.service.RejectClaimRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +46,6 @@ public class AdminController {
     @PutMapping("/update-policy")
     public ResponseEntity<?> updatePolicy(@RequestBody AdminPolicyRequestDto dto) {
         adminService.updatePolicy(dto);
-
-        log.info("Admin update policy===================================={}", dto);
 
         return ResponseEntity.ok(Map.of("message", "Policy updated successfully!"));
     }
@@ -76,6 +78,60 @@ public class AdminController {
         AdminCustommersDto getCustomerByUserId = adminService.getCustomerByUserId(customerId);
 
         return ResponseEntity.ok().body(getCustomerByUserId);
+    }
+
+    @PatchMapping("/update-customers")
+    public ResponseEntity<?> updateCustomer(@RequestBody UpdateCustomerDto dto) {
+
+        AdminCustommersDto upatedCustomer = adminService.updateCustomer(dto);
+        return ResponseEntity.ok(upatedCustomer);
+    }
+
+    @PatchMapping("/claims/{claimId}/approve")
+    public ResponseEntity<?> approveClaim(@PathVariable Long claimId,
+            @RequestBody ApproveClaimRequest request) {
+
+        try {
+            adminService.approveClaim(claimId, request);
+
+            return ResponseEntity.ok(Map.of("message", "Claim approved successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (RuntimeException e) {
+            log.error("=======================Error approving claim {}: {}", claimId, e.getMessage());
+            return ResponseEntity.internalServerError().body(Map.of("error", "Failed to approve claim"));
+        }
+    }
+
+    @PatchMapping("/claims/{claimId}/reject")
+    public ResponseEntity<?> rejectClaim(
+            @PathVariable Long claimId,
+            @RequestBody RejectClaimRequest request) {
+
+        try {
+            adminService.rejectClaim(claimId, request);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Claim rejected successfully!",
+                    "claimId", claimId));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (RuntimeException e) {
+            log.error("Error rejecting claim {}: {}", claimId, e.getMessage());
+            return ResponseEntity.internalServerError().body(Map.of("error", "Failed to reject claim"));
+        }
+    }
+
+    @PatchMapping("/claims/{claimId}/mark-paid")
+    public ResponseEntity<?> markClaimAsPaid(
+            @PathVariable Long claimId,
+            @RequestBody MarkAsPaidRequest request) {
+
+        adminService.markClaimAsPaid(claimId, request);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Claim marked as paid successfully!",
+                "claimId", claimId));
     }
 
 }

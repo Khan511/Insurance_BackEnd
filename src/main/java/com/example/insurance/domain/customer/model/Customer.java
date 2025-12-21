@@ -41,6 +41,9 @@ public class Customer extends AuditEntity {
     @Column(name = "user_uuid_id")
     private String userId;
 
+    // @Column(name = "account_status")
+    // private String accountStatus;
+
     @Column(name = "email", unique = false, nullable = false)
     private String email;
 

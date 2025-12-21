@@ -1,5 +1,6 @@
 package com.example.insurance.infrastructure.web.claim;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import jakarta.validation.Valid;
@@ -33,4 +34,5 @@ public class ClaimSubmissionDTO {
     // @NotEmpty(message = "At least one document is required")
     // @Valid
     private List<DocumentAttachmentDTO> documents;
+
 }
