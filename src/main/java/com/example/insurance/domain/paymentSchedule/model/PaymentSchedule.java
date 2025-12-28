@@ -52,8 +52,56 @@ public class PaymentSchedule {
     @Column(name = "status", length = 20)
     private PaymentStatus status;
 
+    @Column(name = "cancellation_date")
+    private LocalDate cancellationDate;
+
+    @Column(name = "cancelled_by")
+    private String cancelledBy;
+
     // from payment gateway
     @Column(name = "transaction_id", unique = true)
     private String transactionId;
+
+    @Override
+    public String toString() {
+        return "Claim{" +
+                "id=" + id +
+                ", plicy='" + policy + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
+    // Business method to cancel a payment schedule
+    public void cancel(String cancelledByUser) {
+        // Only set to CANCELLED if not already PAID
+        if (this.status != PaymentStatus.PAID) {
+            this.status = PaymentStatus.CANCELLED;
+            this.cancellationDate = LocalDate.now();
+            this.cancelledBy = cancelledByUser;
+        }
+    }
+
+    // Business method to reactivate a cancelled payment schedule
+    public void reactivate() {
+        if (this.status == PaymentStatus.CANCELLED) {
+            this.status = PaymentStatus.PENDING;
+            this.cancellationDate = null;
+            this.cancelledBy = null;
+        }
+    }
+
+    // Check if payment can be cancelled
+    public boolean canBeCancelled() {
+        // Can cancel any schedule except PAID ones
+        return this.status != PaymentStatus.PAID &&
+                this.status != PaymentStatus.CANCELLED;
+    }
+
+    // Check if payment can be reactivated
+    public boolean canBeReactivated() {
+        return this.status == PaymentStatus.CANCELLED &&
+                this.dueDate != null &&
+                this.dueDate.isAfter(LocalDate.now());
+    }
 
 }

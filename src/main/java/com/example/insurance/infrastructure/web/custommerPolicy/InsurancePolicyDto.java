@@ -1,6 +1,8 @@
 package com.example.insurance.infrastructure.web.custommerPolicy;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,19 +32,37 @@ public class InsurancePolicyDto {
     private Map<String, String> eligibilityRules;
     private PolicyStatus status;
 
+    private String statusChangeNotes;
+
     private List<String> targetAudience;
     private List<String> regions;
     private CategoryDto category;
     private PolicyPeriod validityPeriod;
-    private Set<String> allowedClaimTypes; // Using String instead of enum
+    private Set<String> allowedClaimTypes;
     private Map<String, ProductTranslation> translations;
 
-    private String policiyHolderName;
+    private String policyHolderName;
     private String policyHolderEmail;
 
     // Premium information
     private BigDecimal premium;
     private String currency;
+
+    // Cancellation Fields
+    private String cancellationReason;
+    private LocalDate cancellationDate;
+    private String cancelledBy;
+
+    // AUDIT FIELDS
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
+
+    // RELATIONSHIP FIELDS:
+    private String userId;
+    private Long policyHolderId;
+    private Long productId;
 
     // Payment Information
     // MONTHLY, QUARTERLY, ANNUAL

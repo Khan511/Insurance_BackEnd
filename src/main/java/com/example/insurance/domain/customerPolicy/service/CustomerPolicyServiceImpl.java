@@ -1,5 +1,6 @@
 package com.example.insurance.domain.customerPolicy.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -35,7 +36,9 @@ import com.example.insurance.shared.kernel.embeddables.PersonName;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerPolicyServiceImpl implements CustomerPolicyService {
@@ -71,6 +74,9 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
                     name.setFirstName(user.getName().getFirstName());
                     name.setLastName(user.getName().getLastName());
                     newCustomer.setName(name);
+
+                    String fullName = user.getName().getFirstName() + " "
+                            + user.getName().getLastName();
 
                     newCustomer.setUserId(user.getUserId());
                     newCustomer.setEmail(user.getEmail());
@@ -110,7 +116,12 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerPolicy.setPolicyNumber(product.getPolicyNumber());
         customerPolicy.setPolicyHolder(customer);
         customerPolicy.setProduct(product);
-        customerPolicy.setStatus(PolicyStatus.ACTIVE);
+        customerPolicy.setCreatedBy(user.getName().getFirstName() + " " + user.getName().getLastName());
+
+        // Determine status based on effective date
+        LocalDate effectiveDate = buyPolicyDto.getCoveragePeriod().getEffectiveDate();
+        LocalDate currentDate = LocalDate.now();
+        customerPolicy.setStatus(effectiveDate.isAfter(currentDate) ? PolicyStatus.INACTIVE : PolicyStatus.ACTIVE);
 
         // Set coverage period
         PolicyPeriod coveragePeriod = new PolicyPeriod();
@@ -136,10 +147,13 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         customerPolicy.setPremium(premium);
         customerPolicy.setPaymentFrequency(buyPolicyDto.getPaymentFrequency());
 
-        List<PaymentSchedule> paymentSchedules = paymentScheduleService.generatePaymentSchedule(customerPolicy,
-                buyPolicyDto.getPaymentFrequency());
-
-        customerPolicy.setPaymentSchedules(paymentSchedules);
+        if (customerPolicy.getPaymentSchedules() == null || customerPolicy.getPaymentSchedules().isEmpty()) {
+            List<PaymentSchedule> paymentSchedules = paymentScheduleService.generatePaymentSchedule(customerPolicy,
+                    buyPolicyDto.getPaymentFrequency());
+            customerPolicy.setPaymentSchedules(paymentSchedules);
+        } else {
+            log.warn("Payment schedules already exist for policy. Skipping generation.");
+        }
 
         // Add policy to customer(establishes bidirectional relationship)
         customer.addPolicy(customerPolicy);

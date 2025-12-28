@@ -1,8 +1,11 @@
 package com.example.insurance.domain.auditing.domain;
 
 import java.time.Instant;
+
+import org.springframework.data.annotation.CreatedBy;
 // import java.util.UUID;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
@@ -13,8 +16,10 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditEntity {
@@ -30,6 +35,14 @@ public abstract class AuditEntity {
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @CreatedBy
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @Version
     private Long version; // for optimistic locking

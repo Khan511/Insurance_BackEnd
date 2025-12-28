@@ -4,13 +4,14 @@ package com.example.insurance.common.enummuration;
 public enum ClaimStatus {
     PENDING,
     UNDER_REVIEW,
-    UNDER_INVESTIGATION,
+    PAUSED,
     APPROVED,
     PAID,
     REJECTED,
     WITHDRAWN,
     CLOSED,
-    CANCELLED;
+    CANCELLED,
+    EXPIRED;
 
     // Optional: Business logic methods
     public boolean isActive() {

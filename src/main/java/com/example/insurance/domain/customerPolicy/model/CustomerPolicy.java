@@ -1,5 +1,6 @@
 package com.example.insurance.domain.customerPolicy.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +52,19 @@ public class CustomerPolicy extends AuditEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // @Column(name = "user_id")
+    // private String userId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "policy_holder_id")
     private Customer policyHolder;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private InsuranceProduct product;
+
+    // @Column(name = "product_id")
+    // private Long productId;
 
     @Embedded
     private PolicyPeriod coveragePeriod;
@@ -68,14 +76,23 @@ public class CustomerPolicy extends AuditEntity {
     @Column(name = "payment_frequency")
     private PaymentFrequency paymentFrequency;
 
+    @Column(name = "cancellation_reason")
+    private String cancellationReason;
+
+    @Column(name = "cancellation_date")
+    private LocalDate cancellationDate;
+
+    @Column(name = "cancelled_by")
+    private String cancelledBy;
+
     @Enumerated(EnumType.STRING)
     private PolicyStatus status;
 
+    @Column(name = "status_change_notes")
+    private String statusChangeNotes;
+
     @OneToMany(mappedBy = "customerPolicy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PolicyBeneficiary> beneficiaries = new ArrayList<>();
-
-    // @OneToMany(mappedBy = "policy")
-    // private List<Claim> claims;
 
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
     private List<PaymentSchedule> paymentSchedules;

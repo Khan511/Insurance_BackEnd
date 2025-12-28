@@ -1,6 +1,7 @@
 package com.example.insurance.usecases.admin.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import com.example.insurance.infrastructure.web.custommerPolicy.BeneficiaryDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.CoveragePeriodDto;
@@ -9,21 +10,18 @@ import lombok.Data;
 @Data
 public class AdminPolicyRequestDto {
     private Long id;
-    // private String policyNumber;
     private String status;
-    // private CustomerDto customer;
-    // private String product;
+
     private CoveragePeriodDto validityPeriod;
     private BigDecimal premium;
-    // private List<BeneficiaryDto> beneficiaries;
 
-    // private BigDecimal vehicleValue; // For auto insurance
-    // private Integer drivingExperience; // For auto insurance
-    // private String healthCondition; // For life insurance
-    // private BigDecimal propertyValue; // For home insurance
-    // private String propertyLocation; // For home insurance
+    private String cancellationReason;
+    private String cancelledBy;
+    private String statusChangeNotes;
+    private String updatedBy;
 
-    // private PaymentFrequency paymentFrequency;
+    private Boolean isCancelling;
+
     private String paymentFrequency;
 
     private List<BeneficiaryDto> beneficiaries;

@@ -21,4 +21,9 @@ public class PaymentScheduleDto {
     private String status;
 
     private String transactionId;
+
+    private LocalDate cancellationDate;
+    private String cancelledBy;
+
+    private Long policyId;
 }

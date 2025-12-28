@@ -75,6 +75,15 @@ public class Claim extends AuditEntity {
     @Column(name = "rejection_reason", length = 1000)
     private String rejectionReason;
 
+    @Column(name = "cancellation_reason", length = 1000)
+    private String cancellationReason;
+
+    @Column(name = "cancelled_by")
+    private String cancelledBy;
+
+    @Column(name = "cancellation_date")
+    private LocalDate cancellationDate;
+
     /**
      * Date when the claim amount was paid to the customer
      */
@@ -168,7 +177,6 @@ public class Claim extends AuditEntity {
     }
 
     // ========== BUSINESS METHODS ==========
-
     /**
      * Mark claim as approved
      */
@@ -288,6 +296,14 @@ public class Claim extends AuditEntity {
             default:
                 return false;
         }
+    }
+
+    public void cancel(String cancelledByUser, String reason) {
+        this.status = ClaimStatus.CANCELLED;
+        this.cancellationReason = reason;
+        this.cancelledBy = cancelledByUser;
+        this.cancellationDate = LocalDate.now();
+        this.closedDate = LocalDateTime.now();
     }
 
     public boolean isValidIncidentType() {

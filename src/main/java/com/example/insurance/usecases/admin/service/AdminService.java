@@ -22,6 +22,8 @@ public interface AdminService {
 
     PaymentSummaryDto getAllPayments();
 
+    ClaimResponseDTO getClaimDetails(Long claimId);
+
     List<AdminCustommersDto> getAllCustomers();
 
     AdminCustommersDto getCustomerByUserId(String userId);

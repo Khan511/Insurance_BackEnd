@@ -44,6 +44,13 @@ public class AdminController {
         return ResponseEntity.ok(getAllClaims);
     }
 
+    @GetMapping("/claim-details/{claimId}")
+    public ResponseEntity<?> getClaimDetails(@PathVariable Long claimId) {
+        ClaimResponseDTO claimDetails = adminService.getClaimDetails(claimId);
+
+        return ResponseEntity.ok().body(claimDetails);
+    }
+
     @PutMapping("/update-policy")
     public ResponseEntity<?> updatePolicy(@RequestBody AdminPolicyRequestDto dto) {
         adminService.updatePolicy(dto);
