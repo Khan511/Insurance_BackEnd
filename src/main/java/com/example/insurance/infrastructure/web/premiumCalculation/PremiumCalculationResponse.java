@@ -20,7 +20,6 @@ public class PremiumCalculationResponse {
     private BigDecimal amount;
     private String currency;
     private BigDecimal installmentAmount;
-    // private String paymentFrequency;
     private PaymentFrequency paymentFrequency;
     private String formulaUsed;
 

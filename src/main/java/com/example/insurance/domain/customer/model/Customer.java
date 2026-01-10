@@ -3,7 +3,6 @@ package com.example.insurance.domain.customer.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-// import java.util.UUID;
 
 import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
@@ -16,9 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -40,9 +37,6 @@ public class Customer extends AuditEntity {
     // This is customer UUID(gonna change it Custommer_uuid_id)
     @Column(name = "user_uuid_id")
     private String userId;
-
-    // @Column(name = "account_status")
-    // private String accountStatus;
 
     @Column(name = "email", unique = false, nullable = false)
     private String email;

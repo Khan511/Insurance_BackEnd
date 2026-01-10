@@ -10,7 +10,6 @@ import lombok.Data;
 public class PremiumCalculationRequest {
     private Long productId;
     private Map<String, Object> riskFactors;
-    // private String paymentFrequency;
     private PaymentFrequency paymentFrequency;
 
 }

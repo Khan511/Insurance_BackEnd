@@ -17,6 +17,5 @@ public interface CustomerPolicyService {
     public List<CustomerPolicy> findByUserId(String userId);
 
     public void changePaymentFrequency(Long policyId, PaymentFrequency newFrequency);
-    // int calculateAge(LocalDate birthDate);
 
 }

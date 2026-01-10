@@ -22,5 +22,5 @@ public class UpdateCustomerDto {
     String customerBillingAddressCity;
     String customerBillingAddressPostalCode;
     String customerBillingAddressCountry;
-    // String status;
+
 }

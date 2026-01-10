@@ -3,11 +3,8 @@ package com.example.insurance.domain.policyBeneficiary.model;
 import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.embeddable.BeneficiaryDetails;
-// import com.example.insurance.embeddable.TaxIdentifierValidator;
-// import jakarta.persistence.AttributeOverride;
-// import jakarta.persistence.AttributeOverrides;
+
 import jakarta.persistence.Embedded;
-// import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

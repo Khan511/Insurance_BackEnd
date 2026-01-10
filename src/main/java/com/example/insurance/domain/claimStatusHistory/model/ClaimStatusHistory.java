@@ -44,9 +44,6 @@ public class ClaimStatusHistory {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
-    // @Embedded
-    // private SystemContext systemContext; // For distributed tracing
-
     // Required by JPA
     protected ClaimStatusHistory() {
     }

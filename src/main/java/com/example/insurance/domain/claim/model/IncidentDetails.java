@@ -3,9 +3,7 @@ package com.example.insurance.domain.claim.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.example.insurance.common.enummuration.IncidentType;
-import com.example.insurance.embeddable.GeoCooordinates;
 import com.example.insurance.embeddable.ThirdPartyDetails;
-import com.example.insurance.embeddable.WeatherConditions;
 import com.example.insurance.shared.kernel.embeddables.Address;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -61,12 +59,6 @@ public class IncidentDetails {
 
     @Embedded
     private ThirdPartyDetails thirdPartyDetails;
-
-    // @Embedded
-    // private GeoCooordinates coordinates;
-
-    // @Embedded
-    // private WeatherConditions weatherCondition;
 
     // Business login
     public boolean isRepostedWithin24Hourse() {

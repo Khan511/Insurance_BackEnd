@@ -1,8 +1,6 @@
 package com.example.insurance.usecases.admin.controller;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +10,6 @@ import lombok.Setter;
 public class AdminCustommersDto {
 
     String customerId;
-    // String customerName;
     String customerFirstname;
     String customerLastname;
     String email;

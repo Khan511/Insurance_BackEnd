@@ -85,23 +85,3 @@ public class AdminMapper {
         return "createdAt";
     }
 }
-// public static String mapSortField(String requestField) {
-// switch (requestField.toLowerCase()) {
-// case "paiddate":
-// return "paidDate";
-// case "approveddate":
-// return "approvedDate";
-// case "rejecteddate":
-// return "rejectedDate";
-// case "approvedamount":
-// return "approvedAmount";
-// case "processingdays":
-// return "processingDays";
-// case "submissiondate":
-// return "createdAt";
-// default:
-// return "createdAt";
-// }
-// }
-
-// }

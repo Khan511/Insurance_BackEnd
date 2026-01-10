@@ -68,7 +68,7 @@ public class userServiceImpl implements UserService {
         // Create and send verification email
         try {
             userVerificationService.createVerificationToken(savedUser);
-            log.info("Verification ========================================= email sent to: {}", email);
+
         } catch (Exception e) {
 
             System.err.println("Failed to send verification email: " + e.getMessage());

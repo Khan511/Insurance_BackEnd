@@ -1,6 +1,5 @@
 package com.example.insurance.infrastructure.web.claim;
 
-import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import jakarta.validation.Valid;

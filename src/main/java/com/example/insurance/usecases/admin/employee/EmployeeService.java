@@ -192,32 +192,4 @@ public class EmployeeService {
         return prefix + String.format("%04d", count);
     }
 
-    // private RoleType determineRoleFromJobTitle(String jobTitle, RoleType
-    // requestedRole) {
-    // // If role is specified in DTO, use it
-    // if (requestedRole != null) {
-    // return requestedRole;
-    // }
-
-    // // Default mapping based on job title - only 4 roles now
-    // return switch (jobTitle.toUpperCase()) {
-    // case "AGENT", "SALES AGENT", "SALES REPRESENTATIVE", "BROKER" ->
-    // RoleType.AGENT;
-    // case "CLAIM MANAGER", "CLAIMS MANAGER", "CLAIMS ADJUSTER", "CLAIMS
-    // SUPERVISOR" -> RoleType.CLAIM_MANAGER;
-    // case "ADMIN", "SYSTEM ADMINISTRATOR", "ADMINISTRATOR", "SUPER ADMIN" ->
-    // RoleType.ADMIN;
-
-    // // Map legacy/old roles to appropriate new roles:
-    // case "UNDERWRITER", "RISK ASSESSOR" -> RoleType.AGENT; // Underwriters become
-    // AGENTS
-    // case "AUDITOR", "COMPLIANCE OFFICER" -> RoleType.ADMIN; // Auditors become
-    // ADMINS
-    // case "CUSTOMER SUPPORT", "SUPPORT AGENT", "HELPDESK" -> RoleType.AGENT; //
-    // Support becomes AGENT
-
-    // // Default fallback - most employees should be AGENTS
-    // default -> RoleType.AGENT;
-    // };
-    // }
 }

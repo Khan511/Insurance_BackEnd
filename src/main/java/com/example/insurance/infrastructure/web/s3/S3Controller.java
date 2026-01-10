@@ -249,11 +249,4 @@ public class S3Controller {
         return fileKey;
     }
 
-    // private String getFileExtension(String filename) {
-    // int lastIndex = filename.lastIndexOf('.');
-    // if (lastIndex == -1) {
-    // return "";
-    // }
-    // return filename.substring(lastIndex + 1);
-    // }
 }

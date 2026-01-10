@@ -14,7 +14,6 @@ public interface AdminService {
     List<InsurancePolicyDto> getAllPolicies();
 
     List<ClaimResponseDTO> getAllClaims(ClaimSortRequest request);
-    // List<ClaimResponseDTO> getAllClaims();
 
     void updatePolicy(AdminPolicyRequestDto dto);
 

@@ -17,7 +17,6 @@ import lombok.Setter;
 public class AdminClaimUpdateRequest {
 
     private String policyNumber;
-    // private String policeReportNumber;
 
     private String claimNumber;
     private String claimId;

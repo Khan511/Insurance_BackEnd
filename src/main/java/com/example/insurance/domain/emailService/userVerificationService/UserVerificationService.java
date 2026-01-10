@@ -1,16 +1,12 @@
 package com.example.insurance.domain.emailService.userVerificationService;
 
-// package com.example.insurance.domain.user.service.verification;
-
 import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.emailService.emailVerificationToken.VerificationToken;
 import com.example.insurance.domain.emailService.service.EmailService;
 import com.example.insurance.domain.emailService.verificationTokenRepo.VerificationTokenRepository;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
-// import com.example.insurance.domain.verification.VerificationToken;
-// import com.example.insurance.domain.verification.VerificationTokenRepository;
-// import com.example.insurance.global.service.email.EmailService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

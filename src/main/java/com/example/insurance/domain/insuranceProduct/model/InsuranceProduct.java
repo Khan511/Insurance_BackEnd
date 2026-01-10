@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-// import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-// import java.util.UUID;
 
 import org.hibernate.annotations.Type;
 
@@ -16,7 +14,6 @@ import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-// import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -28,10 +25,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.MapKeyClass;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
-// import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -95,7 +90,7 @@ public class InsuranceProduct extends AuditEntity {
     @MapKeyColumn(name = "rule_key")
     @Column(name = "rule_value")
     private Map<String, String> eligibilityRules = new HashMap<>();
-    // @Convert(converter = JpaJsonConverter.class)
+
     @Type(JsonBinaryType.class)
     @Column(name = "calculation_config", columnDefinition = "jsonb")
     private PremiumCalculationConfig calculationConfig; // JSONB storage for complex config
