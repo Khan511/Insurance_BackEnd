@@ -3,7 +3,6 @@ package com.example.insurance.usecases.admin.service;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.amazonaws.auth.SdkClock.Instance;
 import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.claim.model.Claim;

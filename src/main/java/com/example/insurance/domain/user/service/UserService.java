@@ -16,4 +16,8 @@ public interface UserService {
 
     public void updateLoginAttempt(String email, LoginType loginType);
 
+    boolean verifyEmail(String token);
+
+    void resendVerificationEmail(String email);
+
 }

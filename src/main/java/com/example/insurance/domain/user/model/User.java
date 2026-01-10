@@ -49,6 +49,9 @@ public class User extends AuditEntity {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "email_verified_at")
+    private LocalDateTime emailVerifiedAt;
+
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 

@@ -4,7 +4,10 @@ import static com.example.insurance.shared.constant.Constant.CREATE_USER;
 import static com.example.insurance.shared.constant.Constant.GET_ALL_POLICIES;
 import static com.example.insurance.shared.constant.Constant.GET_POLICY_DETAILS;
 import static com.example.insurance.shared.constant.Constant.LOGIN_PATH;
+import static com.example.insurance.shared.constant.Constant.RESEND_VERIFICATION_PATH;
 import static com.example.insurance.shared.constant.Constant.TOKEN_INVALIDATED_MSG;
+import static com.example.insurance.shared.constant.Constant.VERIFY_EMAIL_PATH;
+
 import java.io.IOException;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -39,7 +42,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         // if (LOGIN_PATH.equals(request.getRequestURI())) {
         if (uri.startsWith(LOGIN_PATH) || uri.startsWith(GET_ALL_POLICIES) || uri.startsWith(GET_POLICY_DETAILS)
-                || uri.startsWith(CREATE_USER)) {
+                || uri.startsWith(CREATE_USER) || uri.startsWith(VERIFY_EMAIL_PATH)
+                || uri.startsWith(RESEND_VERIFICATION_PATH)) {
             filterChain.doFilter(request, response);
             return;
         }

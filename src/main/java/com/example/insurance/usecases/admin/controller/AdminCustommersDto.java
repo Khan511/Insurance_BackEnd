@@ -34,6 +34,8 @@ public class AdminCustommersDto {
     String IdExpirationDate;
     String IdVerificationStatus;
 
+    String role;
+
     String customerPrimaryAddressStreet;
     String customerPrimaryAddressCity;
     String customerPrimaryAddressPostalCode;

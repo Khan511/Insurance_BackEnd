@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        padding: 40px 30px;
+        text-align: center;
+      }
+      .content {
+        padding: 40px 30px;
+      }
+      .button {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin: 20px 0;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+      }
+      .footer {
+        background: #f8f9fa;
+        padding: 20px 30px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        border-top: 1px solid #e9ecef;
+      }
+      .token {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: monospace;
+        word-break: break-all;
+        margin: 20px 0;
+        border-left: 4px solid #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Welcome to Insurance Platform! 🎉</h1>
+      </div>
+
+      <div class="content">
+        <h2>Verify Your Email Address</h2>
+        <p>Hello there! 👋</p>
+        <p>
+          Thank you for signing up with Insurance Platform. To complete your
+          registration and activate your account, please verify your email
+          address by clicking the button below:
+        </p>
+
+        <div style="text-align: center">
+          <a th:href="${verificationUrl}" class="button">
+            Verify Email Address
+          </a>
+        </div>
+
+        <p>This link will expire in 24 hours for security reasons.</p>
+
+        <p>
+          If the button doesn't work, copy and paste this link into your
+          browser:
+        </p>
+        <div class="token" th:text="${verificationUrl}"></div>
+
+        <p>
+          <strong>Need help?</strong> If you didn't create this account or need
+          assistance, please contact our support team immediately.
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>© 2025 Insurance Platform. All rights reserved.</p>
+        <p>This is an automated message, please do not reply to this email.</p>
+      </div>
+    </div>
+  </body>
+</html>

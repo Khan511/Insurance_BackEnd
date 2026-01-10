@@ -12,6 +12,9 @@ public class Constant {
         public static final String ROLE_PREFIX = "ROLE_";
         public static final String LOGIN_EMAIL = "loginEmail";
         public static final String TOKEN_INVALIDATED_MSG = "Token invalidated";
+        public static final String VERIFY_EMAIL_PATH = "/api/v1/auth/verify-email";
+        public static final String RESEND_VERIFICATION_PATH = "/api/v1/auth/resend-verification";
+
         public static final List<String> ALLOWED_ORIGIONS = List.of("http://securedoc.com", "http://localhost:4200",
                         "http://localhost:5173", "http://localhost:5173/documents",
                         "http://localhost:3000");

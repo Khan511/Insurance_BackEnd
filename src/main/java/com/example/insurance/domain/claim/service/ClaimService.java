@@ -17,30 +17,4 @@ public interface ClaimService {
 
     Claim findByClaimNumber(String claimNumber);
 
-    // // New methods for business operations
-    // void approveClaim(Long claimId, String adminUsername, BigDecimal
-    // approvedAmount);
-
-    // void rejectClaim(Long claimId, String adminUsername, String rejectionReason);
-
-    // void markClaimAsPaid(Long claimId, String adminUsername);
-
-    // void updateClaimStatus(Long claimId, ClaimStatus newStatus, String
-    // adminUsername, String reason);
-
-    // // Query methods
-    // Claim getClaimDetails(Long claimId);
-
-    // List<Claim> getAllClaims();
-
-    // List<Claim> getOpenClaims();
-
-    // List<Claim> getProcessedClaims();
-
-    // long getAverageProcessingTime();
-
-    // // Old method (deprecated)
-    // @Deprecated
-    // void processClaim(Long claimId, BigDecimal amount, ClaimStatus status);
-
 }

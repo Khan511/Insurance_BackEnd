@@ -1,9 +1,11 @@
 package com.example.insurance.domain.emailService.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Async;
 
-@Service
 public interface EmailService {
+    @Async
+    void sendVerificationEmail(String to, String token);
 
-    void sendNewAccountEmail(String name, String email, String token);
+    @Async
+    void sendEmail(String to, String subject, String htmlContent);
 }

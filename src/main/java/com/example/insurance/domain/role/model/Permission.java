@@ -1,21 +1,41 @@
+
 package com.example.insurance.domain.role.model;
 
 public enum Permission {
-    // General User Management
-    CREATE_USER, VIEW_USER, EDIT_USER, DELETE_USER, ASSIGN_ROLE,
+    // User Management
+    VIEW_USER,
 
     // Policy Management
-    CREATE_POLICY, EDIT_POLICY, VIEW_POLICY, DELETE_POLICY, APPROVE_POLICY,
-
-    // Premium & Payment
-    CALCULATE_PREMIUM, MAKE_PAYMENT, VIEW_PAYMENT_HISTORY, REFUND_PAYMENT,
+    CREATE_POLICY,
+    EDIT_POLICY,
+    VIEW_POLICY,
 
     // Claim Management
-    FILE_CLAIM, VIEW_CLAIM, APPROVE_CLAIM, REJECT_CLAIM, EDIT_CLAIM,
+    FILE_CLAIM,
+    VIEW_CLAIM,
+    EDIT_CLAIM,
+    APPROVE_CLAIM,
+    REJECT_CLAIM,
+
+    // Payment Management
+    MAKE_PAYMENT,
+    VIEW_PAYMENT_HISTORY,
+
+    // Premium Calculation
+    CALCULATE_PREMIUM,
 
     // Audit & Logs
-    VIEW_AUDIT_LOGS, EXPORT_LOGS,
+    VIEW_AUDIT_LOGS,
 
-    // System Settings
-    ACCESS_ADMIN_PANEL, MANAGE_SYSTEM_SETTINGS, VIEW_DASHBOARD
+    // System Management (Admin only)
+    CREATE_USER,
+    DELETE_USER,
+    EDIT_USER,
+    DELETE_POLICY,
+    ASSIGN_ROLE,
+    REFUND_PAYMENT,
+    EXPORT_LOGS,
+    ACCESS_ADMIN_PANEL,
+    MANAGE_SYSTEM_SETTINGS,
+    VIEW_DASHBOARD
 }

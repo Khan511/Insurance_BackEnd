@@ -5,6 +5,7 @@ import java.util.Set;
 // import java.util.UUID;
 
 import com.example.insurance.common.enummuration.RoleType;
+import com.example.insurance.domain.user.model.User;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -17,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,6 +47,9 @@ public class RoleEntity {
     @Column(name = "permission", length = 50)
     @Enumerated(EnumType.STRING)
     private Set<Permission> permissions = new HashSet<>();
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private Set<User> users = new HashSet<>();
 
     // Helper function
     public void addPermission(Permission permission) {

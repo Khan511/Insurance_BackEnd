@@ -1,66 +1,77 @@
-package com.example.insurance.domain.role.model;
 
-import java.util.Map;
-import java.util.Set;
+// package com.example.insurance.domain.role.model;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+// import java.util.Map;
+// import java.util.Set;
+// import org.springframework.boot.CommandLineRunner;
+// import org.springframework.stereotype.Component;
+// import com.example.insurance.common.enummuration.RoleType;
+// import com.example.insurance.domain.role.repository.RoleRepository;
+// import lombok.RequiredArgsConstructor;
 
-import com.example.insurance.common.enummuration.RoleType;
-import com.example.insurance.domain.role.repository.RoleRepository;
-import lombok.RequiredArgsConstructor;
+// @Component
+// @RequiredArgsConstructor
+// public class RoleSeeder implements CommandLineRunner {
 
-@Component
-@RequiredArgsConstructor
-public class RoleSeeder implements CommandLineRunner {
+// private final RoleRepository roleRepository;
 
-        private final RoleRepository roleRepository;
+// @Override
+// public void run(String... args) {
 
-        @Override
-        public void run(String... args) {
+// Map<RoleType, Set<Permission>> rolePermission = Map.of(
+// // CUSTOMER - Basic customer functions
+// RoleType.CUSTOMER, Set.of(
+// Permission.VIEW_POLICY,
+// Permission.FILE_CLAIM,
+// Permission.VIEW_CLAIM,
+// Permission.MAKE_PAYMENT,
+// Permission.VIEW_USER),
 
-                Map<RoleType, Set<Permission>> rolePermission = Map.of(
-                                RoleType.USER, Set.of(),
-                                RoleType.ADMIN, Set.of(Permission.values()),
-                                RoleType.CUSTOMER, Set.of(
-                                                Permission.VIEW_POLICY, Permission.MAKE_PAYMENT,
-                                                Permission.FILE_CLAIM,
-                                                Permission.VIEW_CLAIM),
-                                RoleType.AGENT, Set.of(
-                                                Permission.CREATE_POLICY, Permission.EDIT_POLICY,
-                                                Permission.VIEW_USER),
-                                RoleType.UNDERWRITER, Set.of(
-                                                Permission.APPROVE_POLICY, Permission.CALCULATE_PREMIUM),
-                                RoleType.CLAIM_MANAGER, Set.of(
-                                                Permission.VIEW_CLAIM, Permission.APPROVE_CLAIM,
-                                                Permission.REJECT_CLAIM, Permission.EDIT_CLAIM),
-                                RoleType.CUSTOMER_SUPPORT, Set.of(
-                                                Permission.VIEW_USER, Permission.VIEW_POLICY,
-                                                Permission.VIEW_CLAIM),
-                                RoleType.AUDITOR, Set.of(
-                                                Permission.VIEW_AUDIT_LOGS, Permission.EXPORT_LOGS),
-                                RoleType.PARTNER, Set.of(
-                                                Permission.VIEW_POLICY, Permission.CREATE_POLICY));
+// // AGENT - Sales and customer support
+// RoleType.AGENT, Set.of(
+// Permission.CREATE_POLICY,
+// Permission.EDIT_POLICY,
+// Permission.VIEW_POLICY,
+// Permission.VIEW_USER,
+// Permission.VIEW_CLAIM,
+// Permission.FILE_CLAIM,
+// Permission.MAKE_PAYMENT,
+// Permission.CALCULATE_PREMIUM,
+// Permission.VIEW_PAYMENT_HISTORY),
 
-                rolePermission.forEach((roleType, perms) -> {
+// // CLAIM_MANAGER - Handle claims
+// RoleType.CLAIM_MANAGER, Set.of(
+// Permission.VIEW_CLAIM,
+// Permission.EDIT_CLAIM,
+// Permission.APPROVE_CLAIM,
+// Permission.REJECT_CLAIM,
+// Permission.VIEW_POLICY,
+// Permission.VIEW_USER,
+// Permission.VIEW_PAYMENT_HISTORY,
+// Permission.VIEW_AUDIT_LOGS),
 
-                        roleRepository.findByName(roleType).ifPresentOrElse(
-                                        role -> updaterPermissions(role, perms),
-                                        () -> createRole(roleType, perms));
-                });
-        }
+// // ADMIN - Full system access
+// RoleType.ADMIN, Set.of(Permission.values()));
 
-        private void createRole(RoleType roleType, Set<Permission> permissions) {
-                RoleEntity role = new RoleEntity();
-                role.setName(roleType);
-                permissions.forEach(role::addPermission);
-                roleRepository.save(role);
-        }
+// rolePermission.forEach((roleType, perms) -> {
+// roleRepository.findByName(roleType).ifPresentOrElse(
+// role -> updatePermissions(role, perms),
+// () -> createRole(roleType, perms));
+// });
+// }
 
-        private void updaterPermissions(RoleEntity role, Set<Permission> newPermissions) {
-                if (!role.getPermissions().equals(newPermissions)) {
-                        role.setPermissions(newPermissions);
-                        roleRepository.save(role);
-                }
-        }
-}
+// private void createRole(RoleType roleType, Set<Permission> permissions) {
+// RoleEntity role = new RoleEntity();
+// role.setName(roleType);
+// permissions.forEach(role::addPermission);
+// roleRepository.save(role);
+// }
+
+// private void updatePermissions(RoleEntity role, Set<Permission>
+// newPermissions) {
+// if (!role.getPermissions().equals(newPermissions)) {
+// role.setPermissions(newPermissions);
+// roleRepository.save(role);
+// }
+// }
+// }

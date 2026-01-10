@@ -60,7 +60,6 @@ public class AdminController {
 
     @PutMapping("/update-claim")
     public ResponseEntity<?> updateClaim(@RequestBody AdminClaimUpdateRequest request) {
-
         adminService.updateClaim(request);
 
         return ResponseEntity.ok(Map.of("message", "Claim updated successfully!"));
