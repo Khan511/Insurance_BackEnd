@@ -70,7 +70,7 @@ public class SecurityFilterChainConfig {
                                                 .requestMatchers(HttpMethod.POST,
                                                                 "/api/auth/**",
                                                                 "/api/v1/auth/resend-verification",
-                                                                "/api/user/create-user")
+                                                                "/api/user/**")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.GET,
                                                                 "/api/v1/auth/**",
@@ -81,12 +81,17 @@ public class SecurityFilterChainConfig {
                                                                 "/api/product/product-details/**")
                                                 .permitAll()
 
+                                                .requestMatchers("/api/premium/calculate").permitAll()
+
+                                                // Allow chatbot endpoints without authentication
+                                                .requestMatchers("/api/chatbot/**").permitAll()
+
                                                 // ========== ROLE-BASED ACCESS (Using hasAuthority) ==========
                                                 // ADMIN only endpoints
                                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                                 .requestMatchers("/api/system-settings/**").hasAuthority("ADMIN")
                                                 .requestMatchers("/api/roles/**").hasAuthority("ADMIN")
-                                                .requestMatchers("/api/users/**").hasAuthority("ADMIN")
+                                                // .requestMatchers("/api/users/**").hasAuthority("ADMIN")
 
                                                 // AGENT endpoints
                                                 .requestMatchers("/api/agent/**").hasAuthority("AGENT")

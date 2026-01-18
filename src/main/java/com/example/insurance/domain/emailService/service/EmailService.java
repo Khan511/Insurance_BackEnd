@@ -7,5 +7,8 @@ public interface EmailService {
     void sendVerificationEmail(String to, String token);
 
     @Async
+    void sendPasswordResetEmail(String to, String token);
+
+    @Async
     void sendEmail(String to, String subject, String htmlContent);
 }

@@ -1,6 +1,8 @@
+
 package com.example.insurance.infrastructure.web.premiumCalculation;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +19,21 @@ public class PremiumCalculationController {
 
     @PostMapping("/calculate")
     public PremiumCalculationResponse calculatePremium(
-            @RequestBody PremiumCalculationRequest request,
-            @AuthenticationPrincipal CustomUserDetails userDetails) {
+            @RequestBody PremiumCalculationRequest request) {
+        System.out.println("==================================Helllllloooo");
 
-        return premiumCalculationService.calculatePremium(request, userDetails.getUsername());
+        // Check if user is authenticated
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = null;
+
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication.getPrincipal() instanceof String)
+                && authentication.getPrincipal() instanceof CustomUserDetails) {
+            // User is authenticated
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            userEmail = userDetails.getUsername();
+        }
+
+        return premiumCalculationService.calculatePremium(request, userEmail);
     }
 }

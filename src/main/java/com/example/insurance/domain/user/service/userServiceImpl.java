@@ -3,15 +3,20 @@ package com.example.insurance.domain.user.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.insurance.common.enummuration.RoleType;
 import com.example.insurance.common.enummuration.UserStatus;
+import com.example.insurance.domain.emailService.service.EmailService;
 import com.example.insurance.domain.emailService.userVerificationService.UserVerificationService;
+import com.example.insurance.domain.passwordRessetToken.model.PasswordResetTokenEntity;
+import com.example.insurance.domain.passwordRessetToken.repository.PasswordResetTokenrepository;
 import com.example.insurance.domain.role.model.RoleEntity;
 import com.example.insurance.domain.role.repository.RoleRepository;
 import com.example.insurance.domain.user.model.User;
@@ -27,12 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class userServiceImpl implements UserService {
-
+    private final EmailService emailService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final CacheStore<String, Integer> userCache;
     private final UserVerificationService userVerificationService;
+    private final PasswordResetTokenrepository passwordResetTokenrepository;
 
     @Override
     @Transactional
@@ -168,4 +174,98 @@ public class userServiceImpl implements UserService {
     public void resendVerificationEmail(String email) {
         userVerificationService.resendVerificationEmail(email);
     }
+
+    @Override
+    @Transactional
+    public void initiatePasswordReset(String email) {
+        try {
+            log.info("Initiat Method ===========================================");
+
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+            // Check if user is Vvalid
+            if (!user.isEnabled()) {
+                throw new RuntimeException("Please verify your email before resetting password");
+            }
+
+            // Delete any existing tokens for user
+            passwordResetTokenrepository.deleteByUser(user);
+
+            // Create new reset token
+            PasswordResetTokenEntity resetTokenEntity = new PasswordResetTokenEntity();
+            resetTokenEntity.setToken(UUID.randomUUID().toString());
+            resetTokenEntity.setUser(user);
+            // 1 hour expiry
+            resetTokenEntity.setExpiryDate(Instant.now().plus(1, ChronoUnit.HOURS));
+            resetTokenEntity.setUsed(false);
+
+            passwordResetTokenrepository.save(resetTokenEntity);
+
+            // Send password reset email
+            emailService.sendPasswordResetEmail(user.getEmail(), resetTokenEntity.getToken());
+
+        } catch (Exception e) {
+            log.info("Password reset requested for non-existent email: {}", email);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean validatePasswordResetToken(String token) {
+        try {
+
+            PasswordResetTokenEntity resetTokenEntity = passwordResetTokenrepository.findByToken(token)
+                    .orElseThrow(() -> new RuntimeException("Invalid reset token"));
+
+            // Check if toekn is valid
+            if (resetTokenEntity.getExpiryDate().isBefore(Instant.now())) {
+                throw new RuntimeException("Reset token has expired");
+            }
+
+            // Check if token has already benn used.
+            if (resetTokenEntity.isUsed()) {
+                throw new RuntimeException("Reset token has already been used.");
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            log.error("Token validation failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+
+        PasswordResetTokenEntity resetToken = passwordResetTokenrepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid reset token"));
+
+        // Validate token
+        if (resetToken.getExpiryDate().isBefore(Instant.now())) {
+            throw new RuntimeException("Reset token has expired");
+        }
+
+        if (resetToken.isUsed()) {
+            throw new RuntimeException("Reset token has already been used");
+        }
+
+        // Update user password
+        User user = resetToken.getUser();
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
+
+        // Mark token as user
+        resetToken.setUsed(true);
+        resetToken.setUsedAt(Instant.now());
+        passwordResetTokenrepository.save(resetToken);
+
+        // Cleare login attempts cache
+        userCache.evict(user.getEmail());
+
+    }
+
 }

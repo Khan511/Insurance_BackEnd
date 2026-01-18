@@ -2,10 +2,13 @@ package com.example.insurance.global.config;
 
 import static com.example.insurance.shared.constant.Constant.LOGIN_EMAIL;
 import java.io.IOException;
-import java.time.Instant;
+// import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+// import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -29,6 +32,7 @@ import static com.example.insurance.global.config.enums.LoginType.LOGIN_ATTEMPT;
 import static com.example.insurance.global.config.enums.LoginType.LOGIN_FAILURE;
 import static com.example.insurance.global.config.enums.LoginType.LOGIN_SUCCESS;
 import com.example.insurance.shared.constant.Constant;
+import com.example.insurance.shared.exceptions.ErrorResponseDto;
 import com.example.insurance.shared.kernel.utils.ResponseBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -122,27 +126,72 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 ResponseBuilder.buildSuccess(request, Map.of("user", user), "Login successful", HttpStatus.OK));
     }
 
-    private void writeErrorResponse(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException exception) {
+    // Update your writeErrorResponse method in JwtAuthenticationFilter
+    private void writeErrorResponse(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException exception) throws IOException {
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        Map<String, Object> errorResponse = new LinkedHashMap<>();
-        errorResponse.put("timeStamp", Instant.now().toString());
-        errorResponse.put("status", HttpStatus.UNAUTHORIZED.value());
-        errorResponse.put("error", "Authenticaiton Failed");
-        errorResponse.put("message", resolveErrorMessage(exception));
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error("Authentication Failed")
+                .message(resolveErrorMessage(exception))
+                .errorCode(resolveErrorCode(exception))
+                .path(request.getRequestURI())
+                .traceId(UUID.randomUUID().toString().substring(0, 8))
+                .build();
+
+        objectMapper.writeValue(response.getWriter(), errorResponse);
+    }
+
+    private String resolveErrorCode(AuthenticationException exception) {
+        return switch (exception) {
+            case BadCredentialsException e -> "INVALID_CREDENTIALS";
+            case DisabledException e -> "ACCOUNT_DISABLED";
+            case LockedException e -> "ACCOUNT_LOCKED";
+            case AccountExpiredException e -> "ACCOUNT_EXPIRED";
+            case CredentialsExpiredException e -> "CREDENTIALS_EXPIRED";
+            default -> "AUTHENTICATION_FAILED";
+        };
     }
 
     private String resolveErrorMessage(AuthenticationException exception) {
         return switch (exception) {
-            case BadCredentialsException e -> "Invalid credentials";
-            case DisabledException e -> "Account disabled";
-            case LockedException e -> "Account locked";
-            case AccountExpiredException e -> "Account expired";
-            case CredentialsExpiredException e -> "Credentials expired";
-            default -> "Authentication failed";
+            case BadCredentialsException e -> "Invalid email or password";
+            case DisabledException e -> "Your account has been disabled. Please contact support.";
+            case LockedException e -> "Your account has been locked due to multiple failed login attempts";
+            case AccountExpiredException e -> "Your account has expired. Please contact support.";
+            case CredentialsExpiredException e -> "Your password has expired. Please reset your password.";
+            default -> "Authentication failed. Please try again.";
         };
     }
+
+    // private void writeErrorResponse(HttpServletRequest request,
+    // HttpServletResponse response,
+    // AuthenticationException exception) {
+    // response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    // response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+    // Map<String, Object> errorResponse = new LinkedHashMap<>();
+    // errorResponse.put("timeStamp", Instant.now().toString());
+    // errorResponse.put("status", HttpStatus.UNAUTHORIZED.value());
+    // errorResponse.put("error", "Authenticaiton Failed");
+    // errorResponse.put("message", resolveErrorMessage(exception));
+    // }
+
+    // private String resolveErrorMessage(AuthenticationException exception) {
+    // return switch (exception) {
+    // case BadCredentialsException e -> "Invalid credentials";
+    // case DisabledException e -> "Account disabled";
+    // case LockedException e -> "Account locked";
+    // case AccountExpiredException e -> "Account expired";
+    // case CredentialsExpiredException e -> "Credentials expired";
+    // default -> "Authentication failed";
+    // };
+    // }
 
 }
