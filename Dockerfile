@@ -1,5 +1,5 @@
-# Build stage
-FROM maven:3.8.4-openjdk-17-slim AS build
+# Build stage with JDK 21
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
 COPY pom.xml .
@@ -9,7 +9,7 @@ COPY .mvn .mvn
 # Make mvnw executable
 RUN chmod +x mvnw
 
-# Download dependencies (cached layer)
+# Download dependencies
 RUN ./mvnw dependency:go-offline -B
 
 COPY src src
@@ -17,8 +17,8 @@ COPY src src
 # Package the application
 RUN ./mvnw package -DskipTests
 
-# Run stage
-FROM eclipse-temurin:17-jre-alpine
+# Run stage with JRE 21
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar
