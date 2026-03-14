@@ -2,7 +2,7 @@ package com.example.insurance.domain.policyBeneficiary.model;
 
 import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
-import com.example.insurance.embeddable.BeneficiaryDetails;
+import com.example.insurance.shared.kernel.embeddables.BeneficiaryDetails;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

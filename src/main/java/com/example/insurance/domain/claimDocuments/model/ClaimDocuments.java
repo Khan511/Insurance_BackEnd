@@ -2,9 +2,10 @@ package com.example.insurance.domain.claimDocuments.model;
 
 import java.time.Instant;
 import java.util.UUID;
-import com.example.insurance.common.enummuration.ClaimDocumentType;
-import com.example.insurance.common.enummuration.DocumentStatus;
+
 import com.example.insurance.domain.claim.model.Claim;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
+import com.example.insurance.shared.enummuration.DocumentStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

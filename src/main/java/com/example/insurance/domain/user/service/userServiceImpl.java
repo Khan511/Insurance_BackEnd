@@ -11,8 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.insurance.common.enummuration.RoleType;
-import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.emailService.service.EmailService;
 import com.example.insurance.domain.emailService.userVerificationService.UserVerificationService;
 import com.example.insurance.domain.passwordRessetToken.model.PasswordResetTokenEntity;
@@ -23,6 +21,8 @@ import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
 import com.example.insurance.global.config.cache.CacheStore;
 import com.example.insurance.global.config.enums.LoginType;
+import com.example.insurance.shared.enummuration.RoleType;
+import com.example.insurance.shared.enummuration.UserStatus;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 
 import lombok.RequiredArgsConstructor;

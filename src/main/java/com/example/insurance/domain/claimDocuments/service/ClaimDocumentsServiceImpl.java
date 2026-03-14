@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.insurance.common.enummuration.ClaimDocumentType;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
 import com.example.insurance.domain.claimDocuments.repository.ClaimDocumentsRepository;
 import com.example.insurance.infrastructure.web.claim.DocumentAttachmentDTO;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
 
 import lombok.RequiredArgsConstructor;
 

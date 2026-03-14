@@ -7,7 +7,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
-import com.example.insurance.common.enummuration.RoleType;
+
+import com.example.insurance.shared.enummuration.RoleType;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import com.example.insurance.domain.employee.domain.WorkContactInfo;
 import com.example.insurance.domain.employee.domain.EmergencyContact;

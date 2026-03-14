@@ -2,8 +2,8 @@ package com.example.insurance.domain.claimStatusHistory.model;
 
 import java.time.Instant;
 
-import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.domain.claim.model.Claim;
+import com.example.insurance.shared.enummuration.ClaimStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

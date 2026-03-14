@@ -1,11 +1,11 @@
 package com.example.insurance.domain.emailService.userVerificationService;
 
-import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.emailService.emailVerificationToken.VerificationToken;
 import com.example.insurance.domain.emailService.service.EmailService;
 import com.example.insurance.domain.emailService.verificationTokenRepo.VerificationTokenRepository;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
+import com.example.insurance.shared.enummuration.UserStatus;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

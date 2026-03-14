@@ -9,13 +9,13 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.insurance.common.enummuration.ClaimDocumentType;
-import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.claimDocuments.model.ClaimDocuments;
 import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.paymentSchedule.model.PaymentStatus;
 import com.example.insurance.domain.user.model.User;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
+import com.example.insurance.shared.enummuration.ClaimStatus;
 
 import jakarta.persistence.*;
 import lombok.Getter;

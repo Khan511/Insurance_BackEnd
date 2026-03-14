@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 // import java.util.UUID;
 
-import com.example.insurance.common.enummuration.RoleType;
 import com.example.insurance.domain.user.model.User;
+import com.example.insurance.shared.enummuration.RoleType;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;

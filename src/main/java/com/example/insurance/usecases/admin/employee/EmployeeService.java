@@ -1,14 +1,14 @@
 
 package com.example.insurance.usecases.admin.employee;
 
-import com.example.insurance.common.enummuration.RoleType;
-import com.example.insurance.common.enummuration.UserStatus;
 import com.example.insurance.domain.employee.domain.Employee;
 import com.example.insurance.domain.employee.repository.EmployeeRepository;
 import com.example.insurance.domain.role.model.RoleEntity;
 import com.example.insurance.domain.role.repository.RoleRepository;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.service.UserService;
+import com.example.insurance.shared.enummuration.RoleType;
+import com.example.insurance.shared.enummuration.UserStatus;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 
 import lombok.RequiredArgsConstructor;

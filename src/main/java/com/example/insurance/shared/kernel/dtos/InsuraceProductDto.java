@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.insurance.common.enummuration.PolicyStatus;
-import com.example.insurance.common.enummuration.ProductType;
 import com.example.insurance.domain.insuranceProduct.service.PremiumCalculationConfigDto;
-import com.example.insurance.embeddable.CoverageDetail;
-import com.example.insurance.embeddable.ProductTranslation;
+import com.example.insurance.shared.enummuration.PolicyStatus;
+import com.example.insurance.shared.enummuration.ProductType;
+import com.example.insurance.shared.kernel.embeddables.CoverageDetail;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
+import com.example.insurance.shared.kernel.embeddables.ProductTranslation;
+
 import lombok.Data;
 
 @Data

@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.insurance.common.enummuration.ClaimStatus;
 import com.example.insurance.domain.claim.model.Claim;
+import com.example.insurance.shared.enummuration.ClaimStatus;
 
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, Long> {

@@ -60,9 +60,9 @@ public class ClaimMapper {
 
         // Status transition permissions (useful for UI buttons)
         if (claim.getStatus() != null) {
-            dto.setCanBeApproved(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.APPROVED));
-            dto.setCanBeRejected(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.REJECTED));
-            dto.setCanBePaid(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.PAID));
+            dto.setCanBeApproved(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.APPROVED));
+            dto.setCanBeRejected(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.REJECTED));
+            dto.setCanBePaid(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.PAID));
         }
 
         // Map IncidentDetails
@@ -218,9 +218,9 @@ public class ClaimMapper {
 
         // Status transition permissions (useful for UI buttons)
         if (claim.getStatus() != null) {
-            dto.setCanBeApproved(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.APPROVED));
-            dto.setCanBeRejected(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.REJECTED));
-            dto.setCanBePaid(claim.canTransitionTo(com.example.insurance.common.enummuration.ClaimStatus.PAID));
+            dto.setCanBeApproved(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.APPROVED));
+            dto.setCanBeRejected(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.REJECTED));
+            dto.setCanBePaid(claim.canTransitionTo(com.example.insurance.shared.enummuration.ClaimStatus.PAID));
         }
 
         // Map IncidentDetails

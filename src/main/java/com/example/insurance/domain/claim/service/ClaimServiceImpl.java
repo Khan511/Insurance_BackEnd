@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.insurance.common.enummuration.ClaimDocumentType;
-import com.example.insurance.common.enummuration.ClaimStatus;
-import com.example.insurance.common.enummuration.IncidentType;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.claim.model.IncidentDetails;
 import com.example.insurance.domain.claim.repository.ClaimRepository;
@@ -16,12 +13,15 @@ import com.example.insurance.domain.insuranceProduct.model.InsuranceProduct;
 import com.example.insurance.domain.insuranceProduct.service.InsuranceProductService;
 import com.example.insurance.domain.user.model.User;
 import com.example.insurance.domain.user.repository.UserRepository;
-import com.example.insurance.embeddable.ThirdPartyDetails;
 import com.example.insurance.global.config.CustomUserDetails;
 import com.example.insurance.infrastructure.web.claim.ClaimResponseDTO;
 import com.example.insurance.infrastructure.web.claim.ClaimSubmissionDTO;
 import com.example.insurance.infrastructure.web.claim.IncidentDetailsDTO;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
+import com.example.insurance.shared.enummuration.ClaimStatus;
+import com.example.insurance.shared.enummuration.IncidentType;
 import com.example.insurance.shared.kernel.embeddables.Address;
+import com.example.insurance.shared.kernel.embeddables.ThirdPartyDetails;
 
 import lombok.RequiredArgsConstructor;
 

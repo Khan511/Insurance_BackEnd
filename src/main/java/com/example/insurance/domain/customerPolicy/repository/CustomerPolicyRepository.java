@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
+import com.example.insurance.shared.enummuration.PolicyStatus;
 
 @Repository
 public interface CustomerPolicyRepository extends JpaRepository<CustomerPolicy, Long> {

@@ -33,16 +33,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.example.insurance.common.enummuration.ClaimDocumentType;
-import com.example.insurance.common.enummuration.ProductType;
-
 import com.example.insurance.domain.auditing.domain.AuditEntity;
 import com.example.insurance.domain.claim.model.Claim;
 import com.example.insurance.domain.insuranceCategory.model.InsuranceCategory;
-import com.example.insurance.embeddable.CoverageDetail;
-import com.example.insurance.embeddable.ProductTranslation;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
+import com.example.insurance.shared.enummuration.ProductType;
+import com.example.insurance.shared.kernel.embeddables.CoverageDetail;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;
+import com.example.insurance.shared.kernel.embeddables.ProductTranslation;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 @Entity

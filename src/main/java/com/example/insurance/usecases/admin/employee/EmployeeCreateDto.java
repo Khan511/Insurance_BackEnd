@@ -1,8 +1,8 @@
 package com.example.insurance.usecases.admin.employee;
 
-import com.example.insurance.common.enummuration.RoleType;
 import com.example.insurance.domain.employee.domain.EmergencyContact;
 import com.example.insurance.domain.employee.domain.WorkContactInfo;
+import com.example.insurance.shared.enummuration.RoleType;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import jakarta.validation.constraints.*;
 import lombok.Data;

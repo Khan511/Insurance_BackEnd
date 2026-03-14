@@ -1,20 +1,20 @@
 package com.example.insurance.domain.customerPolicy.service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.stream.Collectors;
-import com.example.insurance.common.enummuration.Relationship;
+
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.paymentSchedule.model.PaymentSchedule;
 import com.example.insurance.domain.policyBeneficiary.model.PolicyBeneficiary;
-import com.example.insurance.domain.user.model.User;
-import com.example.insurance.embeddable.BeneficiaryDetails;
+
 import com.example.insurance.infrastructure.web.custommerPolicy.BeneficiaryDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.PaymentScheduleDto;
+import com.example.insurance.shared.enummuration.Relationship;
 import com.example.insurance.shared.kernel.dtos.CategoryDto;
+import com.example.insurance.shared.kernel.embeddables.BeneficiaryDetails;
 
 public class PolicyMapper {
 

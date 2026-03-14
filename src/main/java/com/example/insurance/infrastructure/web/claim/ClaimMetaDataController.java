@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.insurance.common.enummuration.ClaimDocumentType;
+
 import com.example.insurance.domain.claim.service.ClaimService;
 import com.example.insurance.global.config.CustomUserDetails;
+import com.example.insurance.shared.enummuration.ClaimDocumentType;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

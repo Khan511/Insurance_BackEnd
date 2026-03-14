@@ -7,9 +7,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
 import com.example.insurance.domain.customerPolicy.repository.CustomerPolicyRepository;
+import com.example.insurance.shared.enummuration.PolicyStatus;
 
 import lombok.RequiredArgsConstructor;
 

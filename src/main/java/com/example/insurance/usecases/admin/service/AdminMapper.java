@@ -3,9 +3,9 @@ package com.example.insurance.usecases.admin.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.example.insurance.common.enummuration.PolicyStatus;
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customerPolicy.model.CustomerPolicy;
+import com.example.insurance.shared.enummuration.PolicyStatus;
 import com.example.insurance.usecases.admin.controller.AdminCustommersDto;
 
 public class AdminMapper {

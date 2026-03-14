@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.example.insurance.common.enummuration.ClaimStatus;
+import com.example.insurance.shared.enummuration.ClaimStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

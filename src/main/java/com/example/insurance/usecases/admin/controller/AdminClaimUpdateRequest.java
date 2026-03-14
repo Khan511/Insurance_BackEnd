@@ -1,8 +1,10 @@
 package com.example.insurance.usecases.admin.controller;
 
 import java.math.BigDecimal;
-import com.example.insurance.common.enummuration.ClaimStatus;
+
 import com.example.insurance.infrastructure.web.claim.IncidentDetailsDTO;
+import com.example.insurance.shared.enummuration.ClaimStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

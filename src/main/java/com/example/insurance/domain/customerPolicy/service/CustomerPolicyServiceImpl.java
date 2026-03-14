@@ -10,8 +10,7 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.insurance.common.enummuration.PolicyStatus;
-import com.example.insurance.common.enummuration.ProductType;
+
 import com.example.insurance.domain.PremiumCalculation.service.PremiumCalculationService;
 import com.example.insurance.domain.customer.model.Customer;
 import com.example.insurance.domain.customer.model.GovernmentId;
@@ -31,6 +30,8 @@ import com.example.insurance.infrastructure.web.custommerPolicy.GovernmentIdDto;
 import com.example.insurance.infrastructure.web.custommerPolicy.InsurancePolicyDto;
 import com.example.insurance.infrastructure.web.premiumCalculation.PremiumCalculationRequest;
 import com.example.insurance.infrastructure.web.premiumCalculation.PremiumCalculationResponse;
+import com.example.insurance.shared.enummuration.PolicyStatus;
+import com.example.insurance.shared.enummuration.ProductType;
 import com.example.insurance.shared.kernel.embeddables.MonetaryAmount;
 import com.example.insurance.shared.kernel.embeddables.PersonName;
 import com.example.insurance.shared.kernel.embeddables.PolicyPeriod;

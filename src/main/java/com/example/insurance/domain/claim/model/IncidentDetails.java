@@ -2,9 +2,11 @@ package com.example.insurance.domain.claim.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import com.example.insurance.common.enummuration.IncidentType;
-import com.example.insurance.embeddable.ThirdPartyDetails;
+
+import com.example.insurance.shared.enummuration.IncidentType;
 import com.example.insurance.shared.kernel.embeddables.Address;
+import com.example.insurance.shared.kernel.embeddables.ThirdPartyDetails;
+
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
