@@ -20,7 +20,7 @@ public class Constant {
         public static final String RESET_PASSWORD = "/api/user/reset-password";
 
         public static final List<String> ALLOWED_ORIGIONS = List.of("http://securedoc.com",
-                        "https://insurace-app.netlify.app", "http://localhost:4200",
+                        "https://insurace-app.netlify.app/api", "http://localhost:4200",
                         "http://localhost:5173", "http://localhost:5173/documents",
                         "http://localhost:3000");
 
