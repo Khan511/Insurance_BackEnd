@@ -1,0 +1,80 @@
+spring:
+  main:
+    lazy-initialization: true
+  application:
+    name: insurance
+
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    # properties:
+    # hibernate:
+    # dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 100
+      thread-name-prefix: async-email-
+
+  messages:
+    basename: messages
+    encoding: UTF-8
+    use-code-as-default-message: true
+
+jwt:
+  accessTokenExpiration: ${JWT_ACCESS_EXPIRATION} #2minuttes
+  refreshTokenExpiration: ${JWT_REFRESH_EXPIRATION} # 7 hours
+  jwtPrivateKey: ${JWT_PRIVATE_KEY}
+  jwtPublicKey: ${JWT_PUBLIC_KEY}
+  issuer: ${JWT_ISSUER}
+  audience: ${JWT_AUDIENCE}
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretKey: ${AWS_SECRET_ACCESS_KEY}
+  bucket: ${AWS_BUCKET}
+
+# (Development):
+security:
+  headers:
+    csp: "default-src 'self' 'unsafe-inline';"
+
+app:
+  base-url: ${APP_BASE_URL}
+  frontend-url: ${APP_FRONTEND_URL}
+
+ai:
+  huggingface:
+    api:
+      key: ${HUGGING_FACE_CHATBOT_API}
+      url: "https://api-inference.huggingface.co/models"
+      timeout: 30000 # 30 seconds
+      max-retries: 3
+
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
