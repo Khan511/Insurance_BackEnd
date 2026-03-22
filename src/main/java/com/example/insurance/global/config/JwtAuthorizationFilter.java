@@ -6,6 +6,7 @@ import static com.example.insurance.shared.constant.Constant.FORGOT_PASSWORD;
 import static com.example.insurance.shared.constant.Constant.GET_ALL_POLICIES;
 import static com.example.insurance.shared.constant.Constant.GET_POLICY_DETAILS;
 import static com.example.insurance.shared.constant.Constant.LOGIN_PATH;
+import static com.example.insurance.shared.constant.Constant.PREMIUM_CALCULATION_PATH;
 import static com.example.insurance.shared.constant.Constant.RESEND_VERIFICATION_PATH;
 import static com.example.insurance.shared.constant.Constant.RESET_PASSWORD;
 import static com.example.insurance.shared.constant.Constant.TOKEN_INVALIDATED_MSG;
@@ -49,7 +50,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 || uri.startsWith(CREATE_USER) || uri.startsWith(VERIFY_EMAIL_PATH)
                 || uri.startsWith(RESEND_VERIFICATION_PATH) || uri.startsWith(API_CHATBOT)
                 || uri.startsWith(FORGOT_PASSWORD) || uri.startsWith(VALIDATE_REQUEST_TOKEN)
-                || uri.startsWith(RESET_PASSWORD)
+                || uri.startsWith(RESET_PASSWORD) || uri.startsWith(PREMIUM_CALCULATION_PATH)
 
         )
 

@@ -18,6 +18,7 @@ public class Constant {
         public static final String FORGOT_PASSWORD = "/api/user/forgot-password";
         public static final String VALIDATE_REQUEST_TOKEN = "/api/user/validate-reset-token";
         public static final String RESET_PASSWORD = "/api/user/reset-password";
+        public static final String PREMIUM_CALCULATION_PATH = "/api/premium/calculate";
 
         public static final List<String> ALLOWED_ORIGIONS = List.of("http://securedoc.com",
                         "https://insurace-app.netlify.app",

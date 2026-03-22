@@ -102,10 +102,6 @@ public class SecurityFilterChainConfig {
                                                 // CUSTOMER endpoints
                                                 .requestMatchers("/api/customer/**").hasAuthority("CUSTOMER")
 
-                                                // Premium Calculation - Allow all authenticated users
-                                                .requestMatchers(HttpMethod.POST, "/api/premium/calculate")
-                                                .authenticated()
-
                                                 // ========== PERMISSION-BASED ACCESS ==========
                                                 // Policy Management
                                                 .requestMatchers(HttpMethod.GET, "/api/policies/**")
@@ -151,10 +147,6 @@ public class SecurityFilterChainConfig {
 
                                                 .requestMatchers(HttpMethod.POST, "/api/payments/refund")
                                                 .hasAnyAuthority("REFUND_PAYMENT", "ADMIN")
-
-                                                // Premium Calculation
-                                                .requestMatchers("/api/premium/calculate")
-                                                .hasAnyAuthority("CALCULATE_PREMIUM", "ADMIN", "AGENT", "CUSTOMER")
 
                                                 // Policy Approval (for underwriters, now handled by ADMIN/AGENT)
                                                 .requestMatchers("/api/policies/approve/**")
