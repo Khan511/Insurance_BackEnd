@@ -28,7 +28,6 @@ import com.example.insurance.global.config.dto.LoginRequestDto;
 import com.example.insurance.global.config.enums.TokenType;
 import com.example.insurance.infrastructure.web.dtos.AuthResponseDto;
 import com.example.insurance.infrastructure.web.user.UserMapper;
-import static com.example.insurance.global.config.enums.LoginType.LOGIN_ATTEMPT;
 import static com.example.insurance.global.config.enums.LoginType.LOGIN_FAILURE;
 import static com.example.insurance.global.config.enums.LoginType.LOGIN_SUCCESS;
 import com.example.insurance.shared.constant.Constant;
@@ -61,12 +60,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             LoginRequestDto credentials = objectMapper.readValue(request.getInputStream(), LoginRequestDto.class);
             request.setAttribute(LOGIN_EMAIL, credentials.email());
-
-            try {
-                userService.updateLoginAttempt(credentials.email(), LOGIN_ATTEMPT);
-            } catch (Exception e) {
-                log.error("Login attempt update failed for {}", credentials.email());
-            }
 
             return getAuthenticationManager()
                     .authenticate(new UsernamePasswordAuthenticationToken(
@@ -163,7 +156,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return switch (exception) {
             case BadCredentialsException e -> "Invalid email or password";
             case DisabledException e -> "Your account has been disabled. Please contact support.";
-            case LockedException e -> "Your account has been locked due to multiple failed login attempts";
+            case LockedException e -> "Your account has been locked please conatact support";
             case AccountExpiredException e -> "Your account has expired. Please contact support.";
             case CredentialsExpiredException e -> "Your password has expired. Please reset your password.";
             default -> "Authentication failed. Please try again.";

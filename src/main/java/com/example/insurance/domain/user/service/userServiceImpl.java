@@ -100,20 +100,6 @@ public class userServiceImpl implements UserService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
         switch (loginType) {
-            case LOGIN_ATTEMPT -> {
-                // If the user is not found in the cache (i.e., it's their first attempt),
-                // reset their login attempts to 0 and unlock their account.
-                if (userCache.get(user.getEmail()) == null) {
-                    user.setLoginAttempts(0);
-                    user.setAccountNonLocked(true);
-                }
-                user.setLoginAttempts(user.getLoginAttempts() + 1);
-                userCache.put(user.getEmail(), user.getLoginAttempts());
-                // If the login attempts exceed 5, lock the user's account.
-                if (userCache.get(user.getEmail()) > 5) {
-                    user.setAccountNonLocked(false);
-                }
-            }
             case LOGIN_FAILURE -> {
                 // If the user is not found in the cache (i.e., it's their first attempt),
                 // reset their login attempts to 0 and unlock their account.
