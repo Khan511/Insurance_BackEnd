@@ -87,6 +87,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         userService.updateLoginAttempt(userEntity.getEmail(), LOGIN_SUCCESS);
         setTokenCookies(response, user);
+        
         writeSuccessResponse(request, response, user);
     }
 
@@ -162,29 +163,5 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             default -> "Authentication failed. Please try again.";
         };
     }
-
-    // private void writeErrorResponse(HttpServletRequest request,
-    // HttpServletResponse response,
-    // AuthenticationException exception) {
-    // response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    // response.setStatus(HttpStatus.UNAUTHORIZED.value());
-
-    // Map<String, Object> errorResponse = new LinkedHashMap<>();
-    // errorResponse.put("timeStamp", Instant.now().toString());
-    // errorResponse.put("status", HttpStatus.UNAUTHORIZED.value());
-    // errorResponse.put("error", "Authenticaiton Failed");
-    // errorResponse.put("message", resolveErrorMessage(exception));
-    // }
-
-    // private String resolveErrorMessage(AuthenticationException exception) {
-    // return switch (exception) {
-    // case BadCredentialsException e -> "Invalid credentials";
-    // case DisabledException e -> "Account disabled";
-    // case LockedException e -> "Account locked";
-    // case AccountExpiredException e -> "Account expired";
-    // case CredentialsExpiredException e -> "Credentials expired";
-    // default -> "Authentication failed";
-    // };
-    // }
 
 }

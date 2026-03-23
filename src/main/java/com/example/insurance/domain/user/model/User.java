@@ -84,8 +84,11 @@ public class User extends AuditEntity {
         this.roles.add(roleEntity);
     }
 
-    public void removeRole(RoleType roleType) {
-        this.roles.remove(roleType);
+    public void removeRole(RoleEntity roleEntity) {
+        this.roles.remove(roleEntity);
     }
+    // public void removeRole(RoleType roleType) {
+    // this.roles.remove(roleType);
+    // }
 
 }
