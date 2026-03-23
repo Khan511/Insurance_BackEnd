@@ -136,6 +136,16 @@ public class JwtUtil {
         return extractClaims(token, claims -> claims.get(EMAIL, String.class));
     }
 
+    public Optional<Instant> extractExpirationFromToken(String token) {
+        try {
+            return Optional.ofNullable(extractClaims(token, Claims::getExpiration))
+                    .map(Date::toInstant);
+        } catch (Exception e) {
+            log.warn("Failed to extract token expiration: {}", e.getMessage());
+            return Optional.empty();
+        }
+    }
+
     // Cookie setter with security enhancements
     private final TriConsumer<HttpServletResponse, AuthResponseDto, TokenType> tokenCookieSetter = (response, user,
             tokenType) -> {
