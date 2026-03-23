@@ -2,6 +2,7 @@
 package com.example.insurance.domain.claim.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,6 @@ public class ClaimServiceImpl implements ClaimService {
         Claim claim = new Claim();
 
         // Set Basic info
-        claim.setClaimNumber(claimIdGenerator.generateUniqueClaimId());
         claim.setStatus(ClaimStatus.PENDING);
 
         claim.setUser(user);
@@ -60,13 +60,26 @@ public class ClaimServiceImpl implements ClaimService {
         // Set relationship with insurance product
         claim.setInsuranceProduct(product);
 
-        // First save the claim to get an ID
-        Claim savedClaim = claimRepository.save(claim);
+        // Old code:
+        // claim.setClaimNumber(claimIdGenerator.generateUniqueClaimId());
+        // Claim savedClaim = claimRepository.save(claim);
+        Claim savedClaim = saveClaimWithDatabaseClaimNumber(claim);
 
         // Save documents using the ClaimDocumentService
         if (claimSubmissionDTO.getDocuments() != null) {
             claimDocumentsService.saveClaimDocuments(claimSubmissionDTO.getDocuments(), savedClaim);
         }
+    }
+
+    private Claim saveClaimWithDatabaseClaimNumber(Claim claim) {
+        // Persist once with a temporary value so the database can assign the row ID.
+        claim.setClaimNumber(claimIdGenerator.generateTemporaryClaimId());
+        Claim savedClaim = claimRepository.saveAndFlush(claim);
+
+        // The final public claim number is derived from the database ID, which removes
+        // the race between "check if exists" and "save".
+        savedClaim.setClaimNumber(claimIdGenerator.generateClaimId(savedClaim.getId()));
+        return claimRepository.save(savedClaim);
     }
 
     private IncidentDetails mapIncidentDetails(IncidentDetailsDTO dto) {
