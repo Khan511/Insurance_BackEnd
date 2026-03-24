@@ -12,6 +12,6 @@ public interface InsuranceProductRepository extends JpaRepository<InsuranceProdu
 
     Optional<InsuranceProduct> findById(Long policyId);
 
-    InsuranceProduct findByPolicyNumber(String policyNumber);
+    Optional<InsuranceProduct> findByPolicyNumber(String policyNumber);
 
 }

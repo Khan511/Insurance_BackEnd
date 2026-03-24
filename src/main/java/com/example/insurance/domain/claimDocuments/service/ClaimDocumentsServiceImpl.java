@@ -54,10 +54,4 @@ public class ClaimDocumentsServiceImpl implements ClaimDocumentsService {
         return document;
     }
 
-    @Override
-    public List<DocumentAttachmentDTO> allDocumentsOfClaim(String claimId) {
-        return null;
-
-    }
-
 }

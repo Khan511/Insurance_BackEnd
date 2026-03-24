@@ -28,7 +28,8 @@ public class InsuraceProductServiceImpl implements InsuranceProductService {
 
     @Override
     public InsuranceProduct getInsuranceProductByPolicyNumber(String policyNumber) {
-        return insuranceProductRepository.findByPolicyNumber(policyNumber);
+        return insuranceProductRepository.findByPolicyNumber(policyNumber)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
     }
 

@@ -7,6 +7,6 @@ import com.example.insurance.infrastructure.web.claim.DocumentAttachmentDTO;
 public interface ClaimDocumentsService {
     void saveClaimDocuments(List<DocumentAttachmentDTO> documentDTOs, Claim claim);
 
-    List<DocumentAttachmentDTO> allDocumentsOfClaim(String claimId);
+    // List<DocumentAttachmentDTO> allDocumentsOfClaim(String claimId);
 
 }
