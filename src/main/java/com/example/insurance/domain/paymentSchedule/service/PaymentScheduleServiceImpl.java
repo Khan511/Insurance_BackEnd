@@ -86,7 +86,28 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
 
     @Override
     public List<PaymentSchedule> findByPolicyId(long id) {
-        return paymentScheduleRepository.findByPolicyId(id);
+        return refreshOverdueStatuses(paymentScheduleRepository.findByPolicyId(id));
+    }
+
+    @Override
+    @Transactional
+    public List<PaymentSchedule> refreshOverdueStatuses(List<PaymentSchedule> schedules) {
+        if (schedules == null || schedules.isEmpty()) {
+            return schedules;
+        }
+
+        LocalDate today = LocalDate.now();
+        List<PaymentSchedule> overdueSchedules = schedules.stream()
+                .filter(schedule -> schedule.getStatus() == PaymentStatus.PENDING)
+                .filter(schedule -> schedule.getDueDate() != null && schedule.getDueDate().isBefore(today))
+                .peek(schedule -> schedule.setStatus(PaymentStatus.OVERDUE))
+                .toList();
+
+        if (!overdueSchedules.isEmpty()) {
+            paymentScheduleRepository.saveAll(overdueSchedules);
+        }
+
+        return schedules;
     }
 
     @Override

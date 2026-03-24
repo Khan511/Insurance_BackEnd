@@ -11,6 +11,8 @@ public interface PaymentScheduleService {
 
     public List<PaymentSchedule> findByPolicyId(long id);
 
+    public List<PaymentSchedule> refreshOverdueStatuses(List<PaymentSchedule> schedules);
+
     public List<PaymentSchedule> generatePaymentSchedule(CustomerPolicy policy, PaymentFrequency frequency);
 
     public List<PaymentSchedule> regeneratePaymentSchedule(CustomerPolicy policy, PaymentFrequency newFrequency);

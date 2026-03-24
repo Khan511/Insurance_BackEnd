@@ -155,15 +155,6 @@ public class PolicyMapper {
         dto.setStatus(paymentSchedule.getStatus().name());
         dto.setTransactionId(paymentSchedule.getTransactionId());
 
-        String currentStatus = paymentSchedule.getStatus().name();
-        if ("PENDING".equals(currentStatus)) {
-            // Calculate overdue status for pending payments only
-            if (paymentSchedule.getDueDate().isBefore(LocalDate.now())) {
-                dto.setStatus("OVERDUE");
-                ;
-            }
-        }
-
         // Map cancellation fields - ADD THESE
         dto.setCancellationDate(paymentSchedule.getCancellationDate());
         dto.setCancelledBy(paymentSchedule.getCancelledBy());

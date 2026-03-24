@@ -204,13 +204,13 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         // Also sort payment schedules within each policy by due date
         customerPolicies.forEach(policy -> {
             if (policy.getPaymentSchedules() != null) {
+                paymentScheduleService.refreshOverdueStatuses(policy.getPaymentSchedules());
                 policy.getPaymentSchedules().sort(Comparator.comparing(PaymentSchedule::getDueDate));
             }
         });
         return customerPolicies.stream()
                 .map(PolicyMapper::toDto)
                 .toList();
-
     }
 
     @Override
@@ -226,6 +226,11 @@ public class CustomerPolicyServiceImpl implements CustomerPolicyService {
         Optional<CustomerPolicy> policyOpt = customerPolicyRepository.findByUser_UserIdAndId(userId, policyIdLong);
 
         CustomerPolicy policy = policyOpt.orElseThrow(() -> new RuntimeException("Policy not found for user"));
+
+        if (policy.getPaymentSchedules() != null) {
+            paymentScheduleService.refreshOverdueStatuses(policy.getPaymentSchedules());
+            policy.getPaymentSchedules().sort(Comparator.comparing(PaymentSchedule::getDueDate));
+        }
 
         return PolicyMapper.toDto(policy);
 
