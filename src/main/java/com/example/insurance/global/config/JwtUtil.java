@@ -177,9 +177,9 @@ public class JwtUtil {
         try {
             Claims claims = parseTokenClaims(token);
             String userIdFromToken = claims.getSubject();
-            String userIdFromDatabase = userService.getUserByEmail(customUserDetails.getUsername()).getUserId();
+            String userIdFromUserDetails = customUserDetails.getUserId();
 
-            return userIdFromToken.equals(userIdFromDatabase);
+            return userIdFromToken.equals(userIdFromUserDetails);
         } catch (Exception e) {
 
             log.warn("Token validation failed: {}", e.getMessage());
