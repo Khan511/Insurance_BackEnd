@@ -91,7 +91,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         if (refreshToken.isPresent() && isTokenValid(refreshToken.get())) {
             handleRefreshToken(request, response, filterChain, refreshToken.get());
+            return;
         }
+
+        // No valid access token or refresh token - return 401
+        response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
     }
 
     private void handleRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain,
