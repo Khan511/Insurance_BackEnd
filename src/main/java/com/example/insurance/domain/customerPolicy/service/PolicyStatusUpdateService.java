@@ -36,8 +36,9 @@ public class PolicyStatusUpdateService {
             }
         });
 
-        // Update ACTIVE polices that have expired
+        customerPolicyRepository.saveAll(inactivePolicies);
 
+        // Update ACTIVE polices that have expired
         List<CustomerPolicy> activePolicies = customerPolicyRepository.findByStatus(PolicyStatus.ACTIVE);
 
         activePolicies.forEach(policy -> {
@@ -48,9 +49,7 @@ public class PolicyStatusUpdateService {
             }
         });
 
-        customerPolicyRepository.saveAll(inactivePolicies);
         customerPolicyRepository.saveAll(activePolicies);
-
     }
 
 }
