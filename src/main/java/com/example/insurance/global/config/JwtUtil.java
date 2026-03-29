@@ -224,7 +224,15 @@ public class JwtUtil {
 
         var user = userService.getUserByUserId(userId);
 
-        boolean isValid = user != null && user.getUserId().equals(userId);
+        if (user == null) {
+            return tokenFunction.apply(TokenData.builder()
+                    .valid(false)
+                    .authorities(List.of())
+                    .claims(claims)
+                    .build());
+        }
+
+        boolean isValid = user.getUserId().equals(userId);
 
         List<GrantedAuthority> authorities = user.getRoles().stream().flatMap(role -> Stream.concat(
                 // Include ROLE_ authority
