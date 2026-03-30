@@ -426,14 +426,6 @@ public class AdminServiceImpl implements AdminService {
         Claim claim = claimRepository.findById(claimId)
                 .orElseThrow(() -> new RuntimeException("Claim not found with Id: " + claimId));
 
-        // Validate claim can be rejected
-        if (!claim.canTransitionTo(ClaimStatus.REJECTED)) {
-            throw new IllegalStateException(
-                    "Claim cannot be rejected. Current status: " + claim.getStatus() +
-                            ". Valid transitions from " + claim.getStatus() + ": " +
-                            getClaimValidTransitions(claim.getStatus()));
-        }
-
         // Validate claim can be paid
         if (!claim.canBePaid()) {
             throw new IllegalStateException("Claim cannot be paid. Status: " + claim.getStatus() + ", Payment Status: "

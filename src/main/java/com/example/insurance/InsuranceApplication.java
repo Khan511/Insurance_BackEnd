@@ -12,5 +12,6 @@ public class InsuranceApplication {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		SpringApplication.run(InsuranceApplication.class, args);
 
+	
 	}
 }
