@@ -20,8 +20,7 @@ public class PremiumCalculationController {
     @PostMapping("/calculate")
     public PremiumCalculationResponse calculatePremium(
             @RequestBody PremiumCalculationRequest request) {
-        System.out.println("==================================Helllllloooo");
-
+ 
         // Check if user is authenticated
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = null;

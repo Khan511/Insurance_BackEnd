@@ -61,12 +61,7 @@ public class S3Controller {
             if (request.getFileName() == null || request.getFileName().contains("..")) {
                 return ResponseEntity.badRequest().body("Invalid filename");
             }
-            // String folder = switch (request.getFolderType()) {
-            // case "blog-image" -> "blog-images/";
-            // case "blog-documents" -> "blog-documents/";
-            // default -> "profile-images/";
-            // };
-
+             
             // Extract file extension
             String safeFilename = request.getFileName().replaceAll("[^a-zA-Z0-9._-]", "_");
             // String extension = safeFilename.contains(".") ?
@@ -113,13 +108,6 @@ public class S3Controller {
             @AuthenticationPrincipal CustomUserDetails user) {
 
         try {
-
-            String objectKeye = extractKeyFromUrl(imageUrl);
-            System.out.println("Attempting to delete object with key: " + objectKeye);
-
-            // Add more detailed logging
-            System.out.println("Bucket name: " + bucketName);
-            System.out.println("Full S3 path: s3://" + bucketName + "/" + objectKeye);
 
             String objectKey = extractKeyFromUrl(imageUrl);
 

@@ -288,8 +288,7 @@ public class PremiumCalculationServiceImpl implements PremiumCalculationService 
 
         try {
             BigDecimal result = evaluateExpression(formula, variables);
-            System.out.println("Formula evaluation successful. Result: " + result);
-            return result;
+             return result;
         } catch (Exception e) {
             System.err.println("Error evaluating formula: " + formula + ", error: " + e.getMessage());
             System.err.println("Falling back to base amount: " + baseAmount);

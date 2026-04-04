@@ -43,8 +43,7 @@ public class EmailVerificationController {
     @PostMapping("/resend-verification")
     public ResponseEntity<ResendVerificationResponse> resendVerificationEmail(
             @RequestBody ResendVerificationRequest request) {
-        System.out.println("===================================Email" + request.getEmail());
-        userService.resendVerificationEmail(request.getEmail());
+         userService.resendVerificationEmail(request.getEmail());
 
         ResendVerificationResponse response = ResendVerificationResponse.builder()
                 .message("Verification email sent. Please check your inbox.")
